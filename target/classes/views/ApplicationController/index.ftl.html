@@ -1,0 +1,780 @@
+<#import "../layout/defaultLayout.ftl.html" as layout> 
+<@layout.myLayout "Home page">    
+<section class="section pb-5">
+
+    <h2 class="section-heading h2 pt-4">Demo dashboard to create Rentals</h2>
+    <!--a href="/hello_world.json">Hello World Json</a-->
+
+
+    <ul class="nav md-pills nav-justified pills-secondary">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">Add Parent Unit</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">Add Rental Unit</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#panel3" role="tab">Add Images</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#panel4" role="tab">Help</a>
+        </li>
+    </ul>
+
+    <!-- Tab panels -->
+    <div class="tab-content">
+
+        <!--Panel 1-->
+        <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+            <form method="post" enctype="multipart/form-data" action="/add">
+                <br>
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="md-form">
+                            <input type="text" id="unitname" class="form-control validate" name="unitName">
+                            <label for="unitname" data-error="wrong" data-success="right">Parent unit name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        
+                                                <div class="md-form">
+                            <textarea type="text" id="pudescription" class="md-textarea" name="description"></textarea>
+                            <label for="pudescription">Description</label>
+                        </div>
+                        <!--div class="md-form ">
+
+                            <select class="mdb-select" name="style">
+                                <option value="" disabled selected>Choose unit style</option>
+                                <option value="1">FAMILY</option>
+                                <option value="2">ECO_RATED</option>
+                                <option value="3">BEACH</option>
+                                <option value="4">ROMANTIC</option>
+                                <option value="5">BUSINESS</option>
+                                <option value="6">SPORT</option>
+                            </select>
+                            <label>Parent Unit Style</label>
+                        </div-->
+
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <!--First column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="text" id="total_floors" class="form-control" name="numOfFloors">
+                            <label for="total_floors" class="">No. of Floors</label>
+                        </div>
+                    </div>
+
+                    <!--Second column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="text" id="number_of_Units" class="form-control" name="numOfUnits">
+                            <label for="number_of_Units" class="">Number of Units</label>
+                        </div>
+                    </div>
+
+                    <!--Third column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="text" id="num_elevators" class="form-control" name="elevators">
+                            <label for="num_elevators" class="">No. of Elevators</label>
+                        </div>
+                    </div>
+
+                </div>     
+
+                <div class="row">
+
+                    <!--First column-->
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="wifi" name="wifi">
+                            <label for="wifi">Wifi</label>
+                        </div>
+                    </div>
+
+                    <!--Second column-->
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="cable" name="cable">
+                            <label for="cable">Cable</label>
+                        </div>
+                    </div>
+
+                    <!--Third column-->
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="fitnesscenter" name="fitnessCenter">
+                            <label for="fitnesscenter">Fitness Center</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="swimmingpool" name="swimmingPool">
+                            <label for="swimmingpool">Swimming Pool</label>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="row">
+
+                    <!--First column-->
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="laundry" name="laundry">
+                            <label for="laundry">Laundry Services</label>
+                        </div>
+                    </div>
+
+                    <!--Second column-->
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="wheelchairaccess" name="wheelchairAccess">
+                            <label for="wheelchairaccess">wheelchair Accessiblity</label>
+                        </div>
+                    </div>
+
+                    <!--Third column-->
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="intercomfacilities" name="intercomFacilities">
+                            <label for="intercomfacilities">Intercom Facilities</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="power_backup" name="powerBackup">
+                            <label for="power_backup">Power Backup</label>
+                        </div>
+                    </div>
+
+                </div> 
+
+                <div class="row">
+
+                    <!--First column-->
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="parameter_wall" name="parameterWall">
+                            <label for="parameter_wall">Security parameter wall</label>
+                        </div>
+                    </div>
+
+                    <!--Second column-->
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="maindoorsecurity" name="mainDoorSecurity">
+                            <label for="maindoorsecurity">Main Door Security</label>
+                        </div>
+                    </div>
+
+                    <!--Third column-->
+                    <div class="col-md-3">
+                        <div class="md-form">
+                            <input type="checkbox" id="lift" name="lift">
+                            <label for="lift">Lift</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>  
+
+                <hr/>
+                <h3>Location</h3>
+                <div class="row">
+
+                    <!--First column-->
+                    <div class="col-md-12">
+                        <div class="md-form">
+                            <i class="fa fa-envelope prefix"></i>
+                            <input type="text" id="fulladdress" class="form-control" name="address">
+                            <label for="fulladdress" class="">Full street address</label>
+                        </div>
+                    </div>
+                </div>
+                <!--First row-->
+                <div class="row">
+                    <!--First column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+
+                            <input type="text" id="street" class="form-control validate" name="street">
+                            <label for="street" data-error="wrong" data-success="right">Street and number</label>
+                        </div>
+                    </div>
+
+                    <!--Second column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+
+                            <input type="text" id="city" class="form-control validate" name="city">
+                            <label for="city" data-error="wrong" data-success="right">City </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="md-form">
+
+                            <input type="text" id="county" class="form-control validate" name="county">
+                            <label for="county" data-error="wrong" data-success="right">County</label>
+                        </div>
+                    </div>
+                </div>
+                <!--/.First row-->
+
+                <hr/>
+                <h3>Accessibility</h3>
+                <div class="row">
+
+                    <!--First column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="checkbox" id="hasschools" name="hasSchools">
+                            <label for="hasschools">School</label>
+                        </div>
+                    </div>
+
+                    <!--Second column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="checkbox" id="hasparks"  name="hasParks">
+                            <label for="hasparks">Children park</label>
+                        </div>
+                    </div>
+
+                    <!--Third column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="checkbox" id="hasbanks" name="hasBanks">
+                            <label for="hasbanks">Bank</label>
+                        </div>
+                    </div>
+
+                </div> 
+
+                <div class="row">
+
+                    <!--First column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="checkbox" id="grocery" name="hasGroceryStore">
+                            <label for="grocery">Grocery Store</label>
+                        </div>
+                    </div>
+
+                    <!--Second column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="checkbox" id="publictransport" name="publicTransport">
+                            <label for="publictransport">Public transport</label>
+                        </div>
+                    </div>
+
+                    <!--Third column-->
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="checkbox" id="airport" name="hasAirport">
+                            <label for="airport">Airport</label>
+                        </div>
+                    </div>
+
+                </div> 
+
+
+                <div class="text-center">
+                    <button class="btn-floating peach-gradient btn-lg" >Add</button>
+                </div>
+
+            </form>
+        </div>
+        <!--/.Panel 1-->
+
+        <!--Panel 2-->
+        <div class="tab-pane fade" id="panel2" role="tabpanel">
+            <br>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus
+                reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione
+                porro voluptate odit minima.</p>
+
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-6">
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input type="text" id="unitname" class="form-control validate" name="unitName">
+                        <label for="form81" data-error="wrong" data-success="right">Unit Name/heading</label>
+                    </div>
+                </div>
+
+                <!--First column-->
+                <div class="col-md-6">
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input type="text" id="postedby" class="form-control validate" name="postedBy">
+                        <label for="form81" data-error="wrong" data-success="right">Posted By</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!--Second column-->
+                <div class="col-md-12">
+                    <div class="md-form">
+                        <i class="fa fa-pencil prefix"></i>
+                        <textarea type="text" id="unitDesc" class="md-textarea" name="unitDescription"></textarea>
+                        <label for="form8">Unit Description</label>
+                    </div>
+                </div>
+            </div>
+
+            <!--First row-->
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <!--Dropdown primary-->
+                        <div class="dropdown">
+                            <!--Trigger-->
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="unittype" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Unit Type</button>
+                            <!--Menu-->
+                            <div class="dropdown-menu dropdown-primary">
+                                <a class="dropdown-item" href="#">APARTMENT</a>
+                                <a class="dropdown-item" href="#">CONDO</a>
+                                <a class="dropdown-item" href="#">VILLA</a>
+                                <a class="dropdown-item" href="#">BUNGALOW</a>
+                                <a class="dropdown-item" href="#">CONVERTIBLE</a>
+                                <a class="dropdown-item" href="#">STUDIO</a>
+                                <a class="dropdown-item" href="#">DUPLEX</a>
+                                <a class="dropdown-item" href="#">TRIPLEX</a>
+                                <a class="dropdown-item" href="#">PENTHOUSE</a>
+                                <a class="dropdown-item" href="#">LOFT</a>
+                            </div>
+                        </div>
+                        <!--/Dropdown primary-->
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-3">
+                    <div class="md-form ">
+                        <!--Dropdown primary-->
+                        <div class="dropdown">
+                            <!--Trigger-->
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="privacytype" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRIVACY</button>
+                            <!--Menu-->
+                            <div class="dropdown-menu dropdown-primary">
+                                <a class="dropdown-item" href="#">ENTIRE_HOME</a>
+                                <a class="dropdown-item" href="#">SHARED_ROOM</a>
+                                <a class="dropdown-item" href="#">PRIVATE_ROOM</a>
+                            </div>
+                        </div>
+                        <!--/Dropdown primary-->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form ">
+                        <!--Dropdown primary-->
+                        <div class="dropdown">
+                            <!--Trigger-->
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="furnishingtype" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Furnishing Type</button>
+                            <!--Menu-->
+                            <div class="dropdown-menu dropdown-primary">
+                                <a class="dropdown-item" href="#">FURNISHED</a>
+                                <a class="dropdown-item" href="#">SEMI_FURNISHED</a>
+                                <a class="dropdown-item" href="#">UNFURNISHED</a>
+                            </div>
+                        </div>
+                        <!--/Dropdown primary-->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="activeunit" name="active">
+                        <label for="checkbox22">Active</label>
+                    </div>
+                </div>
+            </div>
+            <!--/.First row-->
+
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input type="text" id="norooms" class="form-control validate" name="numRooms">
+                        <label for="form81" data-error="wrong" data-success="right">No. of bedrooms</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="text" id="nobaths" class="form-control validate" name="numBathrooms">
+                        <label for="nobaths" data-error="wrong" data-success="right">No. of bathrooms</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="text" id="nobalconies" class="form-control validate" name="numBalcony">
+                        <label for="nobalconies" data-error="wrong" data-success="right">No of balconies</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input type="text" id="streetnum" class="form-control validate" name="streetNum">
+                        <label for="streetnum" data-error="wrong" data-success="right">Unit Number</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="text" id="floors" class="form-control validate" name="numFloors">
+                        <label for="floors" data-error="wrong" data-success="right">Unit Floor Number</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="text" id="stuff" class="form-control validate" name="stuff">
+                        <label for="stuff" data-error="wrong" data-success="right">Some stuff</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <input placeholder="Selected date" type="text" id="postdate" class="form-control datepicker" name="postDate">
+                        <label for="postdate">Date of posting</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <input placeholder="Selected date" type="text" id="availdate" class="form-control datepicker" name="availableFrom">
+                        <label for="availdate">Date Available from</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="text" id="unitdesc" class="form-control validate" name="unitDesc">
+                        <label for="unitdesc" data-error="wrong" data-success="right">Unit Description</label>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <h3>Amenities (Unit Features)</h3>  
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">AC</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Parking</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Carpet</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Fireplace</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Pets allowed</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Walk in closet</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">In Unit Laundry</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">In Unit Garden</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">TV</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Kitchen</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Wifi</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Fridge</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Dishwasher</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Gym</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Verandah</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Ensuite Bathroom</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+            <h3>Price Info</h3> 
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <!--Dropdown primary-->
+                        <div class="dropdown">
+                            <!--Trigger-->
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rental Type</button>
+                            <!--Menu-->
+                            <div class="dropdown-menu dropdown-primary">
+                                <a class="dropdown-item" href="#">SHORT_TERM</a>
+                                <a class="dropdown-item" href="#">LONG_TERM</a>
+                            </div>
+                        </div>
+                        <!--/Dropdown primary-->
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-3">
+                    <div class="md-form ">
+                        <!--Dropdown primary-->
+                        <div class="dropdown">
+                            <!--Trigger-->
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Currency</button>
+                            <!--Menu-->
+                            <div class="dropdown-menu dropdown-primary">
+                                <a class="dropdown-item" href="#">DOLLAR</a>
+                                <a class="dropdown-item" href="#">SHILLINGS</a>
+                                <a class="dropdown-item" href="#">POUND</a>
+                            </div>
+                        </div>
+                        <!--/Dropdown primary-->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form ">
+                        <!--Dropdown primary-->
+                        <div class="dropdown">
+                            <!--Trigger-->
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Furnishing Type</button>
+                            <!--Menu-->
+                            <div class="dropdown-menu dropdown-primary">
+                                <a class="dropdown-item" href="#">FURNISHED</a>
+                                <a class="dropdown-item" href="#">SEMI_FURNISHED</a>
+                                <a class="dropdown-item" href="#">UNFURNISHED</a>
+                            </div>
+                        </div>
+                        <!--/Dropdown primary-->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Sub-leasing/rental allowed</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input type="text" id="form81" class="form-control validate" name="street">
+                        <label for="form81" data-error="wrong" data-success="right">Per extra guest charge</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="text" id="form82" class="form-control validate" name="city">
+                        <label for="form82" data-error="wrong" data-success="right">Administration fee</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="text" id="form82" class="form-control validate" name="county">
+                        <label for="form82" data-error="wrong" data-success="right">Security Deposit</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix"></i>
+                        <input type="text" id="form81" class="form-control validate" name="street">
+                        <label for="form81" data-error="wrong" data-success="right">Short term rental price</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="text" id="form82" class="form-control validate" name="city">
+                        <label for="form82" data-error="wrong" data-success="right">Long term rental price</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix"></i>
+                        <input type="text" id="form82" class="form-control validate" name="county">
+                        <label for="form82" data-error="wrong" data-success="right">Cancellation fee</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!--First column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Subleasing allowed</label>
+                    </div>
+                </div>
+
+                <!--Second column-->
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Cancellation allowed</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Meals included in price</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="md-form">
+                        <input type="checkbox" class="filled-in" id="checkbox22">
+                        <label for="checkbox22">Child discount included</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--/.Panel 2-->
+
+        <!--Panel 3-->
+        <div class="tab-pane fade" id="panel3" role="tabpanel">
+            <br>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus
+                reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione
+                porro voluptate odit minima.</p>
+        </div>
+        <!--/.Panel 3-->
+
+        <!--Panel 4-->
+        <div class="tab-pane fade" id="panel4" role="tabpanel">
+            <br>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus
+                reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione
+                porro voluptate odit minima.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus
+                reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione
+                porro voluptate odit minima.</p>
+
+        </div>
+        <!--/.Panel 4-->
+
+    </div>
+
+
+</section>
+<!-- Form register -->
+</@layout.myLayout>

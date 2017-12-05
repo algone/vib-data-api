@@ -1,0 +1,76 @@
+<#macro myLayout title="Layout example">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <title>${title}</title>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <!-- Bootstrap core CSS -->
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
+        <!-- Material Design Bootstrap -->
+        <link href="/assets/css/mdb.min.css" rel="stylesheet"/>
+        <!-- Your custom styles (optional) -->
+        <!--link href="/assets/css/style.css" rel="stylesheet"/-->
+        <link rel='stylesheet' id='compiled.css-css'  href='https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled.min.css?ver=4.4.0' type='text/css' media='all' />
+        <link rel='stylesheet' id='style.css-css'  href='https://mdbootstrap.com/wp-content/themes/mdbootstrap4/style.css?ver=4.8.4' type='text/css' media='all' />
+
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+            .error-template {padding: 40px 15px;text-align: center;}
+        </style>
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body class="cyan-skin">
+
+        <div class="container">
+
+
+
+            <#if (flash.error)??>
+            <div class="alert alert-danger">
+                ${flash.error}
+            </div>
+            </#if>
+
+            <#if (flash.success)??>
+            <div class="alert alert-success">
+                ${flash.success}
+            </div>
+            </#if>
+
+            <#nested/>
+
+            <#include "footer.ftl.html"/>
+
+        </div>
+        <!-- JQuery -->
+        <script type="text/javascript" src="/assets/js/jquery-3.2.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="/assets/js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="/assets/js/mdb.min.js"></script>
+        <script>
+            // Material Select Initialization
+            $(document).ready(function () {
+                $('.mdb-select').material_select();
+            });
+        </script>
+
+    </body>
+</html>
+</#macro>
