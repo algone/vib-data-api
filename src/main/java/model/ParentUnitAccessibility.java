@@ -5,11 +5,19 @@
  */
 package model;
 
+import java.io.Serializable;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
+
+
 /**
  *
  * @author A4372949
  */
-public class ParentUnitAccessibility {
+@Embeddable @Access(AccessType.FIELD)
+public class ParentUnitAccessibility implements Serializable {
+
     private boolean hasSchools;
     private boolean hasParks;
     private boolean hasBanks;
@@ -73,6 +81,5 @@ public class ParentUnitAccessibility {
     public void setHasAirport(boolean hasAirport) {
         this.hasAirport = hasAirport;
     }
-    
-    
+
 }

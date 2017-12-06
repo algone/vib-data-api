@@ -30,27 +30,39 @@
  */
 package controllers;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import ninja.Result;
 import ninja.Results;
 
 import com.google.inject.Singleton;
+import com.google.inject.persist.Transactional;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import model.Location;
 import model.ParentUnit;
 import model.ParentUnitAccessibility;
 import model.ParentUnitFacilities;
+import model.ParentUnitImage;
 import model.Unit;
+import model.UnitImage;
 import model.UnitStyle;
 import ninja.Context;
-import ninja.params.Param;
+import ninja.ReverseRouter;
+import ninja.jpa.UnitOfWork;
 import ninja.uploads.FileItem;
 
 @Singleton
 public class ApplicationController {
 
-    private String PARAMS = "city,county,description,units,fitnessCentre,bank,floors,filepath,school,laundry,street,busstop,intercomm,cable,park,powerBackup,wifi,address,unitName,swimmingPool,airport,parameterWall,wheelchairAccess,elevators,grocery";
+    @Inject
+    ReverseRouter reverseRouter;
+    @Inject
+    Provider<EntityManager> entitiyManagerProvider;
 
     public Result index() {
 
@@ -68,19 +80,65 @@ public class ApplicationController {
 
     }
 
+    @UnitOfWork
+    public Result getParentUnits(Context context) {
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+
+        Query q = entityManager.createQuery("SELECT x FROM ParentUnit x");
+        List<ParentUnit> guestbookEntries = (List<ParentUnit>) q.getResultList();
+
+        return Results.json().render(guestbookEntries);
+
+    }
+
+    public Result createParentUnit(UnitImage image) {
+
+//        EntityManager entityManager = entitiyManagerProvider.get();
+        UnitImage img = new UnitImage();
+        img.setDescription("Some nice image description");
+        img.setImageUrl("https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg");
+//        entityManager.persist(img);
+        ParentUnit vpu = new ParentUnit();
+        vpu.setLocation(new Location());
+        vpu.setParentUnitAccessibility(new ParentUnitAccessibility());
+        vpu.setParentUnitFacilities(new ParentUnitFacilities());
+        vpu.setRentalUnits(new ArrayList<>());
+        vpu.setParentUnitImage(new ParentUnitImage());
+        List<ParentUnit> allPUs = getAllParentUnits();
+        return Results.html().template("views/ApplicationController/index.ftl.html").render("size",allPUs.size()).render("vpu", allPUs);
+    }
+
+    @Transactional
+    public Result addImage(UnitImage image) {
+
+        System.out.println("In postRoute");
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        UnitImage img = new UnitImage();
+        img.setDescription("Some nice image description");
+        img.setImageUrl("https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg");
+        entityManager.persist(img);
+        return Results.json().render(img);
+    }
+
+    @Transactional
     public Result addParentUnit(Context context) throws Exception {
-        FileItem upfile = context.getParameterAsFileItem("puImage");
-        Map<String, List<FileItem>> items = context.getParameterFileItems();
-        items.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((fItems) -> {
-            for (FileItem fItem : fItems) {
-                System.out.println("File: " + fItem.getFileName());
-            }
-        });
+//        FileItem upfile = context.getParameterAsFileItem("puImage");
+//        Map<String, List<FileItem>> items = context.getParameterFileItems();
+//        items.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((fItems) -> {
+//            for (FileItem fItem : fItems) {
+//                System.out.println("File: " + fItem.getFileName());
+//            }
+//        });
         Map<String, String[]> params = context.getParameters();
         ParentUnit vpu = new ParentUnit();
-        Location unitLoc = new Location();
-        ParentUnitFacilities puf = new ParentUnitFacilities();
-        ParentUnitAccessibility accessibility = new ParentUnitAccessibility();
+        vpu.setLocation(new Location());
+        vpu.setParentUnitAccessibility(new ParentUnitAccessibility());
+        vpu.setParentUnitFacilities(new ParentUnitFacilities());
+        vpu.setRentalUnits(new ArrayList<>());
+        vpu.setParentUnitImage(new ParentUnitImage());
+
         for (Map.Entry<String, String[]> entry : params.entrySet()) {
             String key = entry.getKey();
 
@@ -107,97 +165,123 @@ public class ApplicationController {
             /*
             Parent Unit Facilities
              */
-            
+
             if (key.matches("wifi")) {
-                puf.setWifi(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitFacilities().setWifi(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("cable")) {
-                puf.setCable(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitFacilities().setCable(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("fitnessCenter")) {
-                puf.setFitnessCentre(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitFacilities().setFitnessCentre(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("swimmingPool")) {
-                puf.setSwimmingPool(context.getParameter(key).contentEquals("on"));
-            }        
+                vpu.getParentUnitFacilities().setSwimmingPool(context.getParameter(key).contentEquals("on"));
+            }
             if (key.matches("laundry")) {
-                puf.setLaundry(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitFacilities().setLaundry(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("wheelchairAccess")) {
-                puf.setWheelchairAccessibility(context.getParameter(key).contentEquals("on"));
-            }            
+                vpu.getParentUnitFacilities().setWheelchairAccessibility(context.getParameter(key).contentEquals("on"));
+            }
             if (key.matches("intercomFacilities")) {
-                puf.setIntercomFacilities(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitFacilities().setIntercomFacilities(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("powerBackup")) {
-                puf.setPowerBackup(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitFacilities().setPowerBackup(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("mainDoorSecurity")) {
-                puf.setMainDoorSecurity(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitFacilities().setMainDoorSecurity(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("perimeterWall")) {
-                puf.setPerimeterWall(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitFacilities().setPerimeterWall(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("lift")) {
-                puf.setLift(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitFacilities().setLift(context.getParameter(key).contentEquals("on"));
             }
-            vpu.setParentUnitFacilities(puf);
+
 
             /*
             Location Params
              */
             if (key.matches("city")) {
-                unitLoc.setCity(context.getParameter(key));
+                vpu.getLocation().setCity(context.getParameter(key));
             }
             if (key.matches("county")) {
-                unitLoc.setCountyName(context.getParameter(key));
+                vpu.getLocation().setCountyName(context.getParameter(key));
             }
             if (key.matches("address")) {
-                unitLoc.setAddress(context.getParameter(key));
+                vpu.getLocation().setAddress(context.getParameter(key));
             }
             if (key.matches("street")) {
-                unitLoc.setStreetName(context.getParameter(key));
+                vpu.getLocation().setStreetName(context.getParameter(key));
             }
-
-            vpu.setLocation(unitLoc);
 
             /*
             Accessibility
              */
             if (key.matches("hasBanks")) {
-                accessibility.setHasBanks(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitAccessibility().setHasBanks(context.getParameter(key).contentEquals("on"));
 
             }
 
             if (key.matches("hasAirport")) {
-                accessibility.setHasAirport(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitAccessibility().setHasAirport(context.getParameter(key).contentEquals("on"));
 
             }
             if (key.matches("publicTransport")) {
-                accessibility.setPublicTransportStation(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitAccessibility().setPublicTransportStation(context.getParameter(key).contentEquals("on"));
 
             }
             if (key.matches("hasSchools")) {
-                accessibility.setHasSchools(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitAccessibility().setHasSchools(context.getParameter(key).contentEquals("on"));
 
             }
             if (key.matches("hasATM")) {
-                accessibility.setHasATM(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitAccessibility().setHasATM(context.getParameter(key).contentEquals("on"));
 
             }
             if (key.matches("hasParks")) {
-                accessibility.setHasParks(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitAccessibility().setHasParks(context.getParameter(key).contentEquals("on"));
 
             }
             if (key.matches("hasGroceryStore")) {
-                accessibility.setHasGroceryStore(context.getParameter(key).contentEquals("on"));
+                vpu.getParentUnitAccessibility().setHasGroceryStore(context.getParameter(key).contentEquals("on"));
 
             }
 
-            vpu.setParentUnitAccessibility(accessibility);
-
         }
+        EntityManager entityManager = entitiyManagerProvider.get();
+        entityManager.persist(vpu);
 
-        return Results.json().render(vpu);
+//        ParentUnit pu = findParentUnit(vpu.getUnitName());
+
+        List<ParentUnit> allPUs = getAllParentUnits();
+       
+        return Results.html().template("views/ApplicationController/index.ftl.html").render("vpus", allPUs);
+//        return Results.json().render(vpu);
+    }
+
+    @UnitOfWork
+    public List<ParentUnit> getAllParentUnits() {
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+
+        Query q = entityManager.createQuery("SELECT pu FROM ParentUnit pu");
+        List<ParentUnit> vpus = (List<ParentUnit>) q.getResultList();
+
+        return vpus;
+
+    }
+
+    @UnitOfWork
+    public ParentUnit findParentUnit(String unitName) {
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+        Query q = entityManager.createQuery("SELECT pu.unitName FROM ParentUnit pu WHERE pu.unitName LIKE '%"+unitName+"%'");
+        ParentUnit vpu = (ParentUnit) q.getSingleResult();
+
+        return vpu;
+
     }
 }

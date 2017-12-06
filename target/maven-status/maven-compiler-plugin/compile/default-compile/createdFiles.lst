@@ -2,12 +2,17 @@ model\Location.class
 model\Unit.class
 model\UnitType.class
 controllers\ApplicationController.class
+model\UnitPrivacy.class
 conf\Routes.class
+model\ParentUnitFacilities.class
+model\ParentUnitImage_.class
 model\ParentUnit.class
 model\ParentUnitImage.class
 model\FurnishingType.class
 conf\Module.class
 model\RentalType.class
+model\UnitImage_.class
+model\UnitStyle.class
 model\UnitFeature.class
 conf\Filters.class
 model\ParentUnitAccessibility.class

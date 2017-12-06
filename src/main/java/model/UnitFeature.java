@@ -5,11 +5,18 @@
  */
 package model;
 
+import java.io.Serializable;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
+
+
 /**
  *
  * @author A4372949
  */
-public class UnitFeature {
+@Embeddable @Access(AccessType.FIELD)
+public class UnitFeature implements Serializable {
 
     private boolean hasAirConditioning;
     private int numOfParking;

@@ -6,10 +6,13 @@ C:\Workspace\private\vibanda-data-api\src\main\java\conf\Module.java
 C:\Workspace\private\vibanda-data-api\src\main\java\model\Unit.java
 C:\Workspace\private\vibanda-data-api\src\main\java\model\UnitImage.java
 C:\Workspace\private\vibanda-data-api\src\main\java\model\ParentUnitAccessibility.java
+C:\Workspace\private\vibanda-data-api\src\main\java\model\UnitStyle.java
 C:\Workspace\private\vibanda-data-api\src\main\java\model\UnitFeature.java
 C:\Workspace\private\vibanda-data-api\src\main\java\model\ParentUnitImage.java
 C:\Workspace\private\vibanda-data-api\src\main\java\model\FurnishingType.java
+C:\Workspace\private\vibanda-data-api\src\main\java\model\ParentUnitFacilities.java
 C:\Workspace\private\vibanda-data-api\src\main\java\model\UnitType.java
 C:\Workspace\private\vibanda-data-api\src\main\java\model\RentalInfo.java
 C:\Workspace\private\vibanda-data-api\src\main\java\model\RentalType.java
 C:\Workspace\private\vibanda-data-api\src\main\java\controllers\ApplicationController.java
+C:\Workspace\private\vibanda-data-api\src\main\java\model\UnitPrivacy.java

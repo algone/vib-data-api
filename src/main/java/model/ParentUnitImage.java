@@ -6,27 +6,32 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
+
 
 /**
  *
  * @author A4372949
  */
-@Entity
+@Embeddable @Access(AccessType.FIELD)
 public class ParentUnitImage implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String imageUrl;
-    private String description;
 
-    public Long getId() {
-        return id;
+    private String imageId;
+    private String imageUrl;
+    private String imageDescription;
+
+    public String getImageId() {
+        return imageId;
     }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
+    }
+
+
 
     public String getImageUrl() {
         return imageUrl;
@@ -36,12 +41,14 @@ public class ParentUnitImage implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public String getDescription() {
-        return description;
+    public String getImageDescription() {
+        return imageDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setImageDescription(String imageDescription) {
+        this.imageDescription = imageDescription;
     }
+
+
 
 }

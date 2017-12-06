@@ -5,12 +5,18 @@
  */
 package model;
 
+import java.io.Serializable;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
+
+
 /**
  *
  * @author A4372949
  */
-public class RentalInfo {
-
+@Embeddable @Access(AccessType.FIELD)
+public class RentalInfo implements Serializable {
     private RentalType rentalType = RentalType.SHORT_TERM;
     private boolean subleasingAllowed;
     private double adminFee;

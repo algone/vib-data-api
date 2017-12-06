@@ -38,8 +38,8 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        
-                                                <div class="md-form">
+
+                        <div class="md-form">
                             <textarea type="text" id="pudescription" class="md-textarea" name="description"></textarea>
                             <label for="pudescription">Description</label>
                         </div>
@@ -93,7 +93,7 @@
                     <!--First column-->
                     <div class="col-md-3">
                         <div class="md-form">
-                            <input type="checkbox" id="wifi" name="wifi">
+                            <input type="checkbox" id="wifi" name="wifi" value="vpu.wifi">
                             <label for="wifi">Wifi</label>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                     <!--Second column-->
                     <div class="col-md-3">
                         <div class="md-form">
-                            <input type="checkbox" id="cable" name="cable">
+                            <input type="checkbox" id="cable" name="cable" value="vpu.cable">
                             <label for="cable">Cable</label>
                         </div>
                     </div>
@@ -109,13 +109,13 @@
                     <!--Third column-->
                     <div class="col-md-3">
                         <div class="md-form">
-                            <input type="checkbox" id="fitnesscenter" name="fitnessCenter">
+                            <input type="checkbox" id="fitnesscenter" name="fitnessCenter" value="vpu.fitnessCenter">
                             <label for="fitnesscenter">Fitness Center</label>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="md-form">
-                            <input type="checkbox" id="swimmingpool" name="swimmingPool">
+                            <input type="checkbox" id="swimmingpool" name="swimmingPool" value="vpu.swimmingPool">
                             <label for="swimmingpool">Swimming Pool</label>
                         </div>
                     </div>
@@ -307,8 +307,8 @@
                 <div class="col-md-6">
                     <div class="md-form">
                         <i class="fa fa-envelope prefix"></i>
-                        <input type="text" id="unitname" class="form-control validate" name="unitName">
-                        <label for="form81" data-error="wrong" data-success="right">Unit Name/heading</label>
+                        <input type="text" id="uname" class="form-control validate" name="unitName">
+                        <label for="uname" data-error="wrong" data-success="right">Unit Name/heading</label>
                     </div>
                 </div>
 
@@ -326,12 +326,29 @@
             <div class="row">
 
                 <!--Second column-->
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="md-form">
                         <i class="fa fa-pencil prefix"></i>
                         <textarea type="text" id="unitDesc" class="md-textarea" name="unitDescription"></textarea>
                         <label for="form8">Unit Description</label>
                     </div>
+                </div>
+                <div class="input-field col s12">
+
+
+                    <select >
+                        <option value="" disabled selected>Choose Parent Unit</option>
+                        <#if size gt 0>
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                        </#if>
+                        
+      
+               
+                    </select>
+                    <label>Default Select</label>
+
                 </div>
             </div>
 

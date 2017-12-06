@@ -5,50 +5,52 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author A4372949
  */
-public class ParentUnit {
+@Entity
+public class ParentUnit implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    private String unitName = "A Vibanda rental Unit";
+    private String unitName;
     private String description;
     private UnitStyle style = UnitStyle.FAMILY;
-    private int numOfUnits = 0;    
+    private int numOfUnits = 0;
     private int numOfFloors = 0;
-    
-    private ParentUnitFacilities parentUnitFacilities = new ParentUnitFacilities();
-    private Location location = new Location();
-    private ParentUnitAccessibility parentUnitAccessibility = new ParentUnitAccessibility();
-    
-    private ParentUnitImage parentUnitImage = new ParentUnitImage();
 
+    @Embedded
+    private ParentUnitFacilities parentUnitFacilities;
+    @Embedded
+    private Location location;
+    @Embedded
+    private ParentUnitAccessibility parentUnitAccessibility;
+
+    @Embedded
+    private ParentUnitImage parentUnitImage;
+
+
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Unit> rentalUnits = new ArrayList<>();
-    
-    
+
     public ParentUnit() {
     }
 
     public Long getId() {
         return id;
-    }
-
-    public String getParentUnitName() {
-        return unitName;
-    }
-
-    public void setParentUnitName(String parentUnitName) {
-        this.unitName = parentUnitName;
     }
 
     public String getDescription() {
@@ -130,6 +132,5 @@ public class ParentUnit {
     public void setParentUnitFacilities(ParentUnitFacilities parentUnitFacilities) {
         this.parentUnitFacilities = parentUnitFacilities;
     }
-
 
 }

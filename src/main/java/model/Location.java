@@ -5,11 +5,17 @@
  */
 package model;
 
+import java.io.Serializable;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
+
 /**
  *
  * @author A4372949
  */
-public class Location {
+@Embeddable @Access(AccessType.FIELD)
+public class Location implements Serializable {
 
     private String streetName;
     private String address;
@@ -92,5 +98,7 @@ public class Location {
     public void setLon(double lon) {
         this.lon = lon;
     }
+
+
 
 }

@@ -5,17 +5,24 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
  * @author A4372949
  */
-public class Unit {
+@Entity
+public class Unit implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,14 +33,19 @@ public class Unit {
     private int numOfBedrooms;
     private int numOfBathrooms;
     private int numOfBalconies;
+    @Embedded
     private RentalInfo rentalInfo;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOfPosting;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateAvailableFrom;
     private String postedBy;
     private boolean active;
     private int unitNumber;
     private int unitFloorNumber;
+    @OneToMany
     private List<UnitImage> unitImages;
+    @Embedded
     private UnitFeature unitFeature;
     private UnitPrivacy privacy = UnitPrivacy.ENTIRE_HOME;
     private FurnishingType furnishing = FurnishingType.UNFURNISHED;
