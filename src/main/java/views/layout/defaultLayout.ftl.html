@@ -9,71 +9,76 @@
         <meta name="description" content=""/>
         <meta name="author" content=""/>
 
+
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
         <!-- Bootstrap core CSS -->
-        <link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
+        <!--link href="/assets/css/bootstrap.min.css" rel="stylesheet"/-->
         <!-- Material Design Bootstrap -->
-        <link href="/assets/css/mdb.min.css" rel="stylesheet"/>
+        <!--link href="/assets/css/mdb.min.css" rel="stylesheet"/-->
         <!-- Your custom styles (optional) -->
         <!--link href="/assets/css/style.css" rel="stylesheet"/-->
-        <link rel='stylesheet' id='compiled.css-css'  href='https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled.min.css?ver=4.4.0' type='text/css' media='all' />
-        <link rel='stylesheet' id='style.css-css'  href='https://mdbootstrap.com/wp-content/themes/mdbootstrap4/style.css?ver=4.8.4' type='text/css' media='all' />
+        <!--link rel='stylesheet' id='compiled.css-css'  href='https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled.min.css?ver=4.4.0' type='text/css' media='all' /-->
+        <!--link rel='stylesheet' id='style.css-css'  href='https://mdbootstrap.com/wp-content/themes/mdbootstrap4/style.css?ver=4.8.4' type='text/css' media='all' /-->
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/css/materialize.css">
 
-        <style type="text/css">
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
-            .error-template {padding: 40px 15px;text-align: center;}
-        </style>
+        <!-- CSS  -->
+
+        <link href="../../assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="../../assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
           <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
     </head>
-    <body class="cyan-skin">
+    <body >
 
+
+        <#include "header.ftl.html"/>
         <div class="container">
-
-
-
-            <#if (flash.error)??>
-            <div class="alert alert-danger">
-                ${flash.error}
+            <div class="section">  
+                <#nested/>
             </div>
-            </#if>
-
-            <#if (flash.success)??>
-            <div class="alert alert-success">
-                ${flash.success}
-            </div>
-            </#if>
-
-            <#nested/>
-
-            <#include "footer.ftl.html"/>
-
         </div>
+        <#include "footer.ftl.html"/>
+
+
         <!-- JQuery -->
-        <script type="text/javascript" src="/assets/js/jquery-3.2.1.min.js"></script>
+        <!--script type="text/javascript" src="/assets/js/jquery-3.2.1.min.js"></script-->
         <!-- Bootstrap tooltips -->
-        <script type="text/javascript" src="/assets/js/popper.min.js"></script>
-        <!-- Bootstrap core JavaScript -->
-        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-        <!-- MDB core JavaScript -->
-        <script type="text/javascript" src="/assets/js/mdb.min.js"></script>
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="../../assets/js/materialize.js"></script>
+        <script src="../../assets/js/init.js"></script>
+
 
         <script>
+
             // Material Select Initialization
             $(document).ready(function () {
-                  $('select').material_select();
+
+ $('.tabs').tabs();
+                $('select').select();
+                $('.fixed-action-btn').floatingActionButton({
+                    direction: 'left'
+                });
+
+                $('.datepicker').pickadate({
+                    selectMonths: true, // Creates a dropdown to control month
+                    selectYears: 15, // Creates a dropdown of 15 years to control year,
+                    today: 'Today',
+                    clear: 'Clear',
+                    close: 'Ok',
+                    closeOnSelect: false // Close upon selecting a date,
+                });
             });
+
         </script>
 
     </body>

@@ -26,21 +26,21 @@ public class ParentUnit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    private String unitName;
-    private String description;
+    private String unitName="";
+    private String description="";
     private UnitStyle style = UnitStyle.FAMILY;
     private int numOfUnits = 0;
     private int numOfFloors = 0;
 
     @Embedded
-    private ParentUnitFacilities parentUnitFacilities;
+    private ParentUnitFacilities parentUnitFacilities= new ParentUnitFacilities();
     @Embedded
     private Location location;
     @Embedded
-    private ParentUnitAccessibility parentUnitAccessibility;
+    private ParentUnitAccessibility parentUnitAccessibility = new ParentUnitAccessibility();
 
     @Embedded
-    private ParentUnitImage parentUnitImage;
+    private ParentUnitImage parentUnitImage= new ParentUnitImage();
 
 
     @OneToMany(fetch = FetchType.EAGER)

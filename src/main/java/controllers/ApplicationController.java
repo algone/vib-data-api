@@ -92,21 +92,21 @@ public class ApplicationController {
 
     }
 
-    public Result createParentUnit(UnitImage image) {
+    public Result createParentUnit(Context context) {
 
 //        EntityManager entityManager = entitiyManagerProvider.get();
-        UnitImage img = new UnitImage();
-        img.setDescription("Some nice image description");
-        img.setImageUrl("https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg");
+//        UnitImage img = new UnitImage();
+//        img.setDescription("Some nice image description");
+//        img.setImageUrl("https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg");
 //        entityManager.persist(img);
-        ParentUnit vpu = new ParentUnit();
-        vpu.setLocation(new Location());
-        vpu.setParentUnitAccessibility(new ParentUnitAccessibility());
-        vpu.setParentUnitFacilities(new ParentUnitFacilities());
-        vpu.setRentalUnits(new ArrayList<>());
-        vpu.setParentUnitImage(new ParentUnitImage());
-        List<ParentUnit> allPUs = getAllParentUnits();
-        return Results.html().template("views/ApplicationController/index.ftl.html").render("size",allPUs.size()).render("vpu", allPUs);
+        ParentUnit parentUnit = new ParentUnit();
+        parentUnit.setLocation(new Location());
+        parentUnit.setParentUnitAccessibility(new ParentUnitAccessibility());
+        parentUnit.setParentUnitFacilities(new ParentUnitFacilities());
+        parentUnit.setRentalUnits(new ArrayList<>());
+        parentUnit.setParentUnitImage(new ParentUnitImage());
+
+        return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
     }
 
     @Transactional
@@ -172,7 +172,7 @@ public class ApplicationController {
             if (key.matches("cable")) {
                 vpu.getParentUnitFacilities().setCable(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("fitnessCenter")) {
+            if (key.matches("fitnessCentre")) {
                 vpu.getParentUnitFacilities().setFitnessCentre(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("swimmingPool")) {
@@ -181,7 +181,7 @@ public class ApplicationController {
             if (key.matches("laundry")) {
                 vpu.getParentUnitFacilities().setLaundry(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("wheelchairAccess")) {
+            if (key.matches("wheelchairAccessibility")) {
                 vpu.getParentUnitFacilities().setWheelchairAccessibility(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("intercomFacilities")) {
@@ -253,13 +253,16 @@ public class ApplicationController {
         }
         EntityManager entityManager = entitiyManagerProvider.get();
         entityManager.persist(vpu);
+        return Results.json().render(vpu);
+//        return add(vpu);
+    }
 
-//        ParentUnit pu = findParentUnit(vpu.getUnitName());
-
-        List<ParentUnit> allPUs = getAllParentUnits();
-       
-        return Results.html().template("views/ApplicationController/index.ftl.html").render("vpus", allPUs);
-//        return Results.json().render(vpu);
+    @Transactional
+    public Result add(Context context, ParentUnit parent) {
+        EntityManager entityManager = entitiyManagerProvider.get();
+//        entityManager.persist(parentUnit);
+//        return Results.html().template("views/ApplicationController/index.ftl.html").render("vpus", allPUs);
+        return Results.json().render(parent);
     }
 
     @UnitOfWork
@@ -278,7 +281,7 @@ public class ApplicationController {
     public ParentUnit findParentUnit(String unitName) {
 
         EntityManager entityManager = entitiyManagerProvider.get();
-        Query q = entityManager.createQuery("SELECT pu.unitName FROM ParentUnit pu WHERE pu.unitName LIKE '%"+unitName+"%'");
+        Query q = entityManager.createQuery("SELECT pu.unitName FROM ParentUnit pu WHERE pu.unitName LIKE '%" + unitName + "%'");
         ParentUnit vpu = (ParentUnit) q.getSingleResult();
 
         return vpu;

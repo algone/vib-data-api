@@ -1,0 +1,272 @@
+<div class="section">
+
+    <div class="row">
+        <div class="col s6">
+            <div class="md-form">
+                <input type="text" id="unitname" class="form-control validate" name="unitName" >
+                <label for="unitname" data-error="wrong" data-success="right">Parent unit name</label>
+            </div>
+        </div>
+        <div class="col s6">
+                <select id="style" name="style" >
+                    <option value="" disabled selected>Choose unit style</option>
+                    <option value="FAMILY">FAMILY</option>
+                    <option value="ECO_RATED">ECO_RATED</option>
+                    <option value="BEACH">BEACH</option>
+                    <option value="ROMANTIC">ROMANTIC</option>
+                    <option value="BUSINESS">BUSINESS</option>
+                    <option value="SPORT">SPORT</option>
+                </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="md-form">
+                <textarea type="text" id="pudescription" class="md-textarea" name="description"></textarea>
+                <label for="pudescription">Description</label>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+        <!--First column-->
+        <div class="col-md-4">
+            <div class="md-form">
+
+                <p class="range-field ">
+                    <input type="range" id="total_floors" class="form-control" min="0" max="10"  name="numOfFloors"/>
+                </p>
+                <label for="total_floors" class="">No. of Floors</label>
+            </div>
+        </div>
+
+        <!--Second column-->
+        <div class="col-md-4">
+            <div class="md-form">
+                <p class="range-field ">
+                    <input type="range" id="number_of_Units" min="0" max="10"  class="form-control" name="numOfUnits" >
+                </p>
+                <label for="number_of_Units" class="">Number of Units</label>
+            </div>
+        </div>
+
+        <!--Third column-->
+        <div class="col-md-4">
+            <div class="md-form">
+                <label for="num_elevators" class="">No. of Elevators</label>
+                <p class="range-field">
+                    <input type="range" id="num_elevators" class="form-control" min="0" max="10" name="elevators"/>
+                </p>
+
+            </div>
+        </div>
+
+    </div>     
+
+    <div class="row">
+
+        <!--First column-->
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="wifi" name="wifi" >
+                <label for="wifi">Wifi</label>
+            </div>
+        </div>
+
+        <!--Second column-->
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="cable" name="cable" >
+                <label for="cable">Cable</label>
+            </div>
+        </div>
+
+        <!--Third column-->
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="fitnesscentre" name="fitnessCentre" >
+                <label for="fitnesscentre">Fitness Center</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="swimmingpool" name="swimmingPool" >
+                <label for="swimmingpool">Swimming Pool</label>
+            </div>
+        </div>
+    </div> 
+
+    <div class="row">
+
+        <!--First column-->
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="laundry" name="laundry" >
+                <label for="laundry">Laundry Services</label>
+            </div>
+        </div>
+
+        <!--Second column-->
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="wheelchairaccessibility" name="wheelchairAccessibility" >
+                <label for="wheelchairaccessibility">wheelchair Accessiblity</label>
+            </div>
+        </div>
+
+        <!--Third column-->
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="intercomfacilities" name="intercomFacilities" >
+                <label for="intercomfacilities">Intercom Facilities</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="power_backup" name="powerBackup" >
+                <label for="power_backup">Power Backup</label>
+            </div>
+        </div>
+
+    </div> 
+
+    <div class="row">
+
+        <!--First column-->
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="perimeterWall" name="perimeterWall" >
+                <label for="perimeterWall">Security parameter wall</label>
+            </div>
+        </div>
+
+        <!--Second column-->
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="maindoorsecurity" name="mainDoorSecurity" >
+                <label for="maindoorsecurity">Main Door Security</label>
+            </div>
+        </div>
+
+        <!--Third column-->
+        <div class="col-md-3">
+            <div class="md-form">
+                <input type="checkbox" id="lift" name="lift" >
+                <label for="lift">Lift</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>  
+
+    <hr/>
+    <h3>Location</h3>
+    <div class="row">
+
+        <!--First column-->
+        <div class="col-md-12">
+            <div class="md-form">
+                <i class="fa fa-envelope prefix"></i>
+                <input type="text" id="fulladdress" class="form-control" name="address" >
+                <label for="fulladdress" class="">Full street address</label>
+            </div>
+        </div>
+    </div>
+    <!--First row-->
+    <div class="row">
+        <!--First column-->
+        <div class="col-md-4">
+            <div class="md-form">
+
+                <input type="text" id="street" class="form-control validate" name="street" >
+                <label for="street" data-error="wrong" data-success="right">Street and number</label>
+            </div>
+        </div>
+
+        <!--Second column-->
+        <div class="col-md-4">
+            <div class="md-form">
+
+                <input type="text" id="city" class="form-control validate" name="city" >
+                <label for="city" data-error="wrong" data-success="right">City </label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="md-form">
+
+                <input type="text" id="county" class="form-control validate" name="county" >
+                <label for="county" data-error="wrong" data-success="right">County</label>
+            </div>
+        </div>
+    </div>
+    <!--/.First row-->
+
+    <hr/>
+    <h3>Accessibility</h3>
+    <div class="row">
+
+        <!--First column-->
+        <div class="col-md-4">
+            <div class="md-form">
+                <input type="checkbox" id="hasschools" name="hasSchools" >
+                <label for="hasschools">School</label>
+            </div>
+        </div>
+
+        <!--Second column-->
+        <div class="col-md-4">
+            <div class="md-form">
+                <input type="checkbox" id="hasparks"  name="hasParks" >
+                <label for="hasparks">Children park</label>
+            </div>
+        </div>
+
+        <!--Third column-->
+        <div class="col-md-4">
+            <div class="md-form">
+                <input type="checkbox" id="hasbanks" name="hasBanks" >
+                <label for="hasbanks">Bank</label>
+            </div>
+        </div>
+
+    </div> 
+
+    <div class="row">
+
+        <!--First column-->
+        <div class="col-md-4">
+            <div class="md-form">
+                <input type="checkbox" id="grocery" name="hasGroceryStore" >
+                <label for="grocery">Grocery Store</label>
+            </div>
+        </div>
+
+        <!--Second column-->
+        <div class="col-md-4">
+            <div class="md-form">
+                <input type="checkbox" id="publictransport" name="publicTransport" >
+                <label for="publictransport">Public transport</label>
+            </div>
+        </div>
+
+        <!--Third column-->
+        <div class="col-md-4">
+            <div class="md-form">
+                <input type="checkbox" id="airport" name="hasAirport" >
+                <label for="airport">Airport</label>
+            </div>
+        </div>
+
+    </div> 
+
+
+    <div class="text-center">
+        <button class="btn-floating peach-gradient btn-lg" >Add</button>
+    </div>
+
+</div>
+<!-- Purple Header -->
+<!--div class="edge-header deep-purple">  
+</div-->
