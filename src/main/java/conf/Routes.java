@@ -31,6 +31,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/").with(ApplicationController::index);
         router.GET().route("/hello_world.json").with(ApplicationController::helloWorldJson);
         router.POST().route("/add").with(ApplicationController::addParentUnit);
+        router.POST().route("/addUnit").with(ApplicationController::addUnit);
          router.GET().route("/persistImage").with(ApplicationController::addImage);
          router.GET().route("/create").with(ApplicationController::createParentUnit);
          router.GET().route("/list_units").with(ApplicationController::getParentUnits);

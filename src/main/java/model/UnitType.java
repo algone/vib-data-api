@@ -10,7 +10,7 @@ package model;
  * @author A4372949
  */
 public enum UnitType {
-    APPARTMENT,
+    APARTMENT,
     CONDO,
     VILLA,
     BUNGALOW,

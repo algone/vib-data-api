@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -29,29 +28,42 @@ public class Unit implements Serializable {
     private Long id;
     private String unitHeading;
     private String unitDescription;
-    private UnitType unitType = UnitType.APPARTMENT;
+    private String postedBy;
     private int numOfBedrooms;
     private int numOfBathrooms;
     private int numOfBalconies;
-    @Embedded
-    private RentalInfo rentalInfo;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateOfPosting;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateAvailableFrom;
-    private String postedBy;
-    private boolean active;
-    private int unitNumber;
+    private int unitNumber; 
     private int unitFloorNumber;
+    private boolean active;
+    
+    private RentalType rentalType = RentalType.SHORT_TERM;
+    private UnitType unitType = UnitType.APARTMENT;
+    private UnitPrivacy privacy = UnitPrivacy.ENTIRE_HOME;
+    private FurnishingType furnishing = FurnishingType.UNFURNISHED;    
+
+
+    private String dateOfPosting;
+
+    private String dateAvailableFrom;
+    
     @OneToMany
     private List<UnitImage> unitImages;
     @Embedded
     private UnitFeature unitFeature;
-    private UnitPrivacy privacy = UnitPrivacy.ENTIRE_HOME;
-    private FurnishingType furnishing = FurnishingType.UNFURNISHED;
+    @Embedded
+    private RentalInfo rentalInfo;
+    
+
 
     public Long getId() {
         return id;
+    }
+    public RentalType getRentalType() {
+        return rentalType;
+    }
+
+    public void setRentalType(RentalType rentalType) {
+        this.rentalType = rentalType;
     }
 
     public String getUnitHeading() {
@@ -110,21 +122,22 @@ public class Unit implements Serializable {
         this.rentalInfo = rentalInfo;
     }
 
-    public Date getDateOfPosting() {
+    public String getDateOfPosting() {
         return dateOfPosting;
     }
 
-    public void setDateOfPosting(Date dateOfPosting) {
+    public void setDateOfPosting(String dateOfPosting) {
         this.dateOfPosting = dateOfPosting;
     }
 
-    public Date getDateAvailableFrom() {
+    public String getDateAvailableFrom() {
         return dateAvailableFrom;
     }
 
-    public void setDateAvailableFrom(Date dateAvailableFrom) {
+    public void setDateAvailableFrom(String dateAvailableFrom) {
         this.dateAvailableFrom = dateAvailableFrom;
     }
+
 
     public String getPostedBy() {
         return postedBy;

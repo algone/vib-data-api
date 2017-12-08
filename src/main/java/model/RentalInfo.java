@@ -17,7 +17,7 @@ import javax.persistence.Embeddable;
  */
 @Embeddable @Access(AccessType.FIELD)
 public class RentalInfo implements Serializable {
-    private RentalType rentalType = RentalType.SHORT_TERM;
+
     private boolean subleasingAllowed;
     private double adminFee;
     private double securityDeposit;
@@ -30,13 +30,6 @@ public class RentalInfo implements Serializable {
     private boolean childDiscount;
     private double perExtraGuestCharge;
 
-    public RentalType getRentalType() {
-        return rentalType;
-    }
-
-    public void setRentalType(RentalType rentalType) {
-        this.rentalType = rentalType;
-    }
 
     public boolean isSubleasingAllowed() {
         return subleasingAllowed;

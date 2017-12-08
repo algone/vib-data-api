@@ -14,21 +14,11 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
         <!--Import Google Icon Font-->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 
-        <!-- Bootstrap core CSS -->
-        <!--link href="/assets/css/bootstrap.min.css" rel="stylesheet"/-->
-        <!-- Material Design Bootstrap -->
-        <!--link href="/assets/css/mdb.min.css" rel="stylesheet"/-->
-        <!-- Your custom styles (optional) -->
-        <!--link href="/assets/css/style.css" rel="stylesheet"/-->
-        <!--link rel='stylesheet' id='compiled.css-css'  href='https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled.min.css?ver=4.4.0' type='text/css' media='all' /-->
-        <!--link rel='stylesheet' id='style.css-css'  href='https://mdbootstrap.com/wp-content/themes/mdbootstrap4/style.css?ver=4.8.4' type='text/css' media='all' /-->
-        <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/css/materialize.css">
 
         <!-- CSS  -->
-
         <link href="../../assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
         <link href="../../assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
@@ -37,6 +27,9 @@
         <!--[if lt IE 9]>
           <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+
+        <style>
+        </style>
     </head>
     <body >
 
@@ -51,9 +44,9 @@
 
 
         <!-- JQuery -->
-        <!--script type="text/javascript" src="/assets/js/jquery-3.2.1.min.js"></script-->
-        <!-- Bootstrap tooltips -->
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="../../assets/js/jquery-3.2.1.min.js"></script>
+
+
         <script src="../../assets/js/materialize.js"></script>
         <script src="../../assets/js/init.js"></script>
 
@@ -63,20 +56,17 @@
             // Material Select Initialization
             $(document).ready(function () {
 
- $('.tabs').tabs();
+                $('.tabs').tabs();
                 $('select').select();
                 $('.fixed-action-btn').floatingActionButton({
                     direction: 'left'
                 });
 
-                $('.datepicker').pickadate({
-                    selectMonths: true, // Creates a dropdown to control month
-                    selectYears: 15, // Creates a dropdown of 15 years to control year,
-                    today: 'Today',
-                    clear: 'Clear',
-                    close: 'Ok',
-                    closeOnSelect: false // Close upon selecting a date,
-                });
+
+                $('.datepicker').datepicker({formatSubmit: 'YYYY-MM-DD',
+                    hiddenName: true});
+
+
             });
 
         </script>

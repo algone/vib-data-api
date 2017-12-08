@@ -32,7 +32,6 @@ public class UnitFeature implements Serializable {
     private boolean hasKitchen;
     private boolean hasInUnitWifi;
     private boolean hasRefridgerator;
-    private boolean hasFireplace;
     private boolean hasDishwasher;
     private boolean hasInUnitGym;
     private boolean hasVerandah;
@@ -149,15 +148,6 @@ public class UnitFeature implements Serializable {
     public void setHasRefridgerator(boolean hasRefridgerator) {
         this.hasRefridgerator = hasRefridgerator;
     }
-
-    public boolean isHasFireplace() {
-        return hasFireplace;
-    }
-
-    public void setHasFireplace(boolean hasFireplace) {
-        this.hasFireplace = hasFireplace;
-    }
-
     public boolean isHasDishwasher() {
         return hasDishwasher;
     }
