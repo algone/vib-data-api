@@ -37,6 +37,7 @@ import ninja.Results;
 
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import java.io.File;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,8 +67,13 @@ import model.UnitType;
 import ninja.Context;
 import ninja.ReverseRouter;
 import ninja.jpa.UnitOfWork;
+import ninja.params.Param;
+import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItem;
+import ninja.uploads.FileProvider;
+import org.apache.commons.io.FileUtils;
 
+@FileProvider(DiskFileItemProvider.class)
 @Singleton
 public class ApplicationController {
 
@@ -77,6 +83,7 @@ public class ApplicationController {
     Provider<EntityManager> entitiyManagerProvider;
 
     List<Unit> units = new ArrayList<>();
+    List<UnitImage> unitImages = new ArrayList<>();
 
     public Result index() {
 
@@ -146,15 +153,15 @@ public class ApplicationController {
             }
 
             if (key.matches("postDate")) {
-             
-                    vUnit.setDateOfPosting(context.getParameter(key));
+
+                vUnit.setDateOfPosting(context.getParameter(key));
 
             }
 
             if (key.matches("availableFrom")) {
-            
-                    vUnit.setDateAvailableFrom(context.getParameter(key));
- 
+
+                vUnit.setDateAvailableFrom(context.getParameter(key));
+
             }
             /*
             Amenities
@@ -235,6 +242,7 @@ public class ApplicationController {
                 vUnit.getRentalInfo().setChildDiscount(context.getParameter(key).contentEquals("on"));
             }
         }
+        vUnit.getUnitImages().addAll(unitImages);
         units.add(vUnit);
 //        return Results.json().render(units);
         return Results.noContent();
@@ -250,6 +258,25 @@ public class ApplicationController {
 
         return Results.json().render(guestbookEntries);
 
+    }
+
+    public Result uploadUnitImage(Context context,
+            @Param("unitImageFile") FileItem unitImageFile,
+            @Param("imageName") String imageName,
+            @Param("imageDescription") String imageDescription) throws Exception {
+
+        System.out.println("Working Directory = "
+                + System.getProperty("user.dir"));
+        File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
+
+        File destFile = new File(defDir, unitImageFile.getFileName());
+        FileUtils.copyFile(unitImageFile.getFile(), destFile);
+        UnitImage img = new UnitImage();
+        img.setImageUrl("assets/img/images/" + unitImageFile.getFileName());
+        img.setDescription(imageDescription);
+        unitImages.add(img);
+//        return Results.json().render(img);
+         return Results.noContent();
     }
 
     public Result createParentUnit(Context context) {
@@ -413,9 +440,10 @@ public class ApplicationController {
         }
         /*
         Add Pricing info
-        */
-        
+         */
+
         vpu.getRentalUnits().addAll(units);
+       
         units.clear();
         EntityManager entityManager = entitiyManagerProvider.get();
         entityManager.persist(vpu);
