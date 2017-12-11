@@ -1,1 +1,1 @@
-java $JAVA_OPTS -Dninja.mode=prod -jar target/dependency/jetty-runner.jar --port $PORT target/*.jar
+web: java $JAVA_OPTS -Dninja.port=$PORT -Dninja.mode=dev -jar target/*.jar
