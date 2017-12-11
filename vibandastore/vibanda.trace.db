@@ -1060,3 +1060,90 @@ org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic c
 org.h2.jdbc.JdbcSQLException: The object is already closed [90007-186]
 12-10 23:12:35 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: The object is already closed [90007-186]
+12-11 14:11:40 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: Writing to cache:nio:C:/Workspace/private/vibanda-data-api/vibandastore/vibanda.mv.db failed; length 4096 at 36864 [1.4.186/2]" [50000-186]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.message.DbException.convert(DbException.java:295)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.write(MVStore.java:776)
+	at org.h2.mvstore.MVStore.storeNowTry(MVStore.java:1118)
+	at org.h2.mvstore.MVStore.storeNow(MVStore.java:976)
+	at org.h2.mvstore.MVStore.commitAndSave(MVStore.java:965)
+	at org.h2.mvstore.MVStore.commit(MVStore.java:926)
+	at org.h2.mvstore.db.TransactionStore.close(TransactionStore.java:217)
+	at org.h2.mvstore.db.MVTableEngine$Store.close(MVTableEngine.java:341)
+	at org.h2.engine.Database.closeOpenFilesAndUnlock(Database.java:1359)
+	at org.h2.engine.Database.close(Database.java:1259)
+	at org.h2.engine.Database.removeSession(Database.java:1143)
+	at org.h2.engine.Session.close(Session.java:676)
+	at org.h2.jdbc.JdbcConnection.close(JdbcConnection.java:384)
+	at com.mchange.v2.c3p0.impl.NewPooledConnection.close(NewPooledConnection.java:629)
+	at com.mchange.v2.c3p0.impl.NewPooledConnection.closeMaybeCheckedOut(NewPooledConnection.java:259)
+	at com.mchange.v2.c3p0.impl.C3P0PooledConnectionPool$1PooledConnectionResourcePoolManager.destroyResource(C3P0PooledConnectionPool.java:619)
+	at com.mchange.v2.resourcepool.BasicResourcePool$1DestroyResourceTask.run(BasicResourcePool.java:1024)
+	at com.mchange.v2.resourcepool.BasicResourcePool.destroyResource(BasicResourcePool.java:1049)
+	at com.mchange.v2.resourcepool.BasicResourcePool.removeResource(BasicResourcePool.java:1507)
+	at com.mchange.v2.resourcepool.BasicResourcePool.removeResource(BasicResourcePool.java:1477)
+	at com.mchange.v2.resourcepool.BasicResourcePool.access$300(BasicResourcePool.java:44)
+	at com.mchange.v2.resourcepool.BasicResourcePool$1RefurbishCheckinResourceTask.run(BasicResourcePool.java:1342)
+	at com.mchange.v2.async.ThreadPoolAsynchronousRunner$PoolThread.run(ThreadPoolAsynchronousRunner.java:648)
+Caused by: org.h2.jdbc.JdbcSQLException: General error: "java.lang.IllegalStateException: Writing to cache:nio:C:/Workspace/private/vibanda-data-api/vibandastore/vibanda.mv.db failed; length 4096 at 36864 [1.4.186/2]" [50000-186]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	... 26 more
+Caused by: java.lang.IllegalStateException: Writing to cache:nio:C:/Workspace/private/vibanda-data-api/vibandastore/vibanda.mv.db failed; length 4096 at 36864 [1.4.186/2]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:773)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:466)
+	at org.h2.mvstore.FileStore.writeFully(FileStore.java:113)
+	at org.h2.mvstore.MVStore.write(MVStore.java:774)
+	... 21 more
+Caused by: java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.writeInternal(FileChannelImpl.java:783)
+	at sun.nio.ch.FileChannelImpl.write(FileChannelImpl.java:761)
+	at org.h2.store.fs.FileNio.write(FilePathNio.java:79)
+	at org.h2.mvstore.cache.FilePathCache$FileCache.write(FilePathCache.java:123)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:462)
+	... 23 more
+12-11 14:11:40 database: close
+org.h2.message.DbException: IO Exception: "Closing" [90028-186]
+	at org.h2.message.DbException.get(DbException.java:168)
+	at org.h2.mvstore.db.MVTableEngine$Store.close(MVTableEngine.java:362)
+	at org.h2.engine.Database.closeOpenFilesAndUnlock(Database.java:1359)
+	at org.h2.engine.Database.close(Database.java:1259)
+	at org.h2.engine.Database.removeSession(Database.java:1143)
+	at org.h2.engine.Session.close(Session.java:676)
+	at org.h2.jdbc.JdbcConnection.close(JdbcConnection.java:384)
+	at com.mchange.v2.c3p0.impl.NewPooledConnection.close(NewPooledConnection.java:629)
+	at com.mchange.v2.c3p0.impl.NewPooledConnection.closeMaybeCheckedOut(NewPooledConnection.java:259)
+	at com.mchange.v2.c3p0.impl.C3P0PooledConnectionPool$1PooledConnectionResourcePoolManager.destroyResource(C3P0PooledConnectionPool.java:619)
+	at com.mchange.v2.resourcepool.BasicResourcePool$1DestroyResourceTask.run(BasicResourcePool.java:1024)
+	at com.mchange.v2.resourcepool.BasicResourcePool.destroyResource(BasicResourcePool.java:1049)
+	at com.mchange.v2.resourcepool.BasicResourcePool.removeResource(BasicResourcePool.java:1507)
+	at com.mchange.v2.resourcepool.BasicResourcePool.removeResource(BasicResourcePool.java:1477)
+	at com.mchange.v2.resourcepool.BasicResourcePool.access$300(BasicResourcePool.java:44)
+	at com.mchange.v2.resourcepool.BasicResourcePool$1RefurbishCheckinResourceTask.run(BasicResourcePool.java:1342)
+	at com.mchange.v2.async.ThreadPoolAsynchronousRunner$PoolThread.run(ThreadPoolAsynchronousRunner.java:648)
+Caused by: org.h2.jdbc.JdbcSQLException: IO Exception: "Closing" [90028-186]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	... 17 more
+Caused by: java.lang.IllegalStateException: Writing to cache:nio:C:/Workspace/private/vibanda-data-api/vibandastore/vibanda.mv.db failed; length 4096 at 36864 [1.4.186/2]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:773)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:466)
+	at org.h2.mvstore.FileStore.writeFully(FileStore.java:113)
+	at org.h2.mvstore.MVStore.write(MVStore.java:774)
+	at org.h2.mvstore.MVStore.storeNowTry(MVStore.java:1118)
+	at org.h2.mvstore.MVStore.storeNow(MVStore.java:976)
+	at org.h2.mvstore.MVStore.commitAndSave(MVStore.java:965)
+	at org.h2.mvstore.MVStore.commit(MVStore.java:926)
+	at org.h2.mvstore.db.TransactionStore.close(TransactionStore.java:217)
+	at org.h2.mvstore.db.MVTableEngine$Store.close(MVTableEngine.java:341)
+	... 15 more
+Caused by: java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.writeInternal(FileChannelImpl.java:783)
+	at sun.nio.ch.FileChannelImpl.write(FileChannelImpl.java:761)
+	at org.h2.store.fs.FileNio.write(FilePathNio.java:79)
+	at org.h2.mvstore.cache.FilePathCache$FileCache.write(FilePathCache.java:123)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:462)
+	... 23 more
