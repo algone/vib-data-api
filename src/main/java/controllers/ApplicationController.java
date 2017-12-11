@@ -38,6 +38,7 @@ import ninja.Results;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,7 +61,7 @@ import model.RentalInfo;
 import model.RentalType;
 import model.Unit;
 import model.UnitFeature;
-import model.UnitImage;
+import model.VibandaImage;
 import model.UnitPrivacy;
 import model.UnitStyle;
 import model.UnitType;
@@ -83,7 +84,7 @@ public class ApplicationController {
     Provider<EntityManager> entitiyManagerProvider;
 
     List<Unit> units = new ArrayList<>();
-    List<UnitImage> unitImages = new ArrayList<>();
+    List<VibandaImage> unitImages = new ArrayList<>();
 
     public Result index() {
 
@@ -265,24 +266,28 @@ public class ApplicationController {
             @Param("imageName") String imageName,
             @Param("imageDescription") String imageDescription) throws Exception {
 
-        System.out.println("Working Directory = "
-                + System.getProperty("user.dir"));
-        File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
-
-        File destFile = new File(defDir, unitImageFile.getFileName());
-        FileUtils.copyFile(unitImageFile.getFile(), destFile);
-        UnitImage img = new UnitImage();
-        img.setImageUrl("assets/img/images/" + unitImageFile.getFileName());
-        img.setDescription(imageDescription);
+        VibandaImage img = saveImage(unitImageFile.getFile(), imageDescription);
         unitImages.add(img);
 //        return Results.json().render(img);
          return Results.noContent();
     }
 
+    private VibandaImage saveImage(File imageFile, String imageDescription) throws IOException {
+        System.out.println("Working Directory = "
+                + System.getProperty("user.dir"));
+        File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
+        File destFile = new File(defDir, imageFile.getName());
+        FileUtils.copyFile(imageFile, destFile);
+        VibandaImage img = new VibandaImage();
+        img.setImageUrl("assets/img/images/" + imageFile.getName());
+        img.setImageDescription(imageDescription);
+        return img;
+    }
+
     public Result createParentUnit(Context context) {
 
 //        EntityManager entityManager = entitiyManagerProvider.get();
-//        UnitImage img = new UnitImage();
+//        VibandaImage img = new VibandaImage();
 //        img.setDescription("Some nice image description");
 //        img.setImageUrl("https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg");
 //        entityManager.persist(img);
@@ -291,40 +296,35 @@ public class ApplicationController {
         parentUnit.setParentUnitAccessibility(new ParentUnitAccessibility());
         parentUnit.setParentUnitFacilities(new ParentUnitFacilities());
         parentUnit.setRentalUnits(new ArrayList<>());
-        parentUnit.setParentUnitImage(new ParentUnitImage());
+        parentUnit.setParentUnitImage(new VibandaImage());
 
         return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
     }
 
     @Transactional
-    public Result addImage(UnitImage image) {
+    public Result addImage(VibandaImage image) {
 
         System.out.println("In postRoute");
 
         EntityManager entityManager = entitiyManagerProvider.get();
-        UnitImage img = new UnitImage();
-        img.setDescription("Some nice image description");
+        VibandaImage img = new VibandaImage();
+        img.setImageDescription("Some nice image description");
         img.setImageUrl("https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg");
         entityManager.persist(img);
         return Results.json().render(img);
     }
 
     @Transactional
-    public Result addParentUnit(Context context) throws Exception {
-//        FileItem upfile = context.getParameterAsFileItem("puImage");
-//        Map<String, List<FileItem>> items = context.getParameterFileItems();
-//        items.entrySet().stream().map((entry) -> entry.getValue()).forEachOrdered((fItems) -> {
-//            for (FileItem fItem : fItems) {
-//                System.out.println("File: " + fItem.getFileName());
-//            }
-//        });
+    public Result addParentUnit(Context context,  @Param("parentUnitImage") FileItem parentUnitImage, @Param("imagedescription") String parentUnitImageDesc) throws Exception {
+        VibandaImage image = saveImage(parentUnitImage.getFile(), parentUnitImageDesc);
         Map<String, String[]> params = context.getParameters();
         ParentUnit vpu = new ParentUnit();
+        vpu.setParentUnitImage(image);
         vpu.setLocation(new Location());
         vpu.setParentUnitAccessibility(new ParentUnitAccessibility());
         vpu.setParentUnitFacilities(new ParentUnitFacilities());
         vpu.setRentalUnits(new ArrayList<>());
-        vpu.setParentUnitImage(new ParentUnitImage());
+    
 
         for (Map.Entry<String, String[]> entry : params.entrySet()) {
             String key = entry.getKey();

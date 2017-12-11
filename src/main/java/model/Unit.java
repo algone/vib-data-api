@@ -49,8 +49,9 @@ public class Unit implements Serializable {
 
     private String dateAvailableFrom;
     
-   @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    private List<UnitImage> unitImages=new ArrayList<>();
+//   @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+   @Embedded
+    private List<VibandaImage> unitImages=new ArrayList<>();
     @Embedded
     private UnitFeature unitFeature;
     @Embedded
@@ -174,11 +175,11 @@ public class Unit implements Serializable {
         this.unitFloorNumber = unitFloorNumber;
     }
 
-    public List<UnitImage> getUnitImages() {
+    public List<VibandaImage> getUnitImages() {
         return unitImages;
     }
 
-    public void setUnitImages(List<UnitImage> unitImages) {
+    public void setUnitImages(List<VibandaImage> unitImages) {
         this.unitImages = unitImages;
     }
 

@@ -41,10 +41,10 @@ public class ParentUnit implements Serializable {
     private ParentUnitAccessibility parentUnitAccessibility = new ParentUnitAccessibility();
 
     @Embedded
-    private ParentUnitImage parentUnitImage= new ParentUnitImage();
+    private VibandaImage parentUnitImage= new VibandaImage();
 
 
-    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+     @Embedded
     private List<Unit> rentalUnits = new ArrayList<>();
 
     public ParentUnit() {
@@ -86,13 +86,15 @@ public class ParentUnit implements Serializable {
         this.location = location;
     }
 
-    public ParentUnitImage getParentUnitImage() {
+    public VibandaImage getParentUnitImage() {
         return parentUnitImage;
     }
 
-    public void setParentUnitImage(ParentUnitImage parentUnitImage) {
+    public void setParentUnitImage(VibandaImage parentUnitImage) {
         this.parentUnitImage = parentUnitImage;
     }
+
+
 
     public ParentUnitAccessibility getParentUnitAccessibility() {
         return parentUnitAccessibility;
