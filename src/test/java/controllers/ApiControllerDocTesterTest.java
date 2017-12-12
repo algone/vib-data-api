@@ -41,6 +41,7 @@ import org.doctester.testbrowser.Response;
 import org.hamcrest.CoreMatchers;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 
 public class ApiControllerDocTesterTest extends NinjaDocTester {
     
@@ -61,6 +62,7 @@ public class ApiControllerDocTesterTest extends NinjaDocTester {
     }
     
     @Test
+    @Ignore
     public void testGetHelloWorldJson() {
     
         Response response = makeRequest(

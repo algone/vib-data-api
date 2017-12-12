@@ -26,13 +26,12 @@ public class Routes implements ApplicationRoutes {
     public void init(Router router) {
 
         router.GET().route("/").with(ApplicationController::index);
-        router.GET().route("/hello_world.json").with(ApplicationController::helloWorldJson);
-        router.POST().route("/add").with(ApplicationController::addParentUnit);
+        router.POST().route("/addParent").with(ApplicationController::addParent);
         router.POST().route("/addUnit").with(ApplicationController::addUnit);
-        router.POST().route("/uploadUnitImage").with(ApplicationController::uploadUnitImage);
-        router.GET().route("/persistImage").with(ApplicationController::addImage);
+        router.POST().route("/uploadImage").with(ApplicationController::uploadUnitImage);
+
         router.GET().route("/create").with(ApplicationController::createParentUnit);
-        router.GET().route("/list_units").with(ApplicationController::getParentUnits);
+        router.GET().route("/listAll").with(ApplicationController::listAll);
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

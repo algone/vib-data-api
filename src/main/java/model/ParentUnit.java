@@ -32,6 +32,7 @@ public class ParentUnit implements Serializable {
     private UnitStyle style = UnitStyle.FAMILY;
     private int numOfUnits = 0;
     private int numOfFloors = 0;
+    private boolean ecorated;
 
     @Embedded
     private ParentUnitFacilities parentUnitFacilities= new ParentUnitFacilities();
@@ -134,6 +135,14 @@ public class ParentUnit implements Serializable {
 
     public void setParentUnitFacilities(ParentUnitFacilities parentUnitFacilities) {
         this.parentUnitFacilities = parentUnitFacilities;
+    }
+
+    public boolean isEcorated() {
+        return ecorated;
+    }
+
+    public void setEcorated(boolean ecorated) {
+        this.ecorated = ecorated;
     }
 
 }

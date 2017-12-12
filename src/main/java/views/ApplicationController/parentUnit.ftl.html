@@ -1,4 +1,4 @@
-<div class="section">
+<div class="card-panel hoverable"> 
 
     <div class="row">
         <div class="input-field col s6">
@@ -7,16 +7,22 @@
             <label for="unitname" data-error="wrong" data-success="right">Parent unit name</label>
 
         </div>
-        <div class=" input-field col s6">
+        <div class=" input-field col s3">
             <select id="style" name="style" >
                 <option value="" disabled selected>Choose unit style</option>
                 <option value="FAMILY">FAMILY</option>
-                <option value="ECO_RATED">ECO_RATED</option>
                 <option value="BEACH">BEACH</option>
                 <option value="ROMANTIC">ROMANTIC</option>
                 <option value="BUSINESS">BUSINESS</option>
                 <option value="SPORT">SPORT</option>
             </select>
+        </div>
+        <div class="col s3">
+            <label for="ecorated">
+                <input type="checkbox" id="ecorated" name="ecorated" >
+                <span>ECO RATED</span>
+            </label>
+
         </div>
     </div>
     <div class="row">
@@ -29,17 +35,17 @@
         <div class="file-field input-field col s6">
 
             <div class="btn">
-                <span>Image</span>
+                <span>Add Image</span>
                 <input type="file" name="parentUnitImage">
             </div>
             <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" name="imageName">
+                <input class="file-path validate" type="text" name="puImageName">
             </div>
 
         </div>
         <div class=" input-field col s6">
-            <textarea id="imagedescription" class="materialize-textarea" name="imagedescription"></textarea>
-            <label for="imagedescription">Image description</label>
+            <textarea id="puImageDescription" class="materialize-textarea" name="puImageDescription"></textarea>
+            <label for="puImageDescription">Image description</label>
         </div>
     </div>
     <div class="row">
@@ -77,43 +83,33 @@
 
 
     </div>     
-
+</div>
+<div class="card-panel hoverable"> 
+    <h5>Facilities</h5>
+    <br/>
     <div class="row">
-
-        <!--First column-->
         <div class="col s3">
             <label for="wifi">
                 <input type="checkbox" id="wifi" name="wifi" >
                 <span>Wifi</span>
             </label>
-
         </div>
-
-        <!--Second column-->
         <div class="col s3">
-
             <label for="cable"><input type="checkbox" id="cable" name="cable" >
                 <span>Cable</span></label>
-
         </div>
-
-        <!--Third column-->
         <div class="col s3">
-
             <label for="fitnesscentre"><input type="checkbox" id="fitnesscentre" name="fitnessCentre" >
                 <span>Fitness Center</span>
             </label>
-
         </div>
         <div class="col s3">
             <label for="swimmingpool">
                 <input type="checkbox" id="swimmingpool" name="swimmingPool" >
                 <span>Swimming Pool</span>
             </label>
-
         </div>
     </div> 
-
     <div class="row">
 
         <!--First column-->
@@ -184,84 +180,85 @@
 
         </div>
     </div>  
-
-    <div class="section">
-        <h5>Location</h5>
-        <div class="row">
-            <div class="input-field col s12">
-                <i class="fa fa-map prefix"></i>
-                <input type="text" id="fulladdress" class="materialize-textarea" name="address" >
-                <label for="fulladdress" class="">Full street address</label>
-            </div>
+</div>
+<div class="card-panel hoverable"> 
+    <h5>Location</h5>
+    <div class="row">       
+        <div class="input-field col s6">  
+            <input type="text" id="street" class="validate" name="street" >
+            <label for="street" data-error="wrong" data-success="right">Street and number</label>
         </div>
-        <div class="row">
-
-            <div class="input-field col s4">
-                <input type="text" id="street" class="validate" name="street" >
-                <label for="street" data-error="wrong" data-success="right">Street and number</label>
-            </div>
-            <div class="input-field col s4">  
-                <input type="text" id="city" class="validate" name="city" >
-                <label for="city" data-error="wrong" data-success="right">City </label>
-            </div>
-            <div class="input-field col s4">
-                <input type="text" id="county" class="validate" name="county" >
-                <label for="county" data-error="wrong" data-success="right">County</label>
-            </div>
+        <div class="input-field col s6">
+            <input type="text" id="fulladdress" class="materialize-textarea" name="address" >
+            <label for="fulladdress" class="">Address2</label>
         </div>
+
     </div>
-    <div class="section">
-        <h5>Unit Accessibility</h5>
-        <div class="row">
-
-            <div class="col s4">
-                <label for="hasschools">
-                    <input type="checkbox" id="hasschools" name="hasSchools" >
-                    <span> School</span></label>
-
-            </div>
-
-            <div class="col s4">
-                <label for="hasparks">
-                    <input type="checkbox" id="hasparks"  name="hasParks" >
-                    <span>Children park</span></label>
-
-            </div>
-
-            <div class="col s4">
-                <label for="hasbanks"> <input type="checkbox" id="hasbanks" name="hasBanks" >
-                    <span>Bank</span></label>
-
-            </div>
-
-        </div> 
-
-        <div class="row">
-
-            <div class="col s4">
-                <label for="grocery">
-                    <input type="checkbox" id="grocery" name="hasGroceryStore" >
-                    <span>Grocery Store</span></label>
-
-            </div>
-
-            <!--Second column-->
-            <div class="col s4">
-                <label for="publictransport"><input type="checkbox" id="publictransport" name="publicTransport" >
-                    <span>Public transport</span></label>
-            </div>
-
-            <!--Third column-->
-            <div class="col s4">
-                <label for="airport"> <input type="checkbox" id="airport" name="hasAirport" >
-                    <span>Airport</span></label>
-            </div>
-
-        </div> 
-
-
-        <div class="text-center">
-            <button class="btn-floating peach-gradient btn-lg" >Add</button>
+    <div class="row">
+        <div class="input-field col s6">  
+            <input type="text" id="city" class="validate" name="city" >
+            <label for="city" data-error="wrong" data-success="right">City </label>
+        </div>
+        <div class="input-field col s6">
+            <input type="text" id="county" class="validate" name="county" >
+            <label for="county" data-error="wrong" data-success="right">County</label>
         </div>
     </div>
 </div>
+<div class="card-panel hoverable"> 
+    <h5>Unit Accessibility</h5>
+    <div class="row">
+
+        <div class="col s4">
+            <label for="hasschools">
+                <input type="checkbox" id="hasschools" name="hasSchools" >
+                <span> School</span></label>
+
+        </div>
+
+        <div class="col s4">
+            <label for="hasparks">
+                <input type="checkbox" id="hasparks"  name="hasParks" >
+                <span>Children park</span></label>
+
+        </div>
+
+        <div class="col s4">
+            <label for="hasbanks"> <input type="checkbox" id="hasbanks" name="hasBanks" >
+                <span>Bank</span></label>
+
+        </div>
+
+    </div> 
+
+    <div class="row">
+
+        <div class="col s4">
+            <label for="grocery">
+                <input type="checkbox" id="grocery" name="hasGroceryStore" >
+                <span>Grocery Store</span></label>
+
+        </div>
+
+        <!--Second column-->
+        <div class="col s4">
+            <label for="publictransport"><input type="checkbox" id="publictransport" name="publicTransport" >
+                <span>Public transport</span></label>
+        </div>
+
+        <!--Third column-->
+        <div class="col s4">
+            <label for="airport"> <input type="checkbox" id="airport" name="hasAirport" >
+                <span>Airport</span></label>
+        </div>
+
+    </div> 
+
+</div>
+<!--div class="text-center">
+    <button class="btn-floating peach-gradient btn-lg" >Add</button>
+</div-->
+<button class="btn waves-effect waves-light right" type="submit">Add Parent Unit
+    <i class="material-icons right">send</i>
+</button>
+

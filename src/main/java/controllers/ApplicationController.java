@@ -39,16 +39,9 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import model.FurnishingType;
@@ -56,7 +49,6 @@ import model.Location;
 import model.ParentUnit;
 import model.ParentUnitAccessibility;
 import model.ParentUnitFacilities;
-import model.ParentUnitImage;
 import model.RentalInfo;
 import model.RentalType;
 import model.Unit;
@@ -89,16 +81,6 @@ public class ApplicationController {
     public Result index() {
 
         return Results.html();
-
-    }
-
-    public Result helloWorldJson() {
-
-        ParentUnit pu = new ParentUnit();
-
-        pu.getRentalUnits().add(new Unit());
-
-        return Results.json().render(pu);
 
     }
 
@@ -244,79 +226,17 @@ public class ApplicationController {
             }
         }
         vUnit.getUnitImages().addAll(unitImages);
+        unitImages.clear();
         units.add(vUnit);
-//        return Results.json().render(units);
+        
         return Results.noContent();
     }
 
-    @UnitOfWork
-    public Result getParentUnits(Context context) {
-
-        EntityManager entityManager = entitiyManagerProvider.get();
-
-        Query q = entityManager.createQuery("SELECT x FROM ParentUnit x");
-        List<ParentUnit> guestbookEntries = (List<ParentUnit>) q.getResultList();
-
-        return Results.json().render(guestbookEntries);
-
-    }
-
-    public Result uploadUnitImage(Context context,
-            @Param("unitImageFile") FileItem unitImageFile,
-            @Param("imageName") String imageName,
-            @Param("imageDescription") String imageDescription) throws Exception {
-
-        VibandaImage img = saveImage(unitImageFile.getFile(), imageDescription);
-        unitImages.add(img);
-//        return Results.json().render(img);
-         return Results.noContent();
-    }
-
-    private VibandaImage saveImage(File imageFile, String imageDescription) throws IOException {
-        System.out.println("Working Directory = "
-                + System.getProperty("user.dir"));
-        File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
-        File destFile = new File(defDir, imageFile.getName());
-        FileUtils.copyFile(imageFile, destFile);
-        VibandaImage img = new VibandaImage();
-        img.setImageUrl("assets/img/images/" + imageFile.getName());
-        img.setImageDescription(imageDescription);
-        return img;
-    }
-
-    public Result createParentUnit(Context context) {
-
-//        EntityManager entityManager = entitiyManagerProvider.get();
-//        VibandaImage img = new VibandaImage();
-//        img.setDescription("Some nice image description");
-//        img.setImageUrl("https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg");
-//        entityManager.persist(img);
-        ParentUnit parentUnit = new ParentUnit();
-        parentUnit.setLocation(new Location());
-        parentUnit.setParentUnitAccessibility(new ParentUnitAccessibility());
-        parentUnit.setParentUnitFacilities(new ParentUnitFacilities());
-        parentUnit.setRentalUnits(new ArrayList<>());
-        parentUnit.setParentUnitImage(new VibandaImage());
-
-        return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
-    }
-
     @Transactional
-    public Result addImage(VibandaImage image) {
-
-        System.out.println("In postRoute");
-
-        EntityManager entityManager = entitiyManagerProvider.get();
-        VibandaImage img = new VibandaImage();
-        img.setImageDescription("Some nice image description");
-        img.setImageUrl("https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg");
-        entityManager.persist(img);
-        return Results.json().render(img);
-    }
-
-    @Transactional
-    public Result addParentUnit(Context context,  @Param("parentUnitImage") FileItem parentUnitImage, @Param("imagedescription") String parentUnitImageDesc) throws Exception {
-        VibandaImage image = saveImage(parentUnitImage.getFile(), parentUnitImageDesc);
+    public Result addParent(Context context,
+            @Param("parentUnitImage") FileItem parentUnitImage,
+            @Param("puImageDescription") String parentUnitImageDesc) throws Exception {
+        VibandaImage image = saveImage(parentUnitImage, parentUnitImageDesc);
         Map<String, String[]> params = context.getParameters();
         ParentUnit vpu = new ParentUnit();
         vpu.setParentUnitImage(image);
@@ -324,8 +244,9 @@ public class ApplicationController {
         vpu.setParentUnitAccessibility(new ParentUnitAccessibility());
         vpu.setParentUnitFacilities(new ParentUnitFacilities());
         vpu.setRentalUnits(new ArrayList<>());
-    
 
+        //Clear units
+       
         for (Map.Entry<String, String[]> entry : params.entrySet()) {
             String key = entry.getKey();
 
@@ -348,6 +269,9 @@ public class ApplicationController {
             }
             if (key.matches("numOfFloors")) {
                 vpu.setNumOfFloors(Integer.parseInt(context.getParameter(key)));
+            }
+            if (key.matches("ecorated")) {
+                vpu.setDescription(context.getParameter(key));
             }
             /*
             Parent Unit Facilities
@@ -386,7 +310,6 @@ public class ApplicationController {
             if (key.matches("lift")) {
                 vpu.getParentUnitFacilities().setLift(context.getParameter(key).contentEquals("on"));
             }
-
 
             /*
             Location Params
@@ -441,14 +364,36 @@ public class ApplicationController {
         /*
         Add Pricing info
          */
-
         vpu.getRentalUnits().addAll(units);
-       
-        units.clear();
+      
         EntityManager entityManager = entitiyManagerProvider.get();
         entityManager.persist(vpu);
+         units.clear();
         return Results.html().template("views/ApplicationController/index.ftl.html");
 
+    }
+
+    @UnitOfWork
+    public Result listAll(Context context) {
+
+        EntityManager entityManager = entitiyManagerProvider.get();
+
+        Query q = entityManager.createQuery("SELECT pu FROM ParentUnit pu");
+        List<ParentUnit> vpus = (List<ParentUnit>) q.getResultList();
+
+        return Results.json().render(vpus);
+
+    }
+
+    public Result uploadUnitImage(Context context,
+            @Param("unitImageFile") FileItem unitImageFile,
+            @Param("imageName") String imageName,
+            @Param("imageDescription") String imageDescription) throws Exception {
+
+        VibandaImage img = saveImage(unitImageFile, imageDescription);
+        unitImages.add(img);
+//        return Results.json().render(img);
+        return Results.noContent();
     }
 
     @Transactional
@@ -457,18 +402,6 @@ public class ApplicationController {
 //        entityManager.persist(parentUnit);
 //        return Results.html().template("views/ApplicationController/index.ftl.html").render("vpus", allPUs);
         return Results.json().render(parent);
-    }
-
-    @UnitOfWork
-    public List<ParentUnit> getAllParentUnits() {
-
-        EntityManager entityManager = entitiyManagerProvider.get();
-
-        Query q = entityManager.createQuery("SELECT pu FROM ParentUnit pu");
-        List<ParentUnit> vpus = (List<ParentUnit>) q.getResultList();
-
-        return vpus;
-
     }
 
     @UnitOfWork
@@ -481,4 +414,28 @@ public class ApplicationController {
         return vpu;
 
     }
+
+    private VibandaImage saveImage(FileItem imageFile, String imageDescription) throws IOException {
+        System.out.println("Working Directory = "
+                + System.getProperty("user.dir"));
+        File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
+        File destFile = new File(defDir, imageFile.getFileName());
+        FileUtils.copyFile(imageFile.getFile(), destFile);
+        VibandaImage img = new VibandaImage();
+        img.setImageUrl("assets/img/images/" + imageFile.getFileName());
+        img.setImageDescription(imageDescription);
+        return img;
+    }
+
+    public Result createParentUnit(Context context) {
+        ParentUnit parentUnit = new ParentUnit();
+        parentUnit.setLocation(new Location());
+        parentUnit.setParentUnitAccessibility(new ParentUnitAccessibility());
+        parentUnit.setParentUnitFacilities(new ParentUnitFacilities());
+        parentUnit.setRentalUnits(new ArrayList<>());
+        parentUnit.setParentUnitImage(new VibandaImage());
+
+        return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
+    }
+
 }
