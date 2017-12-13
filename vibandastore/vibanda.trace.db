@@ -1234,3 +1234,6 @@ Caused by: java.nio.channels.ClosedByInterruptException
 	at org.h2.mvstore.cache.FilePathCache$FileCache.write(FilePathCache.java:123)
 	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:462)
 	... 23 more
+12-13 10:41:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "RENTALUNITS BINARY(255)": "X'aced0005737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a657870000000017704000000017372000a6d6f... (1757)"; SQL statement:
+insert into PARENT_UNIT (parentId, description, ecorated, address, city, country, countyName, estate, lat, lon, streetName, subCountyName, numOfFloors, numOfUnits, hasATM, hasAirport, hasBanks, hasGroceryStore, hasParks, hasSchools, publicTransportStation, cable, fitnessCentre, intercomFacilities, laundry, lift, mainDoorSecurity, perimeterWall, powerBackup, swimmingPool, wheelchairAccessibility, wifi, parentUnitImage_id, rentalUnits, style, unitName) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-186]

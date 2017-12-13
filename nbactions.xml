@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-ninja:run</actionName>
+            <displayName>ninja:run</displayName>
+            <goals>
+                <goal>ninja:run</goal>
+            </goals>
+        </action>
+    </actions>

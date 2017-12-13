@@ -16,52 +16,57 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
+import javax.persistence.Table;
 
 /**
  *
  * @author A4372949
  */
 @Entity
+@Table(name = "UNITS")
 public class Unit implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long unitId;
     private String unitHeading;
     private String unitDescription;
     private String postedBy;
     private int numOfBedrooms;
     private int numOfBathrooms;
     private int numOfBalconies;
-    private int unitNumber; 
+    private int unitNumber;
     private int unitFloorNumber;
     private boolean active;
-    
+
     private RentalType rentalType = RentalType.SHORT_TERM;
     private UnitType unitType = UnitType.APARTMENT;
     private UnitPrivacy privacy = UnitPrivacy.ENTIRE_HOME;
-    private FurnishingType furnishing = FurnishingType.UNFURNISHED;    
-
+    private FurnishingType furnishing = FurnishingType.UNFURNISHED;
 
     private String dateOfPosting;
 
     private String dateAvailableFrom;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "unit")
+    private List<VibandaImage> unitImages = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_parentUnit")
+    private ParentUnit parentUnit;
     
-//   @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-   @Embedded
-    private List<VibandaImage> unitImages=new ArrayList<>();
     @Embedded
     private UnitFeature unitFeature;
     @Embedded
     private RentalInfo rentalInfo;
-    
 
-
-    public Long getId() {
-        return id;
+    public Long getUnitId() {
+        return unitId;
     }
+
     public RentalType getRentalType() {
         return rentalType;
     }
@@ -142,7 +147,6 @@ public class Unit implements Serializable {
         this.dateAvailableFrom = dateAvailableFrom;
     }
 
-
     public String getPostedBy() {
         return postedBy;
     }
@@ -205,6 +209,14 @@ public class Unit implements Serializable {
 
     public void setFurnishing(FurnishingType furnishing) {
         this.furnishing = furnishing;
+    }
+
+    public ParentUnit getParentUnit() {
+        return parentUnit;
+    }
+
+    public void setParentUnit(ParentUnit parentUnit) {
+        this.parentUnit = parentUnit;
     }
 
 }

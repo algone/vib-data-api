@@ -32,6 +32,7 @@ public class Routes implements ApplicationRoutes {
 
         router.GET().route("/create").with(ApplicationController::createParentUnit);
         router.GET().route("/listAll").with(ApplicationController::listAll);
+        router.GET().route("/api/listUnits").with(ApplicationController::findAllUnits);
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

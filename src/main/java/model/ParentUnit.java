@@ -15,44 +15,50 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author A4372949
  */
 @Entity
+@Table(name = "PARENT_UNIT")
 public class ParentUnit implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    private String unitName="";
-    private String description="";
+    Long parentId;
+    private String unitName = "";
+    private String description = "";
     private UnitStyle style = UnitStyle.FAMILY;
     private int numOfUnits = 0;
     private int numOfFloors = 0;
     private boolean ecorated;
 
     @Embedded
-    private ParentUnitFacilities parentUnitFacilities= new ParentUnitFacilities();
+    private ParentUnitFacilities parentUnitFacilities = new ParentUnitFacilities();
     @Embedded
     private Location location;
     @Embedded
     private ParentUnitAccessibility parentUnitAccessibility = new ParentUnitAccessibility();
 
+
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id")
     @Embedded
-    private VibandaImage parentUnitImage= new VibandaImage();
+    private ParentUnitImage parentUnitImage = new ParentUnitImage();
 
-
-     @Embedded
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+     @JoinColumn(name = "fk_parentUnit")
     private List<Unit> rentalUnits = new ArrayList<>();
 
     public ParentUnit() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getParentId() {
+        return parentId;
     }
 
     public String getDescription() {
@@ -87,15 +93,13 @@ public class ParentUnit implements Serializable {
         this.location = location;
     }
 
-    public VibandaImage getParentUnitImage() {
+    public ParentUnitImage getParentUnitImage() {
         return parentUnitImage;
     }
 
-    public void setParentUnitImage(VibandaImage parentUnitImage) {
+    public void setParentUnitImage(ParentUnitImage parentUnitImage) {
         this.parentUnitImage = parentUnitImage;
     }
-
-
 
     public ParentUnitAccessibility getParentUnitAccessibility() {
         return parentUnitAccessibility;
