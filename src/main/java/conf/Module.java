@@ -19,7 +19,6 @@ package conf;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItemProvider;
 import ninja.uploads.MemoryFileItemProvider;
 
@@ -32,6 +31,7 @@ public class Module extends AbstractModule {
         
         // bind your injections here!
         bind(FileItemProvider.class).to(MemoryFileItemProvider.class);
+        
   
     }
 

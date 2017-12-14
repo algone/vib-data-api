@@ -25,9 +25,6 @@ public class JavaSimpleExample {
     public static void main(String[] args) {
 
         // Create seed data
-        System.getProperties().put("http.proxyHost", "10.151.249.76");
-        System.getProperties().put("http.proxyPort", "8080");
-        System.setProperty("java.net.useSystemProxies", "true");
         List<Document> seedData = new ArrayList<Document>();
 
         seedData.add(new Document("decade", "1970s")
@@ -50,7 +47,7 @@ public class JavaSimpleExample {
 
         // Standard URI format: mongodb://[dbuser:dbpassword@]host:port/dbname
         //mongodb://<dbuser>:<dbpassword>@ds039020.mlab.com:39020/mongolab-amazon-vibanda
-        MongoClientURI uri = new MongoClientURI("mongodb://algone:life4rent#@ds039020.mlab.com:39020/mongolab-amazon-vibanda");
+        MongoClientURI uri = new MongoClientURI("mongodb://vibanda_mvp:iV72pq7Y!R@ds039020.mlab.com:39020/mongolab-amazon-vibanda");
         MongoClient client = new MongoClient(uri);
 
 //        client.
@@ -60,7 +57,7 @@ public class JavaSimpleExample {
          * First we'll add a few songs. Nothing is required to create the
          * songs collection; it is created automatically when we insert.
          */
-        MongoCollection<Document> songs = db.getCollection("rentals");
+        MongoCollection<Document> songs = db.getCollection("vibandalisting");
 
         // Note that the insert method can take either an array or a document.
         try {
@@ -99,7 +96,7 @@ public class JavaSimpleExample {
         }
 
         // Since this is an example, we'll clean up after ourselves.
-        songs.drop();
+//        songs.drop();
 
         // Only close the connection when your app is terminating
         client.close();

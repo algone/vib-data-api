@@ -37,6 +37,8 @@ import ninja.Results;
 
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoIterable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,6 +60,8 @@ import model.VibandaImage;
 import model.UnitPrivacy;
 import model.UnitStyle;
 import model.UnitType;
+import net.binggl.ninja.mongodb.MongoDB;
+
 import ninja.Context;
 import ninja.ReverseRouter;
 import ninja.jpa.UnitOfWork;
@@ -66,31 +70,35 @@ import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItem;
 import ninja.uploads.FileProvider;
 import org.apache.commons.io.FileUtils;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
+import org.mongodb.morphia.Morphia;
 
 @FileProvider(DiskFileItemProvider.class)
 @Singleton
 public class ApplicationController {
-    
+
     @Inject
     ReverseRouter reverseRouter;
     @Inject
     Provider<EntityManager> entitiyManagerProvider;
-    
+
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
-    
+    private MongoDB mongoDB;
+
     public Result index() {
-        
+
         return Results.html();
-        
+
     }
-    
+
     public Result addUnit(Context context) {
         Map<String, String[]> params = context.getParameters();
         Unit vUnit = new Unit();
         vUnit.setUnitFeature(new UnitFeature());
         vUnit.setRentalInfo(new RentalInfo());
-        
+
         for (Map.Entry<String, String[]> entry : params.entrySet()) {
             String key = entry.getKey();
             if (key.matches("unitHeading")) {
@@ -135,17 +143,17 @@ public class ApplicationController {
             if (key.matches("stuff")) {
                 vUnit.setNumOfBedrooms(Integer.parseInt(context.getParameter(key)));
             }
-            
+
             if (key.matches("postDate")) {
-                
+
                 vUnit.setDateOfPosting(context.getParameter(key));
-                
+
             }
-            
+
             if (key.matches("availableFrom")) {
-                
+
                 vUnit.setDateAvailableFrom(context.getParameter(key));
-                
+
             }
             /*
             Amenities
@@ -196,7 +204,7 @@ public class ApplicationController {
             if (key.matches("currencyType")) {
                 vUnit.getRentalInfo().setCurrencyType(context.getParameter(key));
             }
-            
+
             if (key.matches("shortTermRentalPrice")) {
                 vUnit.getRentalInfo().setShortTermRentalPrice(Integer.parseInt(context.getParameter(key)));
             }
@@ -212,7 +220,7 @@ public class ApplicationController {
             if (key.matches("securityDeposit")) {
                 vUnit.getRentalInfo().setSecurityDeposit(Integer.parseInt(context.getParameter(key)));
             }
-            
+
             if (key.matches("subleasingAllowed")) {
                 vUnit.getRentalInfo().setSubleasingAllowed(context.getParameter(key).contentEquals("on"));
             }
@@ -232,7 +240,7 @@ public class ApplicationController {
         return Results.noContent();
 //        return Results.json().render(units);
     }
-    
+
     @Transactional
     public Result addParent(Context context,
             @Param("parentUnitImage") FileItem parentUnitImage,
@@ -249,7 +257,7 @@ public class ApplicationController {
         //Clear units
         for (Map.Entry<String, String[]> entry : params.entrySet()) {
             String key = entry.getKey();
-            
+
             System.out.println(key + ": " + context.getParameter(key));
 
             /*
@@ -276,7 +284,7 @@ public class ApplicationController {
             /*
             Parent Unit Facilities
              */
-            
+
             if (key.matches("wifi")) {
                 vpu.getParentUnitFacilities().setWifi(context.getParameter(key).contentEquals("on"));
             }
@@ -332,74 +340,78 @@ public class ApplicationController {
              */
             if (key.matches("hasBanks")) {
                 vpu.getParentUnitAccessibility().setHasBanks(context.getParameter(key).contentEquals("on"));
-                
+
             }
-            
+
             if (key.matches("hasAirport")) {
                 vpu.getParentUnitAccessibility().setHasAirport(context.getParameter(key).contentEquals("on"));
-                
+
             }
             if (key.matches("publicTransport")) {
                 vpu.getParentUnitAccessibility().setPublicTransportStation(context.getParameter(key).contentEquals("on"));
-                
+
             }
             if (key.matches("hasSchools")) {
                 vpu.getParentUnitAccessibility().setHasSchools(context.getParameter(key).contentEquals("on"));
-                
+
             }
             if (key.matches("hasATM")) {
                 vpu.getParentUnitAccessibility().setHasATM(context.getParameter(key).contentEquals("on"));
-                
+
             }
             if (key.matches("hasParks")) {
                 vpu.getParentUnitAccessibility().setHasParks(context.getParameter(key).contentEquals("on"));
-                
+
             }
             if (key.matches("hasGroceryStore")) {
                 vpu.getParentUnitAccessibility().setHasGroceryStore(context.getParameter(key).contentEquals("on"));
-                
+
             }
-            
+
         }
         /*
         Add Pricing info
          */
         vpu.getRentalUnits().addAll(units);
-        
+
         EntityManager entityManager = entitiyManagerProvider.get();
         entityManager.persist(vpu);
         units.clear();
+                Morphia morphia = this.mongoDB.getMorphia();
+        
+        morphia.mapPackage("model");
+        Datastore ds = this.mongoDB.getDatastore();
+                 
+
+         ds.save(vpu);
 //        return Results.html().template("views/ApplicationController/index.ftl.html");
         return Results.json().render(vpu);
-        
+
     }
-    
+
     @UnitOfWork
     public Result listAll(Context context) {
-        
+
         EntityManager entityManager = entitiyManagerProvider.get();
-        
+
         Query q = entityManager.createQuery("SELECT pu FROM ParentUnit pu");
         List<ParentUnit> vpus = (List<ParentUnit>) q.getResultList();
-        System.out.println("JSON:"+Results.json().render(vpus));
+        System.out.println("JSON:" + Results.json().render(vpus));
         return Results.json().render(vpus);
-        
+
     }
-    
+
     public Result uploadUnitImage(Context context,
             @Param("unitImageFile") FileItem unitImageFile,
             @Param("imageName") String imageName,
             @Param("imageDescription") String imageDescription) throws Exception {
-        
-        
-        
-        
+
         VibandaImage img = saveUnitImage(unitImageFile, imageDescription);
         unitImages.add(img);
 //        return Results.json().render(img);
         return Results.noContent();
     }
-    
+
     @Transactional
     public Result add(Context context, ParentUnit parent) {
         EntityManager entityManager = entitiyManagerProvider.get();
@@ -407,32 +419,33 @@ public class ApplicationController {
 //        return Results.html().template("views/ApplicationController/index.ftl.html").render("vpus", allPUs);
         return Results.json().render(parent);
     }
-    
+
     @UnitOfWork
     public ParentUnit findParentUnit(String unitName) {
-        
+
         EntityManager entityManager = entitiyManagerProvider.get();
         Query q = entityManager.createQuery("SELECT pu.unitName FROM ParentUnit pu WHERE pu.unitName LIKE '%" + unitName + "%'");
         //TypedQuery<Item> q = em.createQuery("SELECT i FROM Item i JOIN FETCH i.order", Item.class);
 
         ParentUnit vpu = (ParentUnit) q.getSingleResult();
-        
+
         return vpu;
-        
+
     }
-    
-        @UnitOfWork
+
+    @UnitOfWork
     public Result findAllUnits(Long id) {
-        
+
         EntityManager entityManager = entitiyManagerProvider.get();
         //List<Item> items = em.createQuery("SELECT i FROM Item i JOIN FETCH i.order", Item.class).getResultList();
         Query q = entityManager.createQuery("SELECT u FROM Unit u JOIN FETCH u.parentUnit", Unit.class);
-       List<Unit> units = (List<Unit>) q.getResultList();
-        
+        List<Unit> units = (List<Unit>) q.getResultList();
+
         return Results.json().render(units);
-        
+
     }
-      private ParentUnitImage saveParentImage(FileItem imageFile, String imageDescription) throws IOException {
+
+    private ParentUnitImage saveParentImage(FileItem imageFile, String imageDescription) throws IOException {
         File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
         File destFile = new File(defDir, imageFile.getFileName());
         FileUtils.copyFile(imageFile.getFile(), destFile);
@@ -440,7 +453,8 @@ public class ApplicationController {
         img.setImageUrl("assets/img/images/" + imageFile.getFileName());
         img.setImageDescription(imageDescription);
         return img;
-    }  
+    }
+
     private VibandaImage saveUnitImage(FileItem imageFile, String imageDescription) throws IOException {
         System.out.println("Working Directory = "
                 + System.getProperty("user.dir"));
@@ -452,7 +466,7 @@ public class ApplicationController {
         img.setImageDescription(imageDescription);
         return img;
     }
-    
+
     public Result createParentUnit(Context context) {
         ParentUnit parentUnit = new ParentUnit();
         parentUnit.setLocation(new Location());
@@ -460,8 +474,34 @@ public class ApplicationController {
         parentUnit.setParentUnitFacilities(new ParentUnitFacilities());
         parentUnit.setRentalUnits(new ArrayList<>());
         parentUnit.setParentUnitImage(new ParentUnitImage());
+
+//        MongoClient client = this.mongoDB.getMongoClient();
+//        MongoIterable<String> dbs = client.getDatabase("").;
         
-        return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
-    }
+//        Datastore ds = this.mongoDB.getDatastore();
+        Morphia morphia = this.mongoDB.getMorphia();
+        
+//        morphia.mapPackage("model");
+        Datastore ds = this.mongoDB.getDatastore();
+//        Datastore ds = morphia.createDatastore(client, "vibandalistings");
+       ds.ensureIndexes();
+
+
+        // Create seed data
+
+        ParentUnitImage img1 = new ParentUnitImage();
+        
+        img1.setImageDescription("Image1 descr");
+        img1.setImageUrl("some/image/url/img.jpg");
+        img1.setImageId("img1");
     
+        ds.save(img1);
+        return Results.json().render(img1);
+//        return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
+    }
+
+    @Inject
+    private void MyDataService(MongoDB mongoDB) {
+        this.mongoDB = mongoDB;
+    }
 }
