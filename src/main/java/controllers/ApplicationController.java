@@ -73,11 +73,14 @@ import org.apache.commons.io.FileUtils;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.Morphia;
+import services.DataService;
 
 @FileProvider(DiskFileItemProvider.class)
 @Singleton
 public class ApplicationController {
 
+    @Inject
+    DataService dbService;
     @Inject
     ReverseRouter reverseRouter;
     @Inject
@@ -377,13 +380,12 @@ public class ApplicationController {
         EntityManager entityManager = entitiyManagerProvider.get();
         entityManager.persist(vpu);
         units.clear();
-                Morphia morphia = this.mongoDB.getMorphia();
-        
+        Morphia morphia = this.mongoDB.getMorphia();
+
         morphia.mapPackage("model");
         Datastore ds = this.mongoDB.getDatastore();
-                 
 
-         ds.save(vpu);
+        ds.save(vpu);
 //        return Results.html().template("views/ApplicationController/index.ftl.html");
         return Results.json().render(vpu);
 
@@ -473,29 +475,24 @@ public class ApplicationController {
         parentUnit.setParentUnitAccessibility(new ParentUnitAccessibility());
         parentUnit.setParentUnitFacilities(new ParentUnitFacilities());
         parentUnit.setRentalUnits(new ArrayList<>());
-        parentUnit.setParentUnitImage(new ParentUnitImage());
 
 //        MongoClient client = this.mongoDB.getMongoClient();
 //        MongoIterable<String> dbs = client.getDatabase("").;
-        
 //        Datastore ds = this.mongoDB.getDatastore();
-        Morphia morphia = this.mongoDB.getMorphia();
-        
-//        morphia.mapPackage("model");
-        Datastore ds = this.mongoDB.getDatastore();
-//        Datastore ds = morphia.createDatastore(client, "vibandalistings");
-       ds.ensureIndexes();
-
-
+//        Morphia morphia = this.mongoDB.getMorphia();
+//
+////        morphia.mapPackage("model");
+//        Datastore ds = this.mongoDB.getDatastore();
+////        Datastore ds = morphia.createDatastore(client, "vibandalistings");
+//        ds.ensureIndexes();
         // Create seed data
-
         ParentUnitImage img1 = new ParentUnitImage();
-        
+
         img1.setImageDescription("Image1 descr");
         img1.setImageUrl("some/image/url/img.jpg");
         img1.setImageId("img1");
-    
-        ds.save(img1);
+        parentUnit.setParentUnitImage(img1);
+        dbService.addParent(parentUnit);
         return Results.json().render(img1);
 //        return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
     }

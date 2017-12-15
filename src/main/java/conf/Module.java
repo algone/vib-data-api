@@ -21,6 +21,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import ninja.uploads.FileItemProvider;
 import ninja.uploads.MemoryFileItemProvider;
+import services.DataService;
+import services.Service;
 
 @Singleton
 public class Module extends AbstractModule {
@@ -31,7 +33,7 @@ public class Module extends AbstractModule {
         
         // bind your injections here!
         bind(FileItemProvider.class).to(MemoryFileItemProvider.class);
-        
+        bind(Service.class).to(DataService.class);
   
     }
 
