@@ -11,18 +11,20 @@
         </ul>
     </div>
     <div id="test1" class="col s12">
-        <form method="post" enctype="multipart/form-data" action="/addParent">
+        <form method="post" enctype="multipart/form-data" action="/api/parents/add" >
             <br>
 
             <#include "parentUnit.ftl.html"/>
 
         </form>
+      
     </div>
     <div id="test2" class="col s12">
-        <form method="post" action="/addUnit">
+        <form method="post" action="/api/units/add">
             <#include "unit.ftl.html"/>
         </form>
-        <#include "unitModal.ftl.html"/>
+       
+       
     </div>
     <div id="test3" class="col s12"> <#include "images.ftl.html"/></div>
 

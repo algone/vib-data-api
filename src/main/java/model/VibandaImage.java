@@ -6,9 +6,6 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +30,8 @@ public class VibandaImage implements Serializable {
     private String imageDescription;
     @ManyToOne
     private Unit unit;
+        @ManyToOne
+    private ParentUnit parent;
 
     public String getImageDescription() {
         return imageDescription;
@@ -68,6 +67,14 @@ public class VibandaImage implements Serializable {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public ParentUnit getParent() {
+        return parent;
+    }
+
+    public void setParent(ParentUnit parent) {
+        this.parent = parent;
     }
 
 }

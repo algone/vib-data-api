@@ -1,0 +1,48 @@
+<!-- Modal Structure -->
+<div id="modal1" class="modal bottom-sheet">
+    <div class="container">
+    <div class="modal-content">
+        <div class="card-panel hoverable"> 
+            <h4 >Add Image</h4>
+            <div class="row">
+
+                <div class="col s12">
+                    <form action="/api/images/upload" method="post" enctype="multipart/form-data">
+                        <div class="row">
+
+                            <div class="file-field input-field col s12">
+                                <div class="btn">
+                                    <span>File</span>
+                                    <input type="file" multiple name="unitImageFile">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Upload one or more files" name="imageName">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class=" input-field col s12">
+                                <textarea id="imagedescription" class="materialize-textarea" name="imageDescription"></textarea>
+                                <label for="imagedescription">Image description</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=" input-field col s12">
+                                <button class="modal-action modal-close btn-floating btn-large waves-effect waves-light red right"  >
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>    
+        </div>
+    </div>
+    <!--div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Exit</a>
+    </div-->
+        </div>
+</div>
+

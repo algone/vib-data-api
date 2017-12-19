@@ -163,6 +163,16 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>sonatype-snapshots</id>
+      <name>Sontatype Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>org.ninjaframework</groupId>

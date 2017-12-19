@@ -5,6 +5,7 @@
  */
 package services;
 
+import java.util.List;
 import model.ParentUnit;
 
 /**
@@ -14,7 +15,8 @@ import model.ParentUnit;
 public interface Service {
     public void addParent(ParentUnit parent);
     public void updateParent(ParentUnit parent);
-    public void deleteParent(ParentUnit parent);
-    public ParentUnit findParent();
+    public void deleteParent(long parentId);
+    public ParentUnit findParent(long parentId);
+    public List<ParentUnit> getAllParents();
     
 }

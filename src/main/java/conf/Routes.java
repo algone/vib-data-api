@@ -19,6 +19,7 @@ import ninja.AssetsController;
 import ninja.Router;
 import ninja.application.ApplicationRoutes;
 import controllers.ApplicationController;
+import controllers.DatabaseController;
 
 public class Routes implements ApplicationRoutes {
 
@@ -26,13 +27,17 @@ public class Routes implements ApplicationRoutes {
     public void init(Router router) {
 
         router.GET().route("/").with(ApplicationController::index);
-        router.POST().route("/addParent").with(ApplicationController::addParent);
-        router.POST().route("/addUnit").with(ApplicationController::addUnit);
-        router.POST().route("/uploadImage").with(ApplicationController::uploadUnitImage);
-
+        router.POST().route("/api/parents/add").with(DatabaseController::addParent);
+        router.POST().route("/api/units/add").with(DatabaseController::addUnit);
+        router.DELETE().route("/api/parents/delete/{parentId}").with(DatabaseController::deleteParent);
+        router.GET().route("/api/parents/find/{parentId}").with(DatabaseController::findParent);
+        router.POST().route("/api/images/upload").with(DatabaseController::addImage);
+        router.GET().route("/api/parents").with(DatabaseController::listAll);
+        router.GET().route("/api/units").with(ApplicationController::findAllUnits);
+        
         router.GET().route("/create").with(ApplicationController::createParentUnit);
-        router.GET().route("/listAll").with(ApplicationController::listAll);
-        router.GET().route("/api/listUnits").with(ApplicationController::findAllUnits);
+        
+        
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

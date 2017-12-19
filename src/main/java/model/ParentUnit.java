@@ -29,7 +29,7 @@ public class ParentUnit implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long parentId;
+    long parentId;
     private String unitName = "";
     private String description = "";
     private UnitStyle style = UnitStyle.FAMILY;
@@ -44,14 +44,14 @@ public class ParentUnit implements Serializable {
     @Embedded
     private ParentUnitAccessibility parentUnitAccessibility = new ParentUnitAccessibility();
 
-
-//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id")
-    @Embedded
-    private ParentUnitImage parentUnitImage = new ParentUnitImage();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parent")
+    private List<VibandaImage> parentImages = new ArrayList<>();
+    
+//    @Embedded
+//    private ParentUnitImage parentUnitImage = new ParentUnitImage();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-     @JoinColumn(name = "fk_parentUnit")
+    @JoinColumn(name = "fk_parentUnit")
     private List<Unit> rentalUnits = new ArrayList<>();
 
     public ParentUnit() {
@@ -93,12 +93,19 @@ public class ParentUnit implements Serializable {
         this.location = location;
     }
 
-    public ParentUnitImage getParentUnitImage() {
-        return parentUnitImage;
+    public List<VibandaImage> getParentImages() {
+        return parentImages;
     }
 
-    public void setParentUnitImage(ParentUnitImage parentUnitImage) {
-        this.parentUnitImage = parentUnitImage;
+//    public ParentUnitImage getParentUnitImage() {
+//        return parentUnitImage;
+//    }
+//
+//    public void setParentUnitImage(ParentUnitImage parentUnitImage) {
+//        this.parentUnitImage = parentUnitImage;
+//    }
+    public void setParentImages(List<VibandaImage> parentImages) {
+        this.parentImages = parentImages;
     }
 
     public ParentUnitAccessibility getParentUnitAccessibility() {

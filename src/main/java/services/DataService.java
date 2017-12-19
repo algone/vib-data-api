@@ -6,6 +6,7 @@
 package services;
 
 import com.google.inject.Inject;
+import java.util.List;
 import javax.inject.Singleton;
 import model.ParentUnit;
 import net.binggl.ninja.mongodb.MongoDB;
@@ -16,6 +17,8 @@ import ninja.lifecycle.Dispose;
 import ninja.lifecycle.Start;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.query.FindOptions;
+import org.mongodb.morphia.query.Query;
 
 /**
  *
@@ -50,7 +53,7 @@ public class DataService implements Service {
         Datastore ds = this.mongoDB.getDatastore();
 
         ds.save(vpu);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
@@ -59,13 +62,38 @@ public class DataService implements Service {
     }
 
     @Override
-    public void deleteParent(ParentUnit parent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deleteParent(long parentId) {
+        Morphia morphia = this.mongoDB.getMorphia();
+        morphia.mapPackage("model");
+        Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        final Query<ParentUnit> parentToDel = ds.createQuery(ParentUnit.class).filter("parentId =", parentId);
+        ds.delete(parentToDel);
+
     }
 
     @Override
-    public ParentUnit findParent() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ParentUnit findParent(long parentId) {
+        Morphia morphia = this.mongoDB.getMorphia();
+        morphia.mapPackage("model");
+        Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        final Query<ParentUnit> parent = ds.createQuery(ParentUnit.class)
+                .field("parentId").equal(parentId);
+        System.out.println("Finding parent..... "+parentId);
+        
+        return parent.get();
+    }
+
+    @Override
+    public List<ParentUnit> getAllParents() {
+        Morphia morphia = this.mongoDB.getMorphia();
+        morphia.mapPackage("model");
+        Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        final Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
+        FindOptions opts = new FindOptions();
+
+        List<ParentUnit> parents = query.asList(opts);
+
+        return parents;
     }
 
 }
