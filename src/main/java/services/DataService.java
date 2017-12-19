@@ -6,7 +6,19 @@
 package services;
 
 import com.google.inject.Inject;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSBuckets;
+import com.mongodb.client.gridfs.model.GridFSUploadOptions;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import javax.inject.Singleton;
 import model.ParentUnit;
 import net.binggl.ninja.mongodb.MongoDB;
@@ -15,6 +27,8 @@ import ninja.Result;
 import ninja.Results;
 import ninja.lifecycle.Dispose;
 import ninja.lifecycle.Start;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.FindOptions;
@@ -78,8 +92,8 @@ public class DataService implements Service {
         Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         final Query<ParentUnit> parent = ds.createQuery(ParentUnit.class)
                 .field("parentId").equal(parentId);
-        System.out.println("Finding parent..... "+parentId);
-        
+        System.out.println("Finding parent..... " + parentId);
+
         return parent.get();
     }
 
@@ -93,7 +107,49 @@ public class DataService implements Service {
 
         List<ParentUnit> parents = query.asList(opts);
 
+        GridFSBucket gridBucket = GridFSBuckets.create(this.mongoDB.getMongoClient().getDatabase("mongolab-amazon-vibanda"));
         return parents;
     }
 
+    public ObjectId upload(String filePath, String fileName) {
+        System.out.println("Calling upload...");
+        MongoClient mongoClient = this.mongoDB.getMongoClient();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
+        ObjectId fileId = null;
+        try {
+            MongoDatabase db = this.mongoDB.getMongoClient().getDatabase("mongolab-amazon-vibanda");
+//            db.createCollection("vibanda_imgdb");
+            GridFSBucket gridBucket = GridFSBuckets.create(db, "vibanda_imgdb");
+            InputStream inputStream = new FileInputStream(new File(filePath));
+            // Create some custom options
+            GridFSUploadOptions uploadOptions = new GridFSUploadOptions().chunkSizeBytes(1024).metadata(new Document("type", "image").append("upload_date", format.parse("2016-09-01T00:00:00Z")).append("content_type", "image/jpg"));
+            fileId = gridBucket.uploadFromStream(fileName, inputStream, uploadOptions);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+//            mongoClient.close();
+        }
+        return fileId;
+    }
+
+    // Download File
+    public void download(String fileName) {
+        System.out.println("Calling download...");
+
+        try {
+            MongoDatabase db = this.mongoDB.getMongoClient().getDatabase("mongolab-amazon-vibanda");
+//            db.createCollection("vibanda_imgdb");
+            GridFSBucket gridBucket = GridFSBuckets.create(db, "vibanda_imgdb");
+
+            FileOutputStream fileOutputStream = new FileOutputStream("download-baby-image.jpg");
+            gridBucket.downloadToStream(fileName, fileOutputStream);
+            fileOutputStream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+//   mongoClient.close();
+        }
+    }
 }

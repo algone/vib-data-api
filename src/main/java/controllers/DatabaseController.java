@@ -81,6 +81,8 @@ public class DatabaseController {
         VibandaImage image = new VibandaImage();
         image.setImageUrl("assets/img/images/" + imageName);
         image.setImageDescription(imageDescription);
+        dbService.upload(destFile.getAbsolutePath(), imageName);
+//        dbService.download(imageName);
         parentImages.add(image);
         return Results.noContent();
 
