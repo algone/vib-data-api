@@ -48,7 +48,4 @@ public class ParentUnitImage implements Serializable {
     public void setImageDescription(String imageDescription) {
         this.imageDescription = imageDescription;
     }
-
-
-
 }

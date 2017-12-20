@@ -11,6 +11,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
+import static com.mongodb.client.model.Filters.eq;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -92,6 +93,13 @@ public class DataService implements Service {
         Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         final Query<ParentUnit> parent = ds.createQuery(ParentUnit.class)
                 .field("parentId").equal(parentId);
+
+//        Document document = myCollection.find(eq("_id", new ObjectId("4f693d40e4b04cde19f17205"))).first();
+//        if (document == null) {
+//            //Document does not exist
+//        } else {
+//            //We found the document
+//        }
         System.out.println("Finding parent..... " + parentId);
 
         return parent.get();
@@ -122,7 +130,12 @@ public class DataService implements Service {
             GridFSBucket gridBucket = GridFSBuckets.create(db, "vibanda_imgdb");
             InputStream inputStream = new FileInputStream(new File(filePath));
             // Create some custom options
-            GridFSUploadOptions uploadOptions = new GridFSUploadOptions().chunkSizeBytes(1024).metadata(new Document("type", "image").append("upload_date", format.parse("2016-09-01T00:00:00Z")).append("content_type", "image/jpg"));
+            GridFSUploadOptions uploadOptions = new GridFSUploadOptions()
+                    .chunkSizeBytes(1024)
+                    .metadata(new Document("type", "image")
+                            .append("upload_date", format.parse("2016-09-01T00:00:00Z"))
+                            .append("content_type", "image/jpg"));
+
             fileId = gridBucket.uploadFromStream(fileName, inputStream, uploadOptions);
 
         } catch (Exception e) {

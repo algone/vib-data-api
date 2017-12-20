@@ -45,9 +45,7 @@ public class DatabaseController {
     }
 
     public Result findParent(Context context, @PathParam("parentId") long id) {
-        System.out.println("ID:" + id);
         ParentUnit parent = dbService.findParent(id);
-
         return Results.json().render(parent);
 
     }
@@ -58,7 +56,6 @@ public class DatabaseController {
         vpu.getRentalUnits().addAll(units);
         units.clear();
         dbService.addParent(vpu);
-//        return Results.json().render(vpu);
       return Results.html().template("views/ApplicationController/index.ftl.html");
 
     }
@@ -82,7 +79,6 @@ public class DatabaseController {
         image.setImageUrl("assets/img/images/" + imageName);
         image.setImageDescription(imageDescription);
         dbService.upload(destFile.getAbsolutePath(), imageName);
-//        dbService.download(imageName);
         parentImages.add(image);
         return Results.noContent();
 
