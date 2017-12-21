@@ -63,23 +63,19 @@ public class DatabaseController {
     public Result addImage(Context context,
             @Param("unitImageFile") FileItem unitImageFile,
             @Param("imageName") String imageName,
+            @Param("coverImage") boolean isCoverImage,
             @Param("imageDescription") String imageDescription) {
-        File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
-        System.out.println("DEST DIR: " + defDir.getAbsolutePath());
-        File destFile = new File(defDir, unitImageFile.getFileName());
-
-        System.out.println("DEST FILE: " + destFile.getAbsolutePath());
-
-        try {
-            FileUtils.copyFile(unitImageFile.getFile(), destFile);
-        } catch (IOException ex) {
-            return Results.json().render("Error...." + ex.getLocalizedMessage());
-        }
+ 
         VibandaImage image = new VibandaImage();
         image.setImageUrl("assets/img/images/" + imageName);
         image.setImageDescription(imageDescription);
-        dbService.upload(destFile.getAbsolutePath(), imageName);
-        parentImages.add(image);
+        dbService.upload(unitImageFile.getFile().getAbsolutePath(), imageName);
+        if(isCoverImage){
+            parentImages.add(image); 
+        }else{
+            unitImages.add(image);
+        }
+            
         return Results.noContent();
 
     }

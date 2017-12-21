@@ -3,6 +3,7 @@
 
 
 <div class="row">
+
     <div class="col s12">
         <ul class="tabs">
             <li class="tab col s3"><a  class="active" href="#test1">Add Parent Unit</a></li>
@@ -17,16 +18,18 @@
             <#include "parentUnit.ftl.html"/>
 
         </form>
-      
+
     </div>
     <div id="test2" class="col s12">
         <form method="post" action="/api/units/add">
             <#include "unit.ftl.html"/>
         </form>
-       
-       
+
+
     </div>
-    <div id="test3" class="col s12"> <#include "images.ftl.html"/></div>
+    <div id="test3" class="col s12"> 
+        <#include "images.ftl.html"/>
+    </div>
 
 </div>
 

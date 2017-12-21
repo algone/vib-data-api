@@ -26,22 +26,38 @@
         </div>
     </div>
     <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s10">
             <textarea id="pudescription" class="materialize-textarea" name="description"></textarea>
             <label for="pudescription">Description</label>
         </div>
-    </div>
-    <div class="row">
-        <div class="file-field input-field col s6">
+                <div class="file-field input-field col s2">
  <!-- Modal Trigger -->
             <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add Images</a>
 
         </div>
+    </div>
 
-        <!--div class=" input-field col s6">
-            <textarea id="puImageDescription" class="materialize-textarea" name="puImageDescription"></textarea>
-            <label for="puImageDescription">Image description</label>
-        </div-->
+        <h5>Location</h5>
+    <div class="row">       
+        <div class="input-field col s6">  
+            <input type="text" id="street" class="validate" name="street" >
+            <label for="street" data-error="wrong" data-success="right">Street and number</label>
+        </div>
+        <div class="input-field col s6">
+            <input type="text" id="fulladdress" class="materialize-textarea" name="address" >
+            <label for="fulladdress" class="">Address2</label>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="input-field col s6">  
+            <input type="text" id="city" class="validate" name="city" >
+            <label for="city" data-error="wrong" data-success="right">City </label>
+        </div>
+        <div class="input-field col s6">
+            <input type="text" id="county" class="validate" name="county" >
+            <label for="county" data-error="wrong" data-success="right">County</label>
+        </div>
     </div>
     <div class="row">
 
@@ -175,32 +191,6 @@
 
         </div>
     </div>  
-</div>
-<div class="card-panel hoverable"> 
-    <h5>Location</h5>
-    <div class="row">       
-        <div class="input-field col s6">  
-            <input type="text" id="street" class="validate" name="street" >
-            <label for="street" data-error="wrong" data-success="right">Street and number</label>
-        </div>
-        <div class="input-field col s6">
-            <input type="text" id="fulladdress" class="materialize-textarea" name="address" >
-            <label for="fulladdress" class="">Address2</label>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="input-field col s6">  
-            <input type="text" id="city" class="validate" name="city" >
-            <label for="city" data-error="wrong" data-success="right">City </label>
-        </div>
-        <div class="input-field col s6">
-            <input type="text" id="county" class="validate" name="county" >
-            <label for="county" data-error="wrong" data-success="right">County</label>
-        </div>
-    </div>
-</div>
-<div class="card-panel hoverable"> 
     <h5>Unit Accessibility</h5>
     <div class="row">
 
@@ -250,6 +240,7 @@
     </div> 
 
 </div>
+
 <!--div class="text-center">
     <button class="btn-floating peach-gradient btn-lg" >Add</button>
 </div-->

@@ -11,7 +11,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
-import static com.mongodb.client.model.Filters.eq;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.inject.Singleton;
 import model.ParentUnit;
+import model.Unit;
 import net.binggl.ninja.mongodb.MongoDB;
 import ninja.Context;
 import ninja.Result;
@@ -104,6 +104,7 @@ public class DataService implements Service {
 
         return parent.get();
     }
+    
 
     @Override
     public List<ParentUnit> getAllParents() {
@@ -112,21 +113,17 @@ public class DataService implements Service {
         Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         final Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
         FindOptions opts = new FindOptions();
-
         List<ParentUnit> parents = query.asList(opts);
-
-        GridFSBucket gridBucket = GridFSBuckets.create(this.mongoDB.getMongoClient().getDatabase("mongolab-amazon-vibanda"));
         return parents;
     }
 
     public ObjectId upload(String filePath, String fileName) {
         System.out.println("Calling upload...");
-        MongoClient mongoClient = this.mongoDB.getMongoClient();
+
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
         ObjectId fileId = null;
         try {
             MongoDatabase db = this.mongoDB.getMongoClient().getDatabase("mongolab-amazon-vibanda");
-//            db.createCollection("vibanda_imgdb");
             GridFSBucket gridBucket = GridFSBuckets.create(db, "vibanda_imgdb");
             InputStream inputStream = new FileInputStream(new File(filePath));
             // Create some custom options
