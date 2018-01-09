@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.inject.Singleton;
@@ -113,6 +114,7 @@ public class DataService implements Service {
         Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         final Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
         FindOptions opts = new FindOptions();
+
         List<ParentUnit> parents = query.asList(opts);
         return parents;
     }
@@ -161,5 +163,21 @@ public class DataService implements Service {
         } finally {
 //   mongoClient.close();
         }
+    }
+
+    @Override
+    public List<Unit> getAllUnits() {
+        Morphia morphia = this.mongoDB.getMorphia();
+        
+        Datastore ds = morphia.mapPackage("model").createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+      Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
+
+        List<ParentUnit> unit = query.field("rentalUnits.1").hasThisOne("DUPLEX").project("rentalUnits", true).asList();
+     
+        List<Unit> units = new ArrayList<>();
+        for (ParentUnit parentUnit : unit) {
+            units.addAll(parentUnit.getRentalUnits());
+        }
+        return units;
     }
 }

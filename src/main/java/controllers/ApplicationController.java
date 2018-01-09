@@ -91,7 +91,7 @@ public class ApplicationController {
     }
 
     public Result addUnit(Context context) {
-        ParamsExtrator pe= new  ParamsExtrator(context);
+        ParamsExtrator pe = new ParamsExtrator(context);
         Unit vUnit = pe.getUnit();
 
         vUnit.getUnitImages().addAll(unitImages);
@@ -100,7 +100,6 @@ public class ApplicationController {
         return Results.noContent();
 //        return Results.json().render(units);
     }
-
 
     @Transactional
     public Result addParent(Context context,
@@ -125,7 +124,6 @@ public class ApplicationController {
         return Results.json().render(vpu);
 
     }
-
 
     @UnitOfWork
     public Result listAll(Context context) {
@@ -170,17 +168,12 @@ public class ApplicationController {
 
     }
 
-
-
     @UnitOfWork
-    public Result findAllUnits(Long id) {
+    public Result findAllUnits() {
 
-        EntityManager entityManager = entitiyManagerProvider.get();
-        //List<Item> items = em.createQuery("SELECT i FROM Item i JOIN FETCH i.order", Item.class).getResultList();
-        Query q = entityManager.createQuery("SELECT u FROM Unit u JOIN FETCH u.parentUnit", Unit.class);
-        List<Unit> units = (List<Unit>) q.getResultList();
-
-        return Results.json().render(units);
+        List<Unit> vunits = dbService.getAllUnits();
+        System.out.println("JSON:" + vunits);
+        return Results.json().render(vunits);
 
     }
 
@@ -224,6 +217,5 @@ public class ApplicationController {
 //        return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
     }
 //
-
 
 }
