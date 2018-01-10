@@ -7,10 +7,10 @@ package controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import model.ParentUnit;
 import model.Unit;
 import model.VibandaImage;
@@ -22,8 +22,8 @@ import ninja.params.PathParam;
 import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItem;
 import ninja.uploads.FileProvider;
-import org.apache.commons.io.FileUtils;
 import services.DataService;
+import services.VibandaImageService;
 
 /**
  *
@@ -35,6 +35,8 @@ public class DatabaseController {
 
     @Inject
     DataService dbService;
+        @Inject
+    VibandaImageService imgService;
     private List<VibandaImage> parentImages = new ArrayList<>();
     private List<Unit> units = new ArrayList<>();
     private List<VibandaImage> unitImages = new ArrayList<>();
@@ -59,6 +61,10 @@ public class DatabaseController {
       return Results.html().template("views/ApplicationController/index.ftl.html");
 
     }
+       public Result uploadImage(Context context) throws IOException {
+        Map result = imgService.uploadImage();
+        return Results.json().render(result);
+    } 
 
     public Result addImage(Context context,
             @Param("unitImageFile") FileItem unitImageFile,
@@ -75,7 +81,6 @@ public class DatabaseController {
         }else{
             unitImages.add(image);
         }
-            
         return Results.noContent();
 
     }

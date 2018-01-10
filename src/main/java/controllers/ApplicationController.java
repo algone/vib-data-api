@@ -41,34 +41,25 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import model.FurnishingType;
+//import javax.persistence.EntityManager;
+//import javax.persistence.Query;
 import model.Location;
 import model.ParentUnit;
 import model.ParentUnitAccessibility;
 import model.ParentUnitFacilities;
-import model.ParentUnitImage;
-import model.RentalInfo;
-import model.RentalType;
 import model.Unit;
-import model.UnitFeature;
 import model.VibandaImage;
-import model.UnitPrivacy;
-import model.UnitStyle;
-import model.UnitType;
 
 import ninja.Context;
 import ninja.ReverseRouter;
 import ninja.jpa.UnitOfWork;
 import ninja.params.Param;
-import ninja.params.PathParam;
 import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItem;
 import ninja.uploads.FileProvider;
 import org.apache.commons.io.FileUtils;
 import services.DataService;
+import services.VibandaImageService;
 
 @FileProvider(DiskFileItemProvider.class)
 @Singleton
@@ -77,9 +68,11 @@ public class ApplicationController {
     @Inject
     DataService dbService;
     @Inject
-    ReverseRouter reverseRouter;
+    VibandaImageService imgService;
     @Inject
-    Provider<EntityManager> entitiyManagerProvider;
+    ReverseRouter reverseRouter;
+//    @Inject
+//    Provider<EntityManager> entitiyManagerProvider;
 
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
@@ -146,28 +139,27 @@ public class ApplicationController {
 //        return Results.json().render(img);
         return Results.noContent();
     }
+//
+//    @Transactional
+//    public Result add(Context context, ParentUnit parent) {
+//        EntityManager entityManager = entitiyManagerProvider.get();
+////        entityManager.persist(parentUnit);
+////        return Results.html().template("views/ApplicationController/index.ftl.html").render("vpus", allPUs);
+//        return Results.json().render(parent);
+//    }
 
-    @Transactional
-    public Result add(Context context, ParentUnit parent) {
-        EntityManager entityManager = entitiyManagerProvider.get();
-//        entityManager.persist(parentUnit);
-//        return Results.html().template("views/ApplicationController/index.ftl.html").render("vpus", allPUs);
-        return Results.json().render(parent);
-    }
-
-    @UnitOfWork
-    public ParentUnit findParentUnit(String unitName) {
-
-        EntityManager entityManager = entitiyManagerProvider.get();
-        Query q = entityManager.createQuery("SELECT pu.unitName FROM ParentUnit pu WHERE pu.unitName LIKE '%" + unitName + "%'");
-        //TypedQuery<Item> q = em.createQuery("SELECT i FROM Item i JOIN FETCH i.order", Item.class);
-
-        ParentUnit vpu = (ParentUnit) q.getSingleResult();
-
-        return vpu;
-
-    }
-
+//    @UnitOfWork
+//    public ParentUnit findParentUnit(String unitName) {
+//
+//        EntityManager entityManager = entitiyManagerProvider.get();
+//        Query q = entityManager.createQuery("SELECT pu.unitName FROM ParentUnit pu WHERE pu.unitName LIKE '%" + unitName + "%'");
+//        //TypedQuery<Item> q = em.createQuery("SELECT i FROM Item i JOIN FETCH i.order", Item.class);
+//
+//        ParentUnit vpu = (ParentUnit) q.getSingleResult();
+//
+//        return vpu;
+//
+//    }
     @UnitOfWork
     public Result findAllUnits() {
 

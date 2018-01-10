@@ -8,28 +8,20 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Reference;
 
 /**
  *
  * @author A4372949
  */
-@Entity
-@Table(name = "PARENT_UNIT")
+@Entity("parentunits")
 public class ParentUnit implements Serializable {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    long parentId;
+    private ObjectId parentId;
     private String unitName = "";
     private String description = "";
     private UnitStyle style = UnitStyle.FAMILY;
@@ -43,21 +35,16 @@ public class ParentUnit implements Serializable {
     private Location location;
     @Embedded
     private ParentUnitAccessibility parentUnitAccessibility = new ParentUnitAccessibility();
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parent")
+    @Embedded
     private List<VibandaImage> parentImages = new ArrayList<>();
-    
-//    @Embedded
-//    private ParentUnitImage parentUnitImage = new ParentUnitImage();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_parentUnit")
+    @Reference(lazy = true)
     private List<Unit> rentalUnits = new ArrayList<>();
 
     public ParentUnit() {
     }
 
-    public Long getParentId() {
+    public ObjectId  getParentId() {
         return parentId;
     }
 
@@ -97,13 +84,6 @@ public class ParentUnit implements Serializable {
         return parentImages;
     }
 
-//    public ParentUnitImage getParentUnitImage() {
-//        return parentUnitImage;
-//    }
-//
-//    public void setParentUnitImage(ParentUnitImage parentUnitImage) {
-//        this.parentUnitImage = parentUnitImage;
-//    }
     public void setParentImages(List<VibandaImage> parentImages) {
         this.parentImages = parentImages;
     }

@@ -32,12 +32,11 @@ public class Routes implements ApplicationRoutes {
         router.DELETE().route("/api/parents/delete/{parentId}").with(DatabaseController::deleteParent);
         router.GET().route("/api/parents/find/{parentId}").with(DatabaseController::findParent);
         router.POST().route("/api/images/upload").with(DatabaseController::addImage);
+        router.GET().route("/api/images/upload2").with(DatabaseController::uploadImage);
         router.GET().route("/api/parents").with(DatabaseController::listAll);
         router.GET().route("/api/units").with(ApplicationController::findAllUnits);
-        
+
         router.GET().route("/create").with(ApplicationController::createParentUnit);
-        
-        
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

@@ -8,29 +8,21 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Reference;
 
 /**
  *
  * @author A4372949
  */
-@Entity
-@Table(name = "UNITS")
+@Entity("units")
 public class Unit implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long unitId;
+    private ObjectId  unitId;
     private String unitHeading;
     private String unitDescription;
     private String postedBy;
@@ -40,29 +32,23 @@ public class Unit implements Serializable {
     private int unitNumber;
     private int unitFloorNumber;
     private boolean active;
-
+    private String dateOfPosting;
+    private String dateAvailableFrom;
     private RentalType rentalType = RentalType.SHORT_TERM;
     private UnitType unitType = UnitType.APARTMENT;
     private UnitPrivacy privacy = UnitPrivacy.ENTIRE_HOME;
     private FurnishingType furnishing = FurnishingType.UNFURNISHED;
 
-    private String dateOfPosting;
-
-    private String dateAvailableFrom;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "unit")
+    @Embedded
     private List<VibandaImage> unitImages = new ArrayList<>();
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_parentUnit")
-    private ParentUnit parentUnit;
-    
     @Embedded
     private UnitFeature unitFeature;
     @Embedded
     private RentalInfo rentalInfo;
+    @Reference(lazy = true)
+    private List<Rating> unitRatings = new ArrayList<>();
 
-    public Long getUnitId() {
+    public ObjectId getUnitId() {
         return unitId;
     }
 
@@ -210,12 +196,12 @@ public class Unit implements Serializable {
         this.furnishing = furnishing;
     }
 
-    public ParentUnit getParentUnit() {
-        return parentUnit;
+    public List<Rating> getUnitRatings() {
+        return unitRatings;
     }
 
-    public void setParentUnit(ParentUnit parentUnit) {
-        this.parentUnit = parentUnit;
+    public void setUnitRatings(List<Rating> unitRatings) {
+        this.unitRatings = unitRatings;
     }
 
 }

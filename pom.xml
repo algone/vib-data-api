@@ -189,6 +189,17 @@
         
     </build>
     <dependencies>
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.17.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/net.binggl/ninja-mongodb-module -->
 
         <dependency>
@@ -237,14 +248,14 @@
             <type>jar</type>
         </dependency>
     </dependencies>
-          <repositories>
-          <repository>
-              <id>sonatype-snapshots</id>
-              <name>Sontatype Snapshots</name>
-              <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-              <snapshots>
-                  <enabled>false</enabled>
-              </snapshots>
-          </repository>
-      </repositories>
+    <repositories>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <name>Sontatype Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
