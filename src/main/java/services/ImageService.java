@@ -5,6 +5,7 @@
  */
 package services;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -14,6 +15,6 @@ import java.util.Map;
  */
 public interface ImageService {
 
-    Map uploadImage() throws IOException;
+    Map uploadImage(File file, Map uploadParams) throws IOException;
     
 }

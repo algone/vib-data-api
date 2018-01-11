@@ -65,7 +65,7 @@ public class DataService implements Service {
     @Override
     public void addParent(ParentUnit vpu) {
         Morphia morphia = this.mongoDB.getMorphia();
-        morphia.mapPackage("model");
+//        morphia.mapPackage("model");
         Datastore ds = this.mongoDB.getDatastore();
 
         ds.save(vpu);

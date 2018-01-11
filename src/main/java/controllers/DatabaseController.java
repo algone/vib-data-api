@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import com.cloudinary.utils.ObjectUtils;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class DatabaseController {
 
     @Inject
     DataService dbService;
-        @Inject
+    @Inject
     VibandaImageService imgService;
     private List<VibandaImage> parentImages = new ArrayList<>();
     private List<Unit> units = new ArrayList<>();
@@ -58,32 +59,42 @@ public class DatabaseController {
         vpu.getRentalUnits().addAll(units);
         units.clear();
         dbService.addParent(vpu);
-      return Results.html().template("views/ApplicationController/index.ftl.html");
+        return Results.html().template("views/ApplicationController/index.ftl.html");
 
     }
-       public Result uploadImage(Context context) throws IOException {
-        Map result = imgService.uploadImage();
+
+    public Result uploadImage(Context context, @Param("unitImageFile") FileItem unitImageFile,
+            @Param("imageName") String imageName,
+            @Param("coverImage") boolean isCoverImage,
+            @Param("imageDescription") String imageDescription) throws IOException {
+        System.out.println("Uploading to Cloudinary.....");
+        Map uploadParams = ObjectUtils.asMap(
+                "tags", "coverImage, living room",
+                "imageDescription", imageDescription
+        );
+        Map result = imgService.uploadImage(unitImageFile.getFile(), uploadParams);
         return Results.json().render(result);
-    } 
+    }
 
     public Result addImage(Context context,
             @Param("unitImageFile") FileItem unitImageFile,
             @Param("imageName") String imageName,
             @Param("coverImage") boolean isCoverImage,
             @Param("imageDescription") String imageDescription) {
- 
+
         VibandaImage image = new VibandaImage();
         image.setImageUrl("assets/img/images/" + imageName);
         image.setImageDescription(imageDescription);
         dbService.upload(unitImageFile.getFile().getAbsolutePath(), imageName);
-        if(isCoverImage){
-            parentImages.add(image); 
-        }else{
+        if (isCoverImage) {
+            parentImages.add(image);
+        } else {
             unitImages.add(image);
         }
         return Results.noContent();
 
     }
+    
 
     public Result listAll(Context context) {
         List<ParentUnit> vpus = dbService.getAllParents();

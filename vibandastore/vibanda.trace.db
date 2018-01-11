@@ -11808,3 +11808,9 @@ org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic c
 	at ninja.standalone.NinjaJetty.doShutdown(NinjaJetty.java:186)
 	at ninja.standalone.AbstractStandalone.shutdown(AbstractStandalone.java:221)
 	at ninja.standalone.AbstractStandalone$1.run(AbstractStandalone.java:107)
+01-10 20:35:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-186]
+01-10 20:35:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-186]
+01-10 20:35:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: The object is already closed [90007-186]
