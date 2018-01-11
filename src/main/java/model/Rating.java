@@ -18,7 +18,7 @@ import org.mongodb.morphia.annotations.Id;
 public class Rating {
 
     @Id
-    private ObjectId ratingId;
+    private ObjectId ratingId = new ObjectId();
     private int rating;
     private Date date;
     private String ipAddress;

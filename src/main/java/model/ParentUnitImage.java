@@ -6,16 +6,14 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Embeddable;
+import org.mongodb.morphia.annotations.Embedded;
 
 
 /**
  *
  * @author A4372949
  */
-@Embeddable @Access(AccessType.FIELD)
+@Embedded
 public class ParentUnitImage implements Serializable {
 
 

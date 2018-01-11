@@ -6,32 +6,23 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+
 
 /**
  *
  * @author A4372949
  */
 //@Embeddable @Access(AccessType.FIELD)
-@Entity
-@Table(name="IMAGES")
+@Embedded
 public class VibandaImage implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private String imageId;
     private String imageUrl;
     private String imageDescription;
-    @ManyToOne
-    private Unit unit;
-        @ManyToOne
-    private ParentUnit parent;
 
     public String getImageDescription() {
         return imageDescription;
@@ -56,25 +47,4 @@ public class VibandaImage implements Serializable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
-    public ParentUnit getParent() {
-        return parent;
-    }
-
-    public void setParent(ParentUnit parent) {
-        this.parent = parent;
-    }
-
 }

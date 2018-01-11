@@ -18,11 +18,11 @@ import org.mongodb.morphia.annotations.Reference;
  *
  * @author A4372949
  */
-@Entity("units")
+@Entity
 public class Unit implements Serializable {
 
     @Id
-    private ObjectId  unitId;
+    private String  unitId= new ObjectId().toHexString();;
     private String unitHeading;
     private String unitDescription;
     private String postedBy;
@@ -45,11 +45,15 @@ public class Unit implements Serializable {
     private UnitFeature unitFeature;
     @Embedded
     private RentalInfo rentalInfo;
-    @Reference(lazy = true)
+    @Reference
     private List<Rating> unitRatings = new ArrayList<>();
 
-    public ObjectId getUnitId() {
+    public String getUnitId() {
         return unitId;
+    }
+
+    public void setUnitId(String unitId) {
+        this.unitId = unitId;
     }
 
     public RentalType getRentalType() {

@@ -21,7 +21,7 @@ import org.mongodb.morphia.annotations.Reference;
 @Entity("parentunits")
 public class ParentUnit implements Serializable {
     @Id
-    private ObjectId parentId;
+    private ObjectId parentId = new ObjectId();
     private String unitName = "";
     private String description = "";
     private UnitStyle style = UnitStyle.FAMILY;
@@ -36,16 +36,20 @@ public class ParentUnit implements Serializable {
     @Embedded
     private ParentUnitAccessibility parentUnitAccessibility = new ParentUnitAccessibility();
     @Embedded
-    private List<VibandaImage> parentImages = new ArrayList<>();
+    private List<VibandaImage> parentImages;
 
-    @Reference(lazy = true)
-    private List<Unit> rentalUnits = new ArrayList<>();
+    @Reference(idOnly=true)
+    private List<Unit> rentalUnits;
 
     public ParentUnit() {
     }
 
     public ObjectId  getParentId() {
         return parentId;
+    }
+
+    public void setParentId(ObjectId parentId) {
+        this.parentId = parentId;
     }
 
     public String getDescription() {
