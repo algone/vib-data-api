@@ -22,7 +22,7 @@ import org.mongodb.morphia.annotations.Reference;
 public class Unit implements Serializable {
 
     @Id
-    private String  unitId= new ObjectId().toHexString();;
+    private String  id= new ObjectId().toHexString();
     private String unitHeading;
     private String unitDescription;
     private String postedBy;
@@ -34,6 +34,7 @@ public class Unit implements Serializable {
     private boolean active;
     private String dateOfPosting;
     private String dateAvailableFrom;
+    private String unitParentId;
     private RentalType rentalType = RentalType.SHORT_TERM;
     private UnitType unitType = UnitType.APARTMENT;
     private UnitPrivacy privacy = UnitPrivacy.ENTIRE_HOME;
@@ -48,13 +49,23 @@ public class Unit implements Serializable {
     @Reference
     private List<Rating> unitRatings = new ArrayList<>();
 
-    public String getUnitId() {
-        return unitId;
+    public String getId() {
+        return id;
     }
 
-    public void setUnitId(String unitId) {
-        this.unitId = unitId;
+    public void setId(String id) {
+        this.id = id;
     }
+
+    public String getUnitParentId() {
+        return unitParentId;
+    }
+
+    public void setUnitParentId(String unitParentId) {
+        this.unitParentId = unitParentId;
+    }
+
+
 
     public RentalType getRentalType() {
         return rentalType;

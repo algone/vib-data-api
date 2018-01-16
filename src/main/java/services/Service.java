@@ -14,11 +14,23 @@ import model.Unit;
  * @author A4372949
  */
 public interface Service {
+
     public void addParent(ParentUnit parent);
+
     public void updateParent(ParentUnit parent);
+
     public void deleteParent(long parentId);
+
+    public void addUnit(Unit unit);
+
+    public void updateUnit(Unit unit);
+
+    public void deleteUnit(String unitId);
+
     public ParentUnit findParent(long parentId);
+
     public List<ParentUnit> getAllParents();
+
     public List<Unit> getAllUnits();
-    
+
 }

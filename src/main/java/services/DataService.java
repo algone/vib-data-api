@@ -6,7 +6,6 @@
 package services;
 
 import com.google.inject.Inject;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
@@ -33,7 +32,6 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-import org.mongodb.morphia.query.FindOptions;
 import org.mongodb.morphia.query.Query;
 
 /**
@@ -65,11 +63,9 @@ public class DataService implements Service {
     @Override
     public void addParent(ParentUnit vpu) {
         Morphia morphia = this.mongoDB.getMorphia();
-//        morphia.mapPackage("model");
-        Datastore ds = this.mongoDB.getDatastore();
+        Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
 
         ds.save(vpu);
-
     }
 
     @Override
@@ -105,17 +101,42 @@ public class DataService implements Service {
 
         return parent.get();
     }
+
+    public List<String> getParentIds() {
+        Morphia morphia = this.mongoDB.getMorphia();
+
+        morphia.mapPackage("model");
+        Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        final Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
+
+        List<ParentUnit> parents = query.asList();
+        List<String> parentIds = new ArrayList<>();
+        parents.forEach((parent) -> {
+            parentIds.add(parent.getId());
+        });
+        return parentIds;
+    }
     
+        public List<String> getUnitIds() {
+
+        List<Unit> units = getAllUnits();
+        List<String> unitIds = new ArrayList<>();
+        units.forEach((parent) -> {
+            unitIds.add(parent.getId());
+        });
+        return unitIds;
+    }
 
     @Override
     public List<ParentUnit> getAllParents() {
         Morphia morphia = this.mongoDB.getMorphia();
+//        morphia.getMapper().getConverters().addConverter(cls);
         morphia.mapPackage("model");
         Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         final Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
-        FindOptions opts = new FindOptions();
-
-        List<ParentUnit> parents = query.asList(opts);
+//        FindOptions opts = new FindOptions();
+        getParentIds();
+        List<ParentUnit> parents = query.asList();
         return parents;
     }
 
@@ -168,16 +189,30 @@ public class DataService implements Service {
     @Override
     public List<Unit> getAllUnits() {
         Morphia morphia = this.mongoDB.getMorphia();
-        
-        Datastore ds = morphia.mapPackage("model").createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-      Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
 
-        List<ParentUnit> unit = query.field("rentalUnits.1").hasThisOne("DUPLEX").project("rentalUnits", true).asList();
-     
-        List<Unit> units = new ArrayList<>();
-        for (ParentUnit parentUnit : unit) {
-            units.addAll(parentUnit.getRentalUnits());
-        }
-        return units;
+        Datastore ds = morphia.mapPackage("model").createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        Query<Unit> query = ds.createQuery(Unit.class);
+
+//        List<ParentUnit> unit = query.field("rentalUnits.1").hasThisOne("DUPLEX").project("rentalUnits", true).asList();
+
+
+        return query.asList();
+    }
+
+    @Override
+    public void addUnit(Unit unit) {
+        Morphia morphia = this.mongoDB.getMorphia();
+        Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        ds.save(unit);
+    }
+
+    @Override
+    public void updateUnit(Unit unit) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteUnit(String unitId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

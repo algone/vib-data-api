@@ -8,21 +8,23 @@ package model;
 import java.io.Serializable;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
+
 
 
 /**
  *
  * @author A4372949
  */
-//@Embeddable @Access(AccessType.FIELD)
+
 @Embedded
 public class VibandaImage implements Serializable {
 
-    private String imageId;
+    private String imageId = new ObjectId().toHexString();
+    private String unitId ;
     private String imageUrl;
     private String imageDescription;
+    private boolean isCoverImage;
+    private boolean useAsParentImage;
 
     public String getImageDescription() {
         return imageDescription;
@@ -47,4 +49,29 @@ public class VibandaImage implements Serializable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public boolean isIsCoverImage() {
+        return isCoverImage;
+    }
+
+    public void setIsCoverImage(boolean isCoverImage) {
+        this.isCoverImage = isCoverImage;
+    }
+
+    public boolean isUseAsParentImage() {
+        return useAsParentImage;
+    }
+
+    public void setUseAsParentImage(boolean useAsParentImage) {
+        this.useAsParentImage = useAsParentImage;
+    }
+
+    public String getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(String unitId) {
+        this.unitId = unitId;
+    }
+    
 }

@@ -40,7 +40,9 @@ import com.google.inject.persist.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 //import javax.persistence.EntityManager;
 //import javax.persistence.Query;
 import model.Location;
@@ -83,6 +85,37 @@ public class ApplicationController {
 
     }
 
+    public Result showUpload() {
+
+        return Results.html().template("views/ApplicationController/index_wiz.ftl.html");
+
+    }
+
+    public Result showParentUnitForm() {
+
+        return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html");
+
+    }
+
+    public Result showUnitForm() {
+        List<String> parents = dbService.getParentIds();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("parentUnits", parents);
+        data.put("msg", "");
+
+        return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
+
+    }
+
+    public Result showImageUploadForm() {
+        List<String> parents = dbService.getUnitIds();
+        Map<String, Object> data = new HashMap<>();
+        data.put("units", parents);
+        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("data", data);
+
+    }
+
     public Result addUnit(Context context) {
         ParamsExtrator pe = new ParamsExtrator(context);
         Unit vUnit = pe.getUnit();
@@ -90,8 +123,9 @@ public class ApplicationController {
         vUnit.getUnitImages().addAll(unitImages);
         unitImages.clear();
         units.add(vUnit);
-        return Results.noContent();
-//        return Results.json().render(units);
+//        return Results.noContent();
+        return Results.json().render(units);
+//return Results.html().template("views/ApplicationController/unitUpload.ftl.html")
     }
 
     @Transactional
@@ -106,8 +140,7 @@ public class ApplicationController {
         /*
         Add Pricing info
          */
-        vpu.getRentalUnits().addAll(units);
-
+//        vpu.getRentalUnits().addAll(units);
 //        EntityManager entityManager = entitiyManagerProvider.get();
 //        entityManager.persist(vpu);
         units.clear();
@@ -124,6 +157,8 @@ public class ApplicationController {
 //        EntityManager entityManager = entitiyManagerProvider.get();
 //        Query q = entityManager.createQuery("SELECT pu FROM ParentUnit pu");
         List<ParentUnit> vpus = dbService.getAllParents();
+
+        List<String> ids = dbService.getParentIds();
         System.out.println("JSON:" + Results.json().render(vpus));
         return Results.json().render(vpus);
 

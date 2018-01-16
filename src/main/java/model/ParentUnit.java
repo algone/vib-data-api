@@ -18,10 +18,10 @@ import org.mongodb.morphia.annotations.Reference;
  *
  * @author A4372949
  */
-@Entity("parentunits")
+@Entity(noClassnameStored = true)
 public class ParentUnit implements Serializable {
     @Id
-    private ObjectId parentId = new ObjectId();
+    private String id = new ObjectId().toHexString();
     private String unitName = "";
     private String description = "";
     private UnitStyle style = UnitStyle.FAMILY;
@@ -37,20 +37,23 @@ public class ParentUnit implements Serializable {
     private ParentUnitAccessibility parentUnitAccessibility = new ParentUnitAccessibility();
     @Embedded
     private List<VibandaImage> parentImages;
-
-    @Reference(idOnly=true)
-    private List<Unit> rentalUnits;
+  @Embedded
+  private List<String> rentalUnits= new ArrayList<>();
+//    @Reference
+//    private List<Unit> rentalUnits= new ArrayList<>();
 
     public ParentUnit() {
     }
 
-    public ObjectId  getParentId() {
-        return parentId;
+    public String getId() {
+        return id;
     }
 
-    public void setParentId(ObjectId parentId) {
-        this.parentId = parentId;
+    public void setId(String id) {
+        this.id = id;
     }
+
+
 
     public String getDescription() {
         return description;
@@ -100,13 +103,21 @@ public class ParentUnit implements Serializable {
         this.parentUnitAccessibility = parentUnitAccessibility;
     }
 
-    public List<Unit> getRentalUnits() {
+    public List<String> getRentalUnits() {
         return rentalUnits;
     }
 
-    public void setRentalUnits(List<Unit> rentalUnits) {
+    public void setRentalUnits(List<String> rentalUnits) {
         this.rentalUnits = rentalUnits;
     }
+
+//    public List<Unit> getRentalUnits() {
+//        return rentalUnits;
+//    }
+//
+//    public void setRentalUnits(List<Unit> rentalUnits) {
+//        this.rentalUnits = rentalUnits;
+//    }
 
     public UnitStyle getStyle() {
         return style;

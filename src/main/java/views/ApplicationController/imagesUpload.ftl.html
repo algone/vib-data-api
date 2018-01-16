@@ -1,0 +1,79 @@
+<#import "../layout/defaultLayout.ftl.html" as layout> 
+<@layout.myLayout "Home page">    
+
+
+<div class="row">
+    <div id="test3" class="col s12"> 
+        <form action="/api/images/upload2">
+            <div class="row">
+                <div class="col s12">
+
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
+                            <span class="card-title">Add Unit Images</span>
+                        </div>
+                        <div class="card-content">
+                            <p>Use this component to add one or more images to the currently defined Unit.</p>
+
+                            <div class="row">
+
+                                <div class="file-field input-field col s10">
+                                    <div class="btn">
+                                        <span>File</span>
+                                        <input type="file" multiple name="unitImageFile">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Upload one or more files" name="imageName">
+                                    </div>
+                                </div>
+                                <div class=" input-field col s2">
+                                    <label for="useAsParentImage">
+                                        <input type="checkbox" id="useAsParentImage" name="useAsParentImage" >
+                                        <span>Use as Parent Image</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class=" input-field col s10">
+                                    <textarea id="imagedescription" class="materialize-textarea" name="imageDescription"></textarea>
+                                    <label for="imageDescription">Image description</label>
+                                </div>
+
+                                <div class=" input-field col s2">
+                                    <label for="coverImage">
+                                        <input type="checkbox" id="coverImage" name="coverImage" >
+                                        <span>Is Cover Image</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class=" input-field col s12">
+                                    <select name="unitId" id="unitid">
+                                        <#list data.units as unit>
+
+                                        <option value="${unit}">${unit}</option>
+
+                                        </#list>
+                                    </select>
+                                    <label>Select Unit</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="card-action">
+
+                            <button class="btn-floating btn-large waves-effect waves-light red" ><i class="material-icons">add</i></button>
+
+                            <!--a href="#">This is a link</a-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</@layout.myLayout>

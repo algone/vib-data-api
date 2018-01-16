@@ -171,7 +171,9 @@ public class ParamsExtrator {
     private void extractUnitProperties() throws NumberFormatException {
 
         for (String key : keys) {
-
+            if (key.matches("unitParent")) {
+                vUnit.setUnitParentId(context.getParameter(key));
+            }
             if (key.matches("unitHeading")) {
                 vUnit.setUnitHeading(context.getParameter(key));
             }
