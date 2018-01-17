@@ -53,7 +53,7 @@ public class DatabaseController {
         return Results.noContent();
     }
 
-    public Result findParent(Context context, @PathParam("parentId") long id) {
+    public Result findParent(@PathParam("parentId") String id) {
         ParentUnit parent = dbService.findParent(id);
         return Results.json().render(parent);
 
@@ -74,14 +74,14 @@ public class DatabaseController {
             @Param("useAsParentImage") boolean useAsParentImage,
             @Param("unitId") String unitId,
             @Param("imageDescription") String imageDescription) throws IOException {
-        
-        System.out.println("Uploading .....image: "+imageName);
+
+        System.out.println("Uploading .....image: " + imageName);
 
         Map uploadParams = ObjectUtils.asMap(
                 "tags", imageDescription,
                 "imageDescription", imageDescription
         );
-        
+
         Map result = imgService.uploadImage(unitImageFile.getFile(), uploadParams);
 
         VibandaImage img = new VibandaImage();
@@ -166,6 +166,22 @@ public class DatabaseController {
         List<Unit> vus = dbService.getAllUnits();
 
         return Results.json().render(vus);
+    }
+
+    public Result findUnit(@PathParam("unitId") String id) {
+        Unit vu = dbService.findUnit(id);
+
+        return Results.json().render(vu);
+    }
+
+    public Result findParentUnit(@PathParam("parentId") String id) {
+        ParentUnit vpu = dbService.findParent(id);
+        return Results.json().render(vpu);
+    }
+
+    public Result getUnitsByParentId(@PathParam("parentId") String id) {
+        List<Unit> vpu = dbService.findUnitsByParentId(id);
+        return Results.json().render(vpu);
     }
 
     public Result addUnit(Context context) {

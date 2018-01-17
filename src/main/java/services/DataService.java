@@ -65,7 +65,6 @@ public class DataService implements Service {
     public void addParent(ParentUnit vpu) {
         Morphia morphia = this.mongoDB.getMorphia();
         Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-
         ds.save(vpu);
     }
 
@@ -84,24 +83,24 @@ public class DataService implements Service {
 
     }
 
-    @Override
-    public ParentUnit findParent(long parentId) {
-        Morphia morphia = this.mongoDB.getMorphia();
-        morphia.mapPackage("model");
-        Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-        final Query<ParentUnit> parent = ds.createQuery(ParentUnit.class)
-                .field("parentId").equal(parentId);
-
-//        Document document = myCollection.find(eq("_id", new ObjectId("4f693d40e4b04cde19f17205"))).first();
-//        if (document == null) {
-//            //Document does not exist
-//        } else {
-//            //We found the document
-//        }
-        System.out.println("Finding parent..... " + parentId);
-
-        return parent.get();
-    }
+//    @Override
+//    public ParentUnit findParent(long parentId) {
+//        Morphia morphia = this.mongoDB.getMorphia();
+//        morphia.mapPackage("model");
+//        Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+//        final Query<ParentUnit> parent = ds.createQuery(ParentUnit.class)
+//                .field("parentId").equal(parentId);
+//
+////        Document document = myCollection.find(eq("_id", new ObjectId("4f693d40e4b04cde19f17205"))).first();
+////        if (document == null) {
+////            //Document does not exist
+////        } else {
+////            //We found the document
+////        }
+//        System.out.println("Finding parent..... " + parentId);
+//
+//        return parent.get();
+//    }
 
     public List<String> getParentIds() {
         Morphia morphia = this.mongoDB.getMorphia();
@@ -127,7 +126,8 @@ public class DataService implements Service {
         });
         return unitIds;
     }
-@Override
+
+    @Override
     public void saveImage(VibandaImage img) {
         System.out.println("Persisting image to mongolab....");
         Morphia morphia = this.mongoDB.getMorphia();
@@ -138,11 +138,9 @@ public class DataService implements Service {
     @Override
     public List<ParentUnit> getAllParents() {
         Morphia morphia = this.mongoDB.getMorphia();
-//        morphia.getMapper().getConverters().addConverter(cls);
         morphia.mapPackage("model");
         Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         final Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
-//        FindOptions opts = new FindOptions();
         getParentIds();
         List<ParentUnit> parents = query.asList();
         return parents;
@@ -197,11 +195,8 @@ public class DataService implements Service {
     @Override
     public List<Unit> getAllUnits() {
         Morphia morphia = this.mongoDB.getMorphia();
-
         Datastore ds = morphia.mapPackage("model").createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Unit> query = ds.createQuery(Unit.class);
-
-//        List<ParentUnit> unit = query.field("rentalUnits.1").hasThisOne("DUPLEX").project("rentalUnits", true).asList();
         return query.asList();
     }
 
@@ -220,5 +215,40 @@ public class DataService implements Service {
     @Override
     public void deleteUnit(String unitId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ParentUnit findParent(String parentId) {
+        Morphia morphia = this.mongoDB.getMorphia();
+
+        Datastore ds = morphia.mapPackage("model").createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
+        Query<ParentUnit> result = query.field("id").equal(parentId);
+        return result.get();
+    }
+
+    @Override
+    public Unit findUnit(String unitId) {
+        Morphia morphia = this.mongoDB.getMorphia();
+
+        Datastore ds = morphia.mapPackage("model").createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        Query<Unit> query = ds.createQuery(Unit.class);
+        Query<Unit> result = query.field("id").equal(unitId);
+        return result.get();
+    }
+
+    @Override
+    public ParentUnit findUnitImages(String unitId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Unit> findUnitsByParentId(String parentId) {
+               Morphia morphia = this.mongoDB.getMorphia();
+
+        Datastore ds = morphia.mapPackage("model").createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        Query<Unit> query = ds.createQuery(Unit.class);
+        Query<Unit> result = query.field("unitParentId").equal(parentId);
+        return result.asList();
     }
 }

@@ -28,10 +28,16 @@ public interface Service {
 
     public void deleteUnit(String unitId);
 
-    public ParentUnit findParent(long parentId);
-
+    /**
+     *
+     * @param parentId
+     * @return
+     */
+    public ParentUnit findParent(String parentId);
+    public List<Unit> findUnitsByParentId(String parentId);
+    public Unit findUnit(String unitId);
+    public ParentUnit findUnitImages(String unitId);
     public List<ParentUnit> getAllParents();
-
     public List<Unit> getAllUnits();
 
     public void saveImage(VibandaImage img);

@@ -30,11 +30,15 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/api/parents/add").with(DatabaseController::addParent);
         router.POST().route("/api/units/add").with(DatabaseController::addUnit);
         router.DELETE().route("/api/parents/delete/{parentId}").with(DatabaseController::deleteParent);
-        router.GET().route("/api/parents/find/{parentId}").with(DatabaseController::findParent);
+//        router.GET().route("/api/parents/find/{parentId}").with(DatabaseController::findParent);
         router.POST().route("/api/images/upload").with(DatabaseController::addImage);
         router.POST().route("/api/images/upload2").with(DatabaseController::uploadImage);
         router.GET().route("/api/parents").with(DatabaseController::listAll);
+        router.GET().route("/api/parents/{parentId}").with(DatabaseController::findParent);
+        
         router.GET().route("/api/units").with(ApplicationController::findAllUnits);
+        router.GET().route("/api/units/{unitId}").with(DatabaseController::findUnit);
+        router.GET().route("/api/units/{parentId}/units").with(DatabaseController::getUnitsByParentId);
 
         router.GET().route("/create").with(ApplicationController::createParentUnit);
         router.GET().route("/form/uploadImage").with(ApplicationController::showImageUploadForm);
