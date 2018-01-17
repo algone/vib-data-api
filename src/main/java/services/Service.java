@@ -8,6 +8,7 @@ package services;
 import java.util.List;
 import model.ParentUnit;
 import model.Unit;
+import model.VibandaImage;
 
 /**
  *
@@ -33,4 +34,5 @@ public interface Service {
 
     public List<Unit> getAllUnits();
 
+    public void saveImage(VibandaImage img);
 }

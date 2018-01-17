@@ -4,17 +4,17 @@
 
 <div class="row">
     <div id="test3" class="col s12"> 
-        <form action="/api/images/upload2">
+        <form action="/api/images/upload2" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col s12">
 
                     <div class="card">
                         <div class="card-image">
                             <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
-                            <span class="card-title">Add Unit Images</span>
+                            <span class="card-title">Add your lovely images to Vibanda</span>
                         </div>
                         <div class="card-content">
-                            <p>Use this component to add one or more images to the currently defined Unit.</p>
+                            <p>Add one or more images to the currently defined Parent or unit. Define if you need the image to be a cover image or to be used as the parent image</p>
 
                             <div class="row">
 
@@ -65,10 +65,12 @@
                         </div>
                         <div class="card-action">
 
-                            <button class="btn-floating btn-large waves-effect waves-light red" ><i class="material-icons">add</i></button>
+                            <!--button class="btn-floating btn-large waves-effect waves-light red" ><i class="material-icons">add</i></button-->
 
                             <!--a href="#">This is a link</a-->
-
+                            <button class="btn waves-effect waves-light right" type="submit" onclick="M.toast({html: 'Image Added'})">Upload Image
+                                <i class="material-icons right">cloud_upload</i>
+                            </button>
                         </div>
                     </div>
                 </div>

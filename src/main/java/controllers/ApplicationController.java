@@ -109,9 +109,9 @@ public class ApplicationController {
     }
 
     public Result showImageUploadForm() {
-        List<String> parents = dbService.getUnitIds();
+        List<String> unitIds = dbService.getUnitIds();
         Map<String, Object> data = new HashMap<>();
-        data.put("units", parents);
+        data.put("units", unitIds);
         return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("data", data);
 
     }

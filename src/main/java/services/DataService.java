@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.inject.Singleton;
 import model.ParentUnit;
 import model.Unit;
+import model.VibandaImage;
 import net.binggl.ninja.mongodb.MongoDB;
 import ninja.Context;
 import ninja.Result;
@@ -116,8 +117,8 @@ public class DataService implements Service {
         });
         return parentIds;
     }
-    
-        public List<String> getUnitIds() {
+
+    public List<String> getUnitIds() {
 
         List<Unit> units = getAllUnits();
         List<String> unitIds = new ArrayList<>();
@@ -125,6 +126,13 @@ public class DataService implements Service {
             unitIds.add(parent.getId());
         });
         return unitIds;
+    }
+@Override
+    public void saveImage(VibandaImage img) {
+        System.out.println("Persisting image to mongolab....");
+        Morphia morphia = this.mongoDB.getMorphia();
+        Datastore ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        ds.save(img);
     }
 
     @Override
@@ -194,8 +202,6 @@ public class DataService implements Service {
         Query<Unit> query = ds.createQuery(Unit.class);
 
 //        List<ParentUnit> unit = query.field("rentalUnits.1").hasThisOne("DUPLEX").project("rentalUnits", true).asList();
-
-
         return query.asList();
     }
 

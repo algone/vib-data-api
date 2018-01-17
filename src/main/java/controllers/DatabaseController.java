@@ -6,7 +6,6 @@
 package controllers;
 
 import com.cloudinary.utils.ObjectUtils;
-import com.google.common.collect.HashBiMap;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -63,11 +62,8 @@ public class DatabaseController {
     public Result addParent(Context context) {
         ParentUnit vpu = new ParamsExtrator(context).getParent();
         vpu.setParentImages(parentImages);
-//        vpu.getRentalUnits().addAll(units);
         dbService.addParent(vpu);
         units.clear();
-
-//        return Results.json().render(vpu);
         return Results.html().template("views/ApplicationController/index.ftl.html");
 
     }
@@ -78,11 +74,14 @@ public class DatabaseController {
             @Param("useAsParentImage") boolean useAsParentImage,
             @Param("unitId") String unitId,
             @Param("imageDescription") String imageDescription) throws IOException {
+        
+        System.out.println("Uploading .....image: "+imageName);
 
         Map uploadParams = ObjectUtils.asMap(
                 "tags", imageDescription,
                 "imageDescription", imageDescription
         );
+        
         Map result = imgService.uploadImage(unitImageFile.getFile(), uploadParams);
 
         VibandaImage img = new VibandaImage();
@@ -92,7 +91,7 @@ public class DatabaseController {
         img.setUnitId(unitId);
         img.setImageDescription((String) uploadParams.get("tags"));
 
-        dbService.upload(unitImageFile.getFile().getAbsolutePath(), imageName);
+//        dbService.upload(unitImageFile.getFile().getAbsolutePath(), imageName);
         String iscover = context.getParameter("coverImage");
         String isParentImage = context.getParameter("useAsParentImage");
 
@@ -104,8 +103,13 @@ public class DatabaseController {
             System.out.println("Adding unit Image");
             img.setUseAsParentImage(true);
         }
-//        return Results.noContent();
-        return Results.json().render(img);
+
+        dbService.saveImage(img);
+
+        List<String> unitIds = dbService.getUnitIds();
+        Map<String, Object> data = new HashMap<>();
+        data.put("units", unitIds);
+        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("data", data);
     }
 
     private Map<String, Object> getCloudinaryResult() throws JsonSyntaxException {
@@ -155,7 +159,6 @@ public class DatabaseController {
 
     public Result listAll(Context context) {
         List<ParentUnit> vpus = dbService.getAllParents();
-
         return Results.json().render(vpus);
     }
 
@@ -168,15 +171,11 @@ public class DatabaseController {
     public Result addUnit(Context context) {
         ParamsExtrator pe = new ParamsExtrator(context);
         Unit vUnit = pe.getUnit();
-
         List<String> parents = dbService.getParentIds();
-
         Map<String, Object> data = new HashMap<>();
         data.put("parentUnits", parents);
         data.put("msg", vUnit.getId() + " Added!");
-
         dbService.addUnit(vUnit);
-
         return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
     }
 }
