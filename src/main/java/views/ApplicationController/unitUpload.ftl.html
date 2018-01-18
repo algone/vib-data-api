@@ -13,9 +13,7 @@
                         
                         <select name="unitParent" id="unitparent">
                             <#list data.parentUnits as parent>
-                            
                             <option value="${parent}">${parent}</option>
-                        
                             </#list>
                         </select>
                          <label>Select Parent Unit</label>
@@ -31,7 +29,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s9">
                         <i class="fa fa-pencil prefix"></i>
                         <textarea id="unitDesc" class="materialize-textarea" name="unitDescription"></textarea>
                         <label for="unitDesc">Unit Description</label>
@@ -43,10 +41,7 @@
                             <option value="LONG_TERM">LONG TERM</option>
                         </select>
                     </div>
-                    <div class="input-field col s3">
-                        <!-- Modal Trigger -->
-                        <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add Images</a>
-                    </div>
+
                 </div>
 
                 <div class="row">
