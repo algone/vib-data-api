@@ -10,6 +10,7 @@
                     <div class="input-field col s4">
 
                         <select name="unitParent" id="unitparent">
+                            <option value="" disabled selected>Choose Parent Unit</option>
                             <#list data.parentUnits as parent>
                             <option value="${parent}">${parent}</option>
                             </#list>
@@ -34,7 +35,7 @@
                     </div>
                     <div class="input-field col s4">
                         <select name="rentalType">
-                            <option value="" disabled selected>Rental type</option>
+                            <option value="" disabled selected>Rental Type</option>
                             <option value="SHORT_TERM">SHORT TERM</option>
                             <option value="LONG_TERM">LONG TERM</option>
                         </select>
@@ -71,7 +72,7 @@
                             <option value="PRIVATE_ROOM">PRIVATE_ROOM</option>
                         </select>
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col s4">
                         <select id="furnishingtype" name="furnishingType">
                             <option value="" disabled selected>Choose furnishing type</option>
                             <option value="FURNISHED">FURNISHED</option>
@@ -79,7 +80,7 @@
                             <option value="UNFURNISHED">UNFURNISHED</option>
                         </select>
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col s2">
                         <label >
                             <input type="checkbox" class="filled-in" id="activeunit" name="active">
                             <span>Active</span>
