@@ -194,4 +194,9 @@ public class DatabaseController {
         dbService.addUnit(vUnit);
         return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
     }
+    
+        public Result findUnitImages(@PathParam("unitId") String id) {
+        List<VibandaImage> vui = dbService.findUnitImages(id);
+        return Results.json().render(vui);
+    }
 }
