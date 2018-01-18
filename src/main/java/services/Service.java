@@ -39,6 +39,5 @@ public interface Service {
     public ParentUnit findUnitImages(String unitId);
     public List<ParentUnit> getAllParents();
     public List<Unit> getAllUnits();
-
     public void saveImage(VibandaImage img);
 }
