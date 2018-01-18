@@ -25,21 +25,28 @@ public class Routes implements ApplicationRoutes {
 
     @Override
     public void init(Router router) {
-
+        /**
+         * Root, defaults to index page
+         */
         router.GET().route("/").with(ApplicationController::index);
+        /**
+         * Adds a new ParentUnit
+         */
         router.POST().route("/api/parents/add").with(DatabaseController::addParent);
-        router.POST().route("/api/units/add").with(DatabaseController::addUnit);
-        router.DELETE().route("/api/parents/delete/{parentId}").with(DatabaseController::deleteParent);
-//        router.GET().route("/api/parents/find/{parentId}").with(DatabaseController::findParent);
+        /**
+         *Deletes a ParentUnit from DB
+         */
+        router.DELETE().route("/api/parents/{parentId}/delete").with(DatabaseController::deleteParent);
         router.POST().route("/api/images/upload").with(DatabaseController::addImage);
         router.POST().route("/api/images/upload2").with(DatabaseController::uploadImage);
         router.GET().route("/api/parents").with(DatabaseController::listAll);
         router.GET().route("/api/parents/{parentId}").with(DatabaseController::findParent);
-        
+
+        router.POST().route("/api/units/add").with(DatabaseController::addUnit);
         router.GET().route("/api/units").with(ApplicationController::findAllUnits);
         router.GET().route("/api/units/{unitId}").with(DatabaseController::findUnit);
         router.GET().route("/api/units/{parentId}/units").with(DatabaseController::getUnitsByParentId);
-        
+
         //Images api
         router.GET().route("/api/images/{unitId}").with(DatabaseController::findUnitImages);
 

@@ -228,6 +228,9 @@ public class ParamsExtrator {
                 vUnit.setDateAvailableFrom(context.getParameter(key));
 
             }
+                        if (key.matches("ecorated")) {
+                vpu.setDescription(context.getParameter(key));
+            }
         }
     }
 

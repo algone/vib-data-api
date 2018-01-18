@@ -32,6 +32,7 @@ public class Unit implements Serializable {
     private int unitNumber;
     private int unitFloorNumber;
     private boolean active;
+    private boolean ecorated;
     private String dateOfPosting;
     private String dateAvailableFrom;
     private String unitParentId;
@@ -217,6 +218,13 @@ public class Unit implements Serializable {
 
     public void setUnitRatings(List<Rating> unitRatings) {
         this.unitRatings = unitRatings;
+    }
+    public boolean isEcorated() {
+        return ecorated;
+    }
+
+    public void setEcorated(boolean ecorated) {
+        this.ecorated = ecorated;
     }
 
 }

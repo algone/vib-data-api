@@ -12,7 +12,6 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Reference;
 
 /**
  *
@@ -39,8 +38,6 @@ public class ParentUnit implements Serializable {
     private List<VibandaImage> parentImages;
   @Embedded
   private List<String> rentalUnits= new ArrayList<>();
-//    @Reference
-//    private List<Unit> rentalUnits= new ArrayList<>();
 
     public ParentUnit() {
     }
