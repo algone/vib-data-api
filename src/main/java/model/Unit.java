@@ -36,6 +36,7 @@ public class Unit implements Serializable {
     private String dateOfPosting;
     private String dateAvailableFrom;
     private String unitParentId;
+    private Location location;
     private RentalType rentalType = RentalType.SHORT_TERM;
     private UnitType unitType = UnitType.APARTMENT;
     private UnitPrivacy privacy = UnitPrivacy.ENTIRE_HOME;
@@ -225,6 +226,14 @@ public class Unit implements Serializable {
 
     public void setEcorated(boolean ecorated) {
         this.ecorated = ecorated;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
 }

@@ -19,6 +19,7 @@ import org.mongodb.morphia.annotations.Id;
  */
 @Entity(noClassnameStored = true)
 public class ParentUnit implements Serializable {
+
     @Id
     private String id = new ObjectId().toHexString();
     private String unitName = "";
@@ -36,8 +37,8 @@ public class ParentUnit implements Serializable {
     private ParentUnitAccessibility parentUnitAccessibility = new ParentUnitAccessibility();
     @Embedded
     private List<VibandaImage> parentImages;
-  @Embedded
-  private List<String> rentalUnits= new ArrayList<>();
+    @Embedded
+    private List<String> rentalUnits = new ArrayList<>();
 
     public ParentUnit() {
     }
@@ -49,8 +50,6 @@ public class ParentUnit implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
-
-
 
     public String getDescription() {
         return description;
@@ -115,7 +114,6 @@ public class ParentUnit implements Serializable {
 //    public void setRentalUnits(List<Unit> rentalUnits) {
 //        this.rentalUnits = rentalUnits;
 //    }
-
     public UnitStyle getStyle() {
         return style;
     }
