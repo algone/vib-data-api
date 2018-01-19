@@ -37,10 +37,10 @@ public class Unit implements Serializable {
     private String dateAvailableFrom;
     private String unitParentId;
     private Location location;
-    private RentalType rentalType = RentalType.SHORT_TERM;
-    private UnitType unitType = UnitType.APARTMENT;
-    private UnitPrivacy privacy = UnitPrivacy.ENTIRE_HOME;
-    private FurnishingType furnishing = FurnishingType.UNFURNISHED;
+    private RentalType rentalType ;
+    private UnitType unitType ;
+    private UnitPrivacy privacy ;
+    private FurnishingType furnishing ;
 
     @Embedded
     private List<VibandaImage> unitImages = new ArrayList<>();

@@ -9,14 +9,19 @@ package model;
  *
  * @author A4372949
  */
-public enum UnitType {
-convertible,
-duplex,
-garden,
-penthouse,
-luxury,
-loft,
-junior,
-triplex,
-studio,
+public enum ParentType {
+    apartments,
+    lodges,
+    villas,
+    cottage,
+    guesthouses,
+    tent,
+    camp,
+    bb,
+    hostels,
+    homestay,
+    mobile,
+    boat,
+    castle,
+    farmhouse
 }

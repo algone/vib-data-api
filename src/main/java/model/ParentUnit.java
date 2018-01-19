@@ -22,11 +22,12 @@ public class ParentUnit implements Serializable {
 
     @Id
     private String id = new ObjectId().toHexString();
-    private String unitName = "";
-    private String description = "";
-    private UnitStyle style = UnitStyle.FAMILY;
-    private int numOfUnits = 0;
-    private int numOfFloors = 0;
+    private String unitName ;
+    private String description ;
+    private UnitStyle style ;
+    private ParentType parentType;
+    private int numOfUnits;
+    private int numOfFloors;
     private boolean ecorated;
 
     @Embedded
@@ -107,13 +108,16 @@ public class ParentUnit implements Serializable {
         this.rentalUnits = rentalUnits;
     }
 
-//    public List<Unit> getRentalUnits() {
-//        return rentalUnits;
-//    }
-//
-//    public void setRentalUnits(List<Unit> rentalUnits) {
-//        this.rentalUnits = rentalUnits;
-//    }
+    public ParentType getParentType() {
+        return parentType;
+    }
+
+    public void setParentType(ParentType parentType) {
+        this.parentType = parentType;
+    }
+
+    
+    
     public UnitStyle getStyle() {
         return style;
     }
