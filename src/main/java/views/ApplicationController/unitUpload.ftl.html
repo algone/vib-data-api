@@ -10,12 +10,12 @@
                     <div class="input-field col s4">
 
                         <select name="unitParent" id="unitparent">
-                            <option value="" disabled selected>Choose Parent Unit</option>
+                            <option value="" disabled selected>Unit belongs to: </option>
                             <#list data.parentUnits as parent>
                             <option value="${parent}">${parent}</option>
                             </#list>
                         </select>
-                        <label>Select Parent Unit</label>
+                        <label>Parent property</label>
                     </div>
                     <div class="input-field col s4">
                         <input type="text" id="uname" class="form-control validate" name="unitHeading">
@@ -31,11 +31,11 @@
                     <div class="input-field col s8">
 
                         <textarea id="unitDesc" class="materialize-textarea" name="unitDescription"></textarea>
-                        <label for="unitDesc">Unit Description</label>
+                        <label for="unitDesc">Description</label>
                     </div>
                     <div class="input-field col s4">
                         <select name="rentalType">
-                            <option value="" disabled selected>Rental Period</option>
+                            <option value="" disabled selected>Rental period</option>
                             <option value="SHORT_TERM">SHORT TERM</option>
                             <option value="LONG_TERM">LONG TERM</option>
                         </select>
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="input-field col s3">
                         <select id="unittype" name="unitType">
-                            <option value="" disabled selected>Choose Unit Type</option>
+                            <option value="" disabled selected>Unit type</option>
                             <option value="junior">JUNIOR</option>
                             <option value="luxury">LUXURY</option>
                             <option value="loft">LOFT</option>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="input-field col s3">
                         <select id="privacy" name="privacy">
-                            <option value="" disabled selected>Choose Privacy</option>
+                            <option value="" disabled selected>Choose privacy</option>
                             <option value="ENTIRE_HOME">ENTIRE_HOME</option>
                             <option value="SHARED_ROOM">SHARED_ROOM</option>
                             <option value="PRIVATE_ROOM">PRIVATE_ROOM</option>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="input-field col s4">
                         <select id="furnishingtype" name="furnishingType">
-                            <option value="" disabled selected>Choose Furnishing type</option>
+                            <option value="" disabled selected>Furnishing</option>
                             <option value="FURNISHED">FURNISHED</option>
                             <option value="SEMI_FURNISHED">SEMI_FURNISHED</option>
                         </select>
@@ -83,32 +83,28 @@
                 <div class="row">
                     <div class="range-field col s4">
                         <input type="range" min="0" max="10" id="numOfBedrooms"  name="numOfBedrooms">
-                        <label for="numOfBedrooms" >No. of bedrooms</label>
+                        <label for="numOfBedrooms" >Bedrooms</label>
                     </div>
                     <div class="range-field col s4">
                         <input type="range" min="0" max="10" id="numOfBathrooms"  name="numOfBathrooms">
-                        <label for="numOfBathrooms" >No. of bathrooms</label>
-                    </div>
-                    <div class="range-field col s4"> 
-                        <input type="range" min="0" max="10" id="numOfBalconies"  name="numOfBalconies">
-                        <label for="numOfBalconies">No of balconies</label>
+                        <label for="numOfBathrooms" >Bathrooms</label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="range-field col s4">
                         <input type="range" id="unitNumber" min="0" max="100"  name="unitNumber">
-                        <label for="unitNumber" >Unit Number</label>
+                        <label for="unitNumber" >No. of units</label>
                     </div>
                     <div class="range-field col s4">
                         <div class="md-form">
                             <input type="range" min="0" max="100" id="unitFloorNumber"  name="unitFloorNumber">
-                            <label for="unitFloorNumber">Unit Floor Number</label>
+                            <label for="unitFloorNumber">Floor No.</label>
                         </div>
                     </div>
                     <div class="range-field col s4">
                         <input type="range"  min="0" max="5" id="stuff" name="stuff">
-                        <label for="stuff" data-error="wrong" data-success="right">No. of Parkings</label>
+                        <label for="stuff" data-error="wrong" data-success="right">No. of parkings</label>
                     </div>
                 </div>
 
@@ -121,7 +117,7 @@
 
                     <div class="col s6">
                         <input placeholder="Selected date" type="text" id="availdate" class="datepicker" name="availableFrom">
-                        <label for="availdate">Date Available from</label>
+                        <label for="availdate">Date available</label>
                     </div>
 
                 </div>
@@ -165,7 +161,7 @@
                     <div class="col s3">
                         <label>
                             <input type="checkbox" class="filled-in" name="hasWalkinCloset">
-                            <span>Walkin Closet</span> 
+                            <span>Walk-in Closet</span> 
                         </label>
                     </div>
                     <div class="col s3">
@@ -239,10 +235,10 @@
 
                     <div class="input-field col s4">
                         <select name="currencyType">
-                            <option value="" disabled selected>Choose curreny type</option>
-                            <option value="DOLLAR">DOLLAR</option>
-                            <option value="SHILLINGS">SHILLINGS</option>
-                            <option value="SHILLINGS">EUROS</option>
+                            <option value="" disabled selected>Currency</option>
+                            <option value="DOLLAR">USD</option>
+                            <option value="SHILLINGS">KSH</option>
+                            <option value="SHILLINGS">EUR</option>
                         </select>
                     </div>
                     <div class="col s2">

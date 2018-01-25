@@ -31,51 +31,44 @@
         </style>
     </head>
     <body>
-
-
         <#include "header.ftl.html"/>
         <div class="container">
             <div class="section">  
                 <#nested/>
             </div>
-            <#include "uploadModal.ftl.html"/>
+            <div class="fixed-action-btn  click-to-toggle">
+                <a class="btn-floating btn-large red" pulse>
+                    <i class="material-icons">edit</i>
+                </a>
+                <ul>
+                    <li><a class="btn-floating red" href="/"><i class="material-icons">insert_chart</i></a></li>
+                    <li><a class="btn-floating yellow darken-1" href="/form/addParent" ><i class="material-icons">home</i></a></li>
+                    <li><a class="btn-floating green" href="/form/addUnit"><i class="material-icons">domain</i></a></li>
+                    <li><a class="btn-floating blue" href="/form/uploadImage"><i class="material-icons">publish</i></a></li>
+                </ul>
+            </div>
         </div>
-        <!-- <#include "footer.ftl.html"/> -->
 
-
-        <!-- JQuery -->
-        <script type="text/javascript" src="../../assets/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="../../assets/js/materialize.js"></script>
-
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
-        <script src="../../assets/js/materialize-stepper.min.js"></script>
 
         <script>
             (function ($) {
                 // Material Select Initialization
                 $(document).ready(function () {
-                    
-                    
-                    $('select').select();
-                    $('.fixed-action-btn').floatingActionButton({
-                        direction: 'left'
-                    });
-                    $('.datepicker').datepicker({formatSubmit: 'YYYY-MM-DD',
-                        hiddenName: true});
 
-                    $('.modal').modal();
-                    $('.stepper').activateStepper();
-                    $('.chips-autocomplete').material_chip({
-                        autocompleteOptions: {
-                            data: {
-                                'Apple': null,
-                                'Microsoft': null,
-                                'Google': null
-                            },
-                            limit: Infinity,
-                            minLength: 1
-                        }
+
+                    $('select').material_select();
+                    $('.datepicker').pickadate({
+                        selectMonths: true, // Creates a dropdown to control month
+                        selectYears: 15, // Creates a dropdown of 15 years to control year,
+                        today: 'Today',
+                        clear: 'Clear',
+                        close: 'Ok',
+                        closeOnSelect: false // Close upon selecting a date,
                     });
+                    $('.modal').modal();
                 });
 
 
