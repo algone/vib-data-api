@@ -2,15 +2,18 @@
 <@layout.myLayout "Home page"> 
 
 <div class="row">
-
+<#if list5?has_content>
     <#list parents?chunk(2) as row>
+      <div class="row">
     <#list row as parent>
-    <div class="row">
+  
         <div class="col s6 m6">${parent.id} </div>
-    </div>
+   
     
     </#list>
+     </div>
     </#list>
+    </#if>
     <div class="col s6 m6">
         <div class="card">
             <div class="card-image">
