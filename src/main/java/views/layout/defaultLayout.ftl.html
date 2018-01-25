@@ -14,7 +14,7 @@
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/css/materialize.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
 
 
         <!--Import Materialize-Stepper CSS -->
@@ -40,63 +40,46 @@
             </div>
             <#include "uploadModal.ftl.html"/>
         </div>
-       <!-- <#include "footer.ftl.html"/> -->
+        <!-- <#include "footer.ftl.html"/> -->
 
 
         <!-- JQuery -->
         <script type="text/javascript" src="../../assets/js/jquery-3.2.1.min.js"></script>
         <script src="../../assets/js/materialize.js"></script>
-        <script src="../../assets/js/init.js"></script>
+
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
         <script src="../../assets/js/materialize-stepper.min.js"></script>
 
         <script>
+            (function ($) {
+                // Material Select Initialization
+                $(document).ready(function () {
+                    
+                    
+                    $('select').select();
+                    $('.fixed-action-btn').floatingActionButton({
+                        direction: 'left'
+                    });
+                    $('.datepicker').datepicker({formatSubmit: 'YYYY-MM-DD',
+                        hiddenName: true});
 
-            // Material Select Initialization
-            $(document).ready(function () {
-
-                $('.tabs').tabs();
-                $('select').select();
-                $('.fixed-action-btn').floatingActionButton({
-                    direction: 'left'
+                    $('.modal').modal();
+                    $('.stepper').activateStepper();
+                    $('.chips-autocomplete').material_chip({
+                        autocompleteOptions: {
+                            data: {
+                                'Apple': null,
+                                'Microsoft': null,
+                                'Google': null
+                            },
+                            limit: Infinity,
+                            minLength: 1
+                        }
+                    });
                 });
 
 
-                $('.datepicker').datepicker({formatSubmit: 'YYYY-MM-DD',
-                    hiddenName: true});
-
-                $('.modal').modal();
-                $('.stepper').activateStepper();
-            });
-
-
-
-            function validateStepOne() {
-                // Extract the checked checkboxes from the first step
-                if ($('.step').first().find('input[type="checkbox"]:checked').length)
-                    return true;
-                return false;
-            }
-
-            function validateStepThree() {
-                test
-                var validation = true;
-                if ($('.step:nth-child(3) input[type="text"]').val().indexOf('materialize') === -1)
-                    validation = false;
-                if ($('.step:nth-child(3) input[type="checkbox"]:checked').length === 0)
-                    validation = false;
-                return validation;
-
-            }
-
-            function nextStepThreeHandler() {
-                if (validateStepThree())
-                    $('.stepper').nextStep();
-                else {
-                    $('.stepper ').destroyFeedback();
-                    $('.stepper').getStep($('.stepper').getActiveStep()).addClass('wrong');
-                }
-            }
+            })(jQuery); // end of jQuery name space
 
         </script>
 

@@ -11,6 +11,7 @@
                 <label for="unitname" data-error="wrong" data-success="right">Property title</label>
 
             </div>
+            
             <div class=" input-field col s4">
                 <select id="style" name="style" >
                     <option value="" disabled selected>Best suited for</option>
@@ -205,7 +206,7 @@
             <div class="col s4">
                 <label for="hasparks">
                     <input type="checkbox" id="hasparks"  name="hasParks" >
-                    <span>Children park</span></label>
+                    <span>Park</span></label>
             </div>
 
             <div class="col s4">
@@ -217,7 +218,7 @@
             <div class="col s4">
                 <label for="grocery">
                     <input type="checkbox" id="grocery" name="hasGroceryStore" >
-                    <span>Grocery Store</span></label>
+                    <span>Grocery store</span></label>
             </div>
             <div class="col s4">
                 <label for="publictransport"><input type="checkbox" id="publictransport" name="publicTransport" >
@@ -228,8 +229,11 @@
                     <span>Airport</span></label>
             </div>
         </div> 
+        <div class="row">
+            <div class="chips chips-autocomplete"></div>
+
+        </div>
         <div class="card-action">
-            <a href="#">This is a link</a>
             <button class="btn waves-effect waves-light right" type="submit">Save
                 <i class="material-icons right">send</i>
             </button>
