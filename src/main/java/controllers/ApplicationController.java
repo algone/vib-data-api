@@ -80,8 +80,8 @@ public class ApplicationController {
     List<VibandaImage> unitImages = new ArrayList<>();
 
     public Result index() {
-        List<ParentUnit> vpus = dbService.getAllParents();
-        return Results.html().template("views/ApplicationController/index.ftl.html").render("parents",vpus);
+//        List<ParentUnit> vpus = dbService.getAllParents();
+        return Results.html().template("views/ApplicationController/index.ftl.html");
 
     }
 
