@@ -1,6 +1,6 @@
 <#import "../layout/defaultLayout.ftl.html" as layout> 
 <@layout.myLayout "Home page">    
-<form method="post" enctype="multipart/form-data" action="/api/parents/add" >
+<form method="post" action="/api/parents/add" >
     <div class="card-panel hoverable"> 
         <h5 class="center-align">Vibanda Parent Unit</h5>
 
@@ -44,13 +44,13 @@
         </div>
         <div class="row">
             <div class="input-field col s10">
-                <textarea id="pudescription" class="materialize-textarea" name="description"></textarea>
-                <label for="pudescription">Description</label>
+                <textarea id="propertydescription" class="materialize-textarea" name="propertydescription"></textarea>
+                <label for="propertydescription">Description</label>
             </div>
-            <div class="input-field col s2">
+            <div class="col s2">
 
-                <input type="checkbox" id="ecorated" name="ecorated" >
-                <label for="ecorated" >Eco-Rated</label>
+                <input type="checkbox" id="eco" name="ecorated" >
+                <label for="eco" >Eco-Rated</label>
 
 
             </div>

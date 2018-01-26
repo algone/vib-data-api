@@ -7,26 +7,35 @@
 
 
 <div class="row">
-    <#if seq?has_content>
-    <#list seq?chunk(2) as row> 
-  <#list row as parent>  
-    <div class="col s6 m6">
-        <div class="card-image">
-            <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
-            <span class="card-title">${parent}</span>
-            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+    <#if parents?has_content>
+    <#list parents?chunk(2) as row> 
+    <#list row as parent>  
+    <div class="col s12 m6">
+        <div class="card ">
+            <div class="card-image">
+                <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
+                <span class="card-title">${parent.unitName}</span>
+                <a class="btn-floating halfway-fab waves-effect waves-light red">
+                    <i class="material-icons">add</i>
+                </a>
+            </div>
+            <div class="card-content">
+           
+                <p>${parent.propertyDescription}</p>
+            </div>
+            <!--div class="card-action">
+                <a href="#">This is a link</a>
+                <a href="#">This is a link</a>
+            </div-->
         </div>
-        <div class="card-content">
-            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-        </div>
-    </div>
-</#list>
+    </div>  
+    </#list>
 
-</#list>
-</#if>
+    </#list>
+    </#if>
 </div>
 
-<div class="row">
+<!--div class="row">
 
     <div class="col s6 m6">
         <div class="card">
@@ -52,7 +61,7 @@
             </div>
         </div>
     </div>
-</div>
+</div-->
 <div class="row">
     <div class="col s12 m6">
         <div class="card blue-grey darken-1">

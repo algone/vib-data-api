@@ -44,9 +44,9 @@ public class DatabaseController {
     DataService dbService;
     @Inject
     VibandaImageService imgService;
-    private List<VibandaImage> parentImages = new ArrayList<>();
-    private List<Unit> units = new ArrayList<>();
-    private List<VibandaImage> unitImages = new ArrayList<>();
+//    private List<VibandaImage> parentImages = new ArrayList<>();
+//    private List<Unit> units = new ArrayList<>();
+//    private List<VibandaImage> unitImages = new ArrayList<>();
 
     public Result deleteParent(@PathParam("parentId") long productId) {
         dbService.deleteParent(productId);
@@ -61,9 +61,9 @@ public class DatabaseController {
 
     public Result addParent(Context context) {
         ParentUnit vpu = new ParamsExtrator(context).getParent();
-        vpu.setParentImages(parentImages);
+   
         dbService.addParent(vpu);
-        units.clear();
+
         return Results.html().template("views/ApplicationController/index.ftl.html");
 
     }
@@ -90,8 +90,6 @@ public class DatabaseController {
         img.setImageUrl(url);
         img.setUnitId(unitId);
         img.setImageDescription((String) uploadParams.get("tags"));
-
-//        dbService.upload(unitImageFile.getFile().getAbsolutePath(), imageName);
         String iscover = context.getParameter("coverImage");
         String isParentImage = context.getParameter("useAsParentImage");
 
@@ -148,11 +146,6 @@ public class DatabaseController {
         image.setImageUrl("assets/img/images/" + imageName);
         image.setImageDescription(imageDescription);
         dbService.upload(unitImageFile.getFile().getAbsolutePath(), imageName);
-        if (isCoverImage) {
-            parentImages.add(image);
-        } else {
-            unitImages.add(image);
-        }
         return Results.noContent();
 
     }

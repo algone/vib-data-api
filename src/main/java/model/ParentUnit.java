@@ -23,7 +23,7 @@ public class ParentUnit implements Serializable {
     @Id
     private String id = new ObjectId().toHexString();
     private String unitName ;
-    private String description ;
+    private String propertyDescription ;
     private UnitStyle style ;
     private ParentType parentType;
     private int numOfUnits;
@@ -52,12 +52,12 @@ public class ParentUnit implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPropertyDescription() {
+        return propertyDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPropertyDescription(String propertyDescription) {
+        this.propertyDescription = propertyDescription;
     }
 
     public int getNumOfFloors() {

@@ -29,10 +29,11 @@ public class ParamsExtrator {
 
     private Context context;
     private Set<String> keys;
-    private ParentUnit vpu = new ParentUnit();
+    private ParentUnit vpu;
     private Unit vUnit = new Unit();
 
     public ParamsExtrator(Context context) {
+        vpu = new ParentUnit();
         this.context = context;
         this.keys = context.getParameters().keySet();
 
@@ -150,8 +151,8 @@ public class ParamsExtrator {
             if (key.matches("unitName")) {
                 vpu.setUnitName(context.getParameter(key));
             }
-            if (key.matches("description")) {
-                vpu.setDescription(context.getParameter(key));
+            if (key.matches("propertydescription")) {
+                vpu.setPropertyDescription(context.getParameter(key));
             }
             if (key.matches("style")) {
                 vpu.setStyle(UnitStyle.valueOf(context.getParameter(key)));
@@ -163,10 +164,10 @@ public class ParamsExtrator {
                 vpu.setNumOfFloors(Integer.parseInt(context.getParameter(key)));
             }
             if (key.matches("ecorated")) {
-                vpu.setDescription(context.getParameter(key));
+                vpu.setPropertyDescription(context.getParameter(key));
             }
-                     if (key.matches("parentType")) {
-                vpu.setDescription(context.getParameter(key));
+            if (key.matches("parentType")) {
+                vpu.setPropertyDescription(context.getParameter(key));
             }
 
         }
