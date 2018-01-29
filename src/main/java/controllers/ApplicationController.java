@@ -98,7 +98,7 @@ public class ApplicationController {
     }
 
     public Result showUnitForm() {
-        List<String> parents = dbService.getParentIds();
+        Map<String, Object> parents = dbService.getParentIds();
 
         Map<String, Object> data = new HashMap<>();
         data.put("parentUnits", parents);
@@ -109,10 +109,10 @@ public class ApplicationController {
     }
 
     public Result showImageUploadForm() {
-        List<String> unitIds = dbService.getUnitIds();
-        Map<String, Object> data = new HashMap<>();
-        data.put("units", unitIds);
-        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("data", data);
+        List<Unit> unitIds = dbService.getAllUnits();
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("units", unitIds);
+        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds);
 
     }
 
@@ -159,7 +159,7 @@ public class ApplicationController {
 //        Query q = entityManager.createQuery("SELECT pu FROM ParentUnit pu");
         List<ParentUnit> vpus = dbService.getAllParents();
 
-        List<String> ids = dbService.getParentIds();
+        Map<String, Object> ids = dbService.getParentIds();
         System.out.println("JSON:" + Results.json().render(vpus));
         return Results.json().render(vpus);
 

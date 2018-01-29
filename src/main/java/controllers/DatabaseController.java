@@ -24,6 +24,7 @@ import model.VibandaImage;
 import ninja.Context;
 import ninja.Result;
 import ninja.Results;
+import ninja.ReverseRouter;
 import ninja.params.Param;
 import ninja.params.PathParam;
 import ninja.uploads.DiskFileItemProvider;
@@ -41,12 +42,13 @@ import services.VibandaImageService;
 public class DatabaseController {
 
     @Inject
+    ReverseRouter reverseRouter;
+
+    @Inject
     DataService dbService;
     @Inject
     VibandaImageService imgService;
-//    private List<VibandaImage> parentImages = new ArrayList<>();
-//    private List<Unit> units = new ArrayList<>();
-//    private List<VibandaImage> unitImages = new ArrayList<>();
+
 
     public Result deleteParent(@PathParam("parentId") long productId) {
         dbService.deleteParent(productId);
@@ -61,11 +63,12 @@ public class DatabaseController {
 
     public Result addParent(Context context) {
         ParentUnit vpu = new ParamsExtrator(context).getParent();
-   
+
         dbService.addParent(vpu);
 
-        return Results.html().template("views/ApplicationController/index.ftl.html");
-
+//        return Results.html().template("views/ApplicationController/index.ftl.html");
+        return reverseRouter.with(ApplicationController::index)
+                .redirect();
     }
 
     public Result uploadImage(Context context, @Param("unitImageFile") FileItem unitImageFile,
@@ -180,15 +183,15 @@ public class DatabaseController {
     public Result addUnit(Context context) {
         ParamsExtrator pe = new ParamsExtrator(context);
         Unit vUnit = pe.getUnit();
-        List<String> parents = dbService.getParentIds();
+        Map<String,Object> parents = dbService.getParentIds();
         Map<String, Object> data = new HashMap<>();
         data.put("parentUnits", parents);
         data.put("msg", vUnit.getId() + " Added!");
         dbService.addUnit(vUnit);
         return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
     }
-    
-        public Result findUnitImages(@PathParam("unitId") String id) {
+
+    public Result findUnitImages(@PathParam("unitId") String id) {
         List<VibandaImage> vui = dbService.findUnitImages(id);
         return Results.json().render(vui);
     }

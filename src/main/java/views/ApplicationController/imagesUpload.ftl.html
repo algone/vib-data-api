@@ -52,8 +52,8 @@
                                 <div class=" input-field col s12">
                                     <select name="unitId" id="unitid">
                                         <option value="" disabled selected>Choose Unit</option>
-                                        <#list data.units as unit>
-                                        <option value="${unit}">${unit}</option>
+                                        <#list units as unit>
+                                        <option value="${unit.id}">${unit.unitHeading}</option>
                                         </#list>
                                     </select>
                                     <label>Select Unit</label>

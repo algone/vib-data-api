@@ -11,8 +11,10 @@
 
                         <select name="unitParent" id="unitparent">
                             <option value="" disabled selected>Unit belongs to: </option>
-                            <#list data.parentUnits as parent>
-                            <option value="${parent}">${parent}</option>
+
+
+                            <#list data.parentUnits?keys as id>
+                            <option value="${id}" class="circle" >${data.parentUnits[id].unitName}</option>
                             </#list>
                         </select>
                         <label>Parent property</label>
