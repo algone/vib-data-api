@@ -47,7 +47,6 @@ public class DataService implements Service {
 
     @Inject
     private MongoDB mongoDB;
-    private Morphia morphia;
     private Datastore ds;
 
     @Start(order = 90)
@@ -62,18 +61,13 @@ public class DataService implements Service {
         System.out.println("Stoping data service...");
     }
 
-    public DataService() {
-        morphia = this.mongoDB.getMorphia();
-        morphia.mapPackage("model");
-        ds = morphia.createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-    }
-
     public Result getCount(Context ctx) {
         return Results.json();
     }
 
     @Override
     public void addParent(ParentUnit vpu) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(vpu);
     }
 
@@ -89,6 +83,7 @@ public class DataService implements Service {
     @Override
     public void deleteParent(long parentId) {
         final Query<ParentUnit> parentToDel = ds.createQuery(ParentUnit.class).filter("parentId =", parentId);
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.delete(parentToDel);
 
     }
@@ -117,13 +112,13 @@ public class DataService implements Service {
     @Override
     public void saveImage(VibandaImage img) {
         System.out.println("Persisting image to mongolab....");
-
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(img);
     }
 
     @Override
     public List<ParentUnit> getAllParents() {
-
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         final Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
 
         List<ParentUnit> parents = query.asList();
@@ -157,6 +152,7 @@ public class DataService implements Service {
 
     @Override
     public List<Unit> getAllUnits() {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Unit> query = ds.createQuery(Unit.class);
         return query.asList();
     }
@@ -167,6 +163,7 @@ public class DataService implements Service {
         ParentUnit parent = findParent(parentId);
         unit.setLocation(parent.getLocation());
         unit.setEcorated(parent.isEcorated());
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(unit);
     }
 
@@ -182,12 +179,13 @@ public class DataService implements Service {
 
     @Override
     public void deleteUnit(String unitId) {
-        
+
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public ParentUnit findParent(String parentId) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
         Query<ParentUnit> result = query.field("id").equal(parentId);
         return result.get();
@@ -195,6 +193,7 @@ public class DataService implements Service {
 
     @Override
     public Unit findUnit(String unitId) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Unit> query = ds.createQuery(Unit.class);
         Query<Unit> result = query.field("id").equal(unitId);
         return result.get();
@@ -202,6 +201,7 @@ public class DataService implements Service {
 
     @Override
     public List<VibandaImage> findUnitImages(String unitId) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<VibandaImage> query = ds.createQuery(VibandaImage.class);
         Query<VibandaImage> result = query.field("unitId").equal(unitId);
         return result.asList();
@@ -209,6 +209,7 @@ public class DataService implements Service {
 
     @Override
     public List<Unit> findUnitsByParentId(String parentId) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Unit> query = ds.createQuery(Unit.class);
         Query<Unit> result = query.field("unitParentId").equal(parentId);
         return result.asList();
@@ -216,7 +217,9 @@ public class DataService implements Service {
 
     @Override
     public void searchUnits(String jsonStr) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Unit> unitQuery = ds.createQuery(Unit.class);
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
