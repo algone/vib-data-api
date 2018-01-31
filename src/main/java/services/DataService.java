@@ -223,6 +223,7 @@ public class DataService implements Service {
     @Override
     public List<Unit> searchUnits(JsonNode jsonData) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        ds.ensureIndexes();
         LOG.debug("JSON data: " + jsonData.textValue());
         JsonNode jsonNode1 = jsonData.get("place");
         String city = jsonNode1.textValue();
