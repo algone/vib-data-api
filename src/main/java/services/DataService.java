@@ -5,6 +5,7 @@
  */
 package services;
 
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import com.mongodb.client.MongoDatabase;
@@ -38,6 +39,8 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -46,6 +49,7 @@ import org.mongodb.morphia.query.Query;
 @Singleton
 public class DataService implements Service {
 
+  final static Logger LOG = LoggerFactory.getLogger(DataService.class);
     @Inject
     private MongoDB mongoDB;
     private Datastore ds;
@@ -219,15 +223,15 @@ public class DataService implements Service {
     @Override
     public List<Unit> searchUnits(JsonNode jsonData) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-        System.out.println("JSON data: "+jsonData.textValue());
+        LOG.debug("JSON data: " + jsonData.textValue());
         JsonNode jsonNode1 = jsonData.get("place");
         String city = jsonNode1.textValue();
-      
+
         List<Unit> units = ds.createQuery(Unit.class)
-                             .search(city)
-                             .order("_id")
-                             .asList();
-        
-       return units;
+                .search(city)
+                .order("_id")
+                .asList();
+
+        return units;
     }
 }
