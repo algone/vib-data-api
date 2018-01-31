@@ -195,4 +195,10 @@ public class DatabaseController {
         List<VibandaImage> vui = dbService.findUnitImages(id);
         return Results.json().render(vui);
     }
+    
+        public Result search(Context context) {
+  
+         dbService.searchUnits("");
+        return Results.json();
+    }
 }

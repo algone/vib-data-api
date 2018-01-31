@@ -54,7 +54,9 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/form/uploadImage").with(ApplicationController::showImageUploadForm);
         router.GET().route("/form/addParent").with(ApplicationController::showParentUnitForm);
         router.GET().route("/form/addUnit").with(ApplicationController::showUnitForm);
-        router.GET().route("/test123").with(ApplicationController::showUpload);
+        
+        //Search
+        router.POST().route("/api/search").with(ApplicationController::showUpload);
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
