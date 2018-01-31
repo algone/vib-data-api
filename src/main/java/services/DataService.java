@@ -225,9 +225,9 @@ public class DataService implements Service {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.ensureIndexes();
         LOG.debug("JSON data: " + jsonData.textValue());
-        JsonNode jsonNode1 = jsonData.get("place");
+//        JsonNode jsonNode1 = jsonData.get("place");
         JsonNode locationNode = jsonData.get("location");
-        String place = jsonNode1.textValue();
+//        String place = jsonNode1.textValue();
       String city = locationNode.get("city").textValue();
         List<Unit> units = ds.createQuery(Unit.class)
                 .search(city)
