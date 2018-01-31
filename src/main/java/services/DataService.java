@@ -226,8 +226,9 @@ public class DataService implements Service {
         ds.ensureIndexes();
         LOG.debug("JSON data: " + jsonData.textValue());
         JsonNode jsonNode1 = jsonData.get("place");
-        String city = jsonNode1.textValue();
-
+        JsonNode locationNode = jsonData.get("location");
+        String place = jsonNode1.textValue();
+      String city = locationNode.get("city").textValue();
         List<Unit> units = ds.createQuery(Unit.class)
                 .search(city)
                 .order("_id")
