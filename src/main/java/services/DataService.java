@@ -218,8 +218,9 @@ public class DataService implements Service {
     @Override
     public void searchUnits(String jsonStr) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        System.out.println("JSON data: "+jsonStr);
         Query<Unit> unitQuery = ds.createQuery(Unit.class);
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 }

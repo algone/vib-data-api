@@ -6,6 +6,8 @@
 package controllers;
 
 import com.cloudinary.utils.ObjectUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -13,11 +15,18 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import model.ParentUnit;
 import model.Unit;
 import model.VibandaImage;
@@ -45,10 +54,11 @@ public class DatabaseController {
     ReverseRouter reverseRouter;
 
     @Inject
+    ObjectMapper objectMapper;
+    @Inject
     DataService dbService;
     @Inject
     VibandaImageService imgService;
-
 
     public Result deleteParent(@PathParam("parentId") long productId) {
         dbService.deleteParent(productId);
@@ -183,7 +193,7 @@ public class DatabaseController {
     public Result addUnit(Context context) {
         ParamsExtrator pe = new ParamsExtrator(context);
         Unit vUnit = pe.getUnit();
-        Map<String,Object> parents = dbService.getParentIds();
+        Map<String, Object> parents = dbService.getParentIds();
         Map<String, Object> data = new HashMap<>();
         data.put("parentUnits", parents);
         data.put("msg", vUnit.getId() + " Added!");
@@ -195,10 +205,29 @@ public class DatabaseController {
         List<VibandaImage> vui = dbService.findUnitImages(id);
         return Results.json().render(vui);
     }
-    
-        public Result search(Context context) {
-  
-         dbService.searchUnits("");
-        return Results.json();
+
+    public Result search(Context context) {
+        InputStream is = null;
+        JsonNode actualObj =null;
+        try {
+            is = context.getInputStream();
+            String jsonString = new BufferedReader(new InputStreamReader(is))
+                    .lines().collect(Collectors.joining("\n"));
+
+            actualObj = objectMapper.readTree(jsonString);
+
+            dbService.searchUnits(actualObj.asText());
+         
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException ex) {
+                Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }  
+        return Results.json().render(actualObj);
     }
+    
 }
