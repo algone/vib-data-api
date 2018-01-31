@@ -5,6 +5,7 @@
  */
 package services;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import model.ParentUnit;
 import model.Unit;
@@ -98,6 +99,6 @@ public interface Service {
      * @param img
      */
     public void saveImage(VibandaImage img);
-    public void searchUnits(String jsonStr);
+    public List<Unit> searchUnits(JsonNode json);
     
 }

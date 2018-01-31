@@ -5,6 +5,7 @@
  */
 package services;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
@@ -216,11 +217,17 @@ public class DataService implements Service {
     }
 
     @Override
-    public void searchUnits(String jsonStr) {
+    public List<Unit> searchUnits(JsonNode jsonData) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-        System.out.println("JSON data: "+jsonStr);
-        Query<Unit> unitQuery = ds.createQuery(Unit.class);
+        System.out.println("JSON data: "+jsonData.textValue());
+        JsonNode jsonNode1 = jsonData.get("name");
+        String city = jsonNode1.textValue();
+      
+        List<Unit> units = ds.createQuery(Unit.class)
+                             .search(city)
+                             .order("_id")
+                             .asList();
         
-       
+       return units;
     }
 }

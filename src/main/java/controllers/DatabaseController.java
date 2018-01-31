@@ -216,18 +216,18 @@ public class DatabaseController {
 
             actualObj = objectMapper.readTree(jsonString);
 
-            dbService.searchUnits(actualObj.asText());
-         
+            List<Unit> res = dbService.searchUnits(actualObj);
+          return Results.json().render(res);
         } catch (IOException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+             return Results.internalServerError();
         } finally {
             try {
                 is.close();
             } catch (IOException ex) {
-                Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+               return Results.internalServerError();
             }
         }  
-        return Results.json().render(actualObj);
+
     }
     
 }
