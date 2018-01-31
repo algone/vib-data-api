@@ -220,7 +220,7 @@ public class DataService implements Service {
     public List<Unit> searchUnits(JsonNode jsonData) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         System.out.println("JSON data: "+jsonData.textValue());
-        JsonNode jsonNode1 = jsonData.get("name");
+        JsonNode jsonNode1 = jsonData.get("place");
         String city = jsonNode1.textValue();
       
         List<Unit> units = ds.createQuery(Unit.class)
