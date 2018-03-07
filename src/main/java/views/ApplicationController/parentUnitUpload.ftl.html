@@ -57,27 +57,50 @@
         </div>
 
         <h6>Location</h6>
-        <div class="row">       
-            <div class="input-field col s6">  
-                <input type="text" id="street" class="validate" name="street" >
-                <label for="street" data-error="wrong" data-success="right">Street</label>
-            </div>
-            <div class="input-field col s6">
-                <input type="text" id="fulladdress" class="materialize-textarea" name="address" >
-                <label for="fulladdress" class="">Number</label>
-            </div>
+        <div class="row "> 
+            <div class="col s6">
+                <div class="row">       
+                    <div class="input-field col s6">  
+                        <input type="text" id="street" class="validate" name="street" >
+                        <label for="street" data-error="wrong" data-success="right">Street</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="text" id="fulladdress" class="materialize-textarea" name="address" >
+                        <label for="fulladdress" class="">Number</label>
+                    </div>
 
-        </div>
-        <div class="row">
-            <div class="input-field col s6">  
-                <input type="text" id="city" class="validate" name="city" >
-                <label for="city" data-error="wrong" data-success="right">City </label>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">  
+                        <input type="text" id="city" class="validate" name="city" >
+                        <label for="city" data-error="wrong" data-success="right">City </label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="text" id="county" class="validate" name="county" >
+                        <label for="county" data-error="wrong" data-success="right">County</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">  
+                        <input type="text" id="lat" class="validate" name="lat" >
+                        <label for="lat" data-error="wrong" data-success="right">Lat </label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="text" id="lon" class="validate" name="lon" >
+                        <label for="lon" data-error="wrong" data-success="right">Lon </label>
+                    </div>
+                </div>
             </div>
-            <div class="input-field col s6">
-                <input type="text" id="county" class="validate" name="county" >
-                <label for="county" data-error="wrong" data-success="right">County</label>
+            <div class="col s6 google-maps">
+                <p>Get Coordinates</p>
+                <div id="map"></div>
+                <div id="geocode-selector"></div>
+
             </div>
         </div>
+
+
         <h6>Facilities</h6>
         <br/>
         <div class="row">

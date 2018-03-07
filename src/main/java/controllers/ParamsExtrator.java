@@ -96,6 +96,12 @@ public class ParamsExtrator {
             if (key.matches("street")) {
                 vpu.getLocation().setStreetName(context.getParameter(key));
             }
+            if (key.matches("lat")) {
+                vpu.getLocation().setLat(Double.parseDouble(context.getParameter(key)));
+            }
+            if (key.matches("lon")) {
+                vpu.getLocation().setLon(Double.parseDouble(context.getParameter(key)));
+            }
         }
     }
 
