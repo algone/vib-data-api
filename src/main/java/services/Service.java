@@ -98,4 +98,6 @@ public interface Service {
      * @param img
      */
     public void saveImage(VibandaImage img);
+    public void searchUnits(String jsonStr);
+    
 }
