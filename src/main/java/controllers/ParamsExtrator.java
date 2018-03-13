@@ -11,7 +11,6 @@ import model.FurnishingType;
 import model.Location;
 import model.ParentUnit;
 import model.ParentUnitAccessibility;
-import model.ParentUnitFacilities;
 import model.RentalInfo;
 import model.RentalType;
 import model.Unit;
@@ -107,16 +106,6 @@ public class ParamsExtrator {
         }
     }
 
-    private void extractParentFacilities() {
-
-        for (String key : keys) {
-
-            /*
-        Parent Unit Facilities
-             */
-        }
-    }
-
     private void extractParentAttributes() throws NumberFormatException {
         /*
         MAin Unit Attributes
@@ -132,12 +121,6 @@ public class ParamsExtrator {
             if (key.matches("style")) {
                 vpu.setStyle(UnitStyle.valueOf(context.getParameter(key)));
             }
-//            if (key.matches("numOfUnits")) {
-//                vpu.setNumOfUnits(Integer.parseInt(context.getParameter(key)));
-//            }
-//            if (key.matches("numOfFloors")) {
-//                vpu.setNumOfFloors(Integer.parseInt(context.getParameter(key)));
-//            }
             if (key.matches("ecorated")) {
                 vpu.setEcorating(context.getParameter(key));
             }
@@ -156,9 +139,6 @@ public class ParamsExtrator {
             }
             if (key.matches("unitHeading")) {
                 vUnit.setUnitHeading(context.getParameter(key));
-            }
-            if (key.matches("postedBy")) {
-                vUnit.setPostedBy(context.getParameter(key));
             }
             if (key.matches("unitDescription")) {
                 vUnit.setUnitDescription(context.getParameter(key));
@@ -184,29 +164,23 @@ public class ParamsExtrator {
             if (key.matches("numOfBathrooms")) {
                 vUnit.setNumOfBathrooms(Integer.parseInt(context.getParameter(key)));
             }
-            if (key.matches("numOfBalconies")) {
-                vUnit.setNumOfBalconies(Integer.parseInt(context.getParameter(key)));
+            if (key.matches("beds")) {
+                vUnit.setBeds(Integer.parseInt(context.getParameter(key)));
             }
             if (key.matches("unitNumber")) {
-                vUnit.setNumOfBedrooms(Integer.parseInt(context.getParameter(key)));
+                vUnit.setUnitNumber(Integer.parseInt(context.getParameter(key)));
             }
-            if (key.matches("unitFloorNumber")) {
-                vUnit.setUnitFloorNumber(Integer.parseInt(context.getParameter(key)));
-            }
-            if (key.matches("stuff")) {
-                vUnit.setNumOfBedrooms(Integer.parseInt(context.getParameter(key)));
-            }
-
             if (key.matches("postDate")) {
-
                 vUnit.setDateOfPosting(context.getParameter(key));
-
             }
-
             if (key.matches("availableFrom")) {
-
                 vUnit.setDateAvailableFrom(context.getParameter(key));
-
+            }
+            if (key.matches("checkinTime")) {
+                vUnit.setCheckinTime(context.getParameter(key));
+            }
+            if (key.matches("checkoutime")) {
+                vUnit.setCheckoutTime(context.getParameter(key));
             }
         }
     }
@@ -308,27 +282,24 @@ public class ParamsExtrator {
             if (key.matches("longTermRentalPrice")) {
                 vUnit.getRentalInfo().setLongTermRentalPrice(Integer.parseInt(context.getParameter(key)));
             }
-            if (key.matches("cancellationFee")) {
-                vUnit.getRentalInfo().setCancellationFee(Integer.parseInt(context.getParameter(key)));
-            }
-            if (key.matches("adminFee")) {
-                vUnit.getRentalInfo().setAdminFee(Integer.parseInt(context.getParameter(key)));
+            if (key.matches("serviceFee")) {
+                vUnit.getRentalInfo().setServiceFee(Integer.parseInt(context.getParameter(key)));
             }
             if (key.matches("securityDeposit")) {
                 vUnit.getRentalInfo().setSecurityDeposit(Integer.parseInt(context.getParameter(key)));
             }
 
-            if (key.matches("subleasingAllowed")) {
-                vUnit.getRentalInfo().setSubleasingAllowed(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("cancellationAllowed")) {
-                vUnit.getRentalInfo().setCancellationAllowed(context.getParameter(key).contentEquals("on"));
+            if (key.matches("extraCharge")) {
+                vUnit.getRentalInfo().setPerExtraGuestCharge(Double.parseDouble(context.getParameter(key)));
             }
             if (key.matches("includeMeals")) {
                 vUnit.getRentalInfo().setIncludeMeals(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("childDiscount")) {
-                vUnit.getRentalInfo().setChildDiscount(context.getParameter(key).contentEquals("on"));
+                vUnit.getRentalInfo().setChildDiscount(Double.parseDouble(context.getParameter(key)));
+            }
+            if (key.matches("cancellationPolicy")) {
+                vUnit.getRentalInfo().setCancellationPolicy(context.getParameter(key));
             }
         }
     }
@@ -336,10 +307,8 @@ public class ParamsExtrator {
     public ParentUnit getParent() {
         vpu.setLocation(new Location());
         vpu.setParentUnitAccessibility(new ParentUnitAccessibility());
-//        vpu.setParentUnitFacilities(new ParentUnitFacilities());
         vpu.setRentalUnits(new ArrayList<>());
         extractParentAttributes();
-        extractParentFacilities();
         extractParentLocation();
         extractParentAccessibility();
         return this.vpu;

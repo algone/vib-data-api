@@ -18,33 +18,23 @@ import javax.persistence.Embeddable;
 @Embeddable @Access(AccessType.FIELD)
 public class RentalInfo implements Serializable {
 
-    private boolean subleasingAllowed;
-    private double adminFee;
+    private double serviceFee;
     private double securityDeposit;
     private double shortTermRentalPrice;
     private double longTermRentalPrice;
-    private boolean cancellationAllowed;
-    private double cancellationFee;
+    private String cancellationPolicy;
     private String currencyType = "US Dollars";
     private boolean includeMeals;
-    private boolean childDiscount;
+    private double childDiscount;
     private double perExtraGuestCharge;
 
 
-    public boolean isSubleasingAllowed() {
-        return subleasingAllowed;
+    public double getServiceFee() {
+        return serviceFee;
     }
 
-    public void setSubleasingAllowed(boolean subleasingAllowed) {
-        this.subleasingAllowed = subleasingAllowed;
-    }
-
-    public double getAdminFee() {
-        return adminFee;
-    }
-
-    public void setAdminFee(double adminFee) {
-        this.adminFee = adminFee;
+    public void setServiceFee(double serviceFee) {
+        this.serviceFee = serviceFee;
     }
 
     public double getSecurityDeposit() {
@@ -70,23 +60,6 @@ public class RentalInfo implements Serializable {
     public void setLongTermRentalPrice(double longTermRentalPrice) {
         this.longTermRentalPrice = longTermRentalPrice;
     }
-
-    public boolean isCancellationAllowed() {
-        return cancellationAllowed;
-    }
-
-    public void setCancellationAllowed(boolean cancellationAllowed) {
-        this.cancellationAllowed = cancellationAllowed;
-    }
-
-    public double getCancellationFee() {
-        return cancellationFee;
-    }
-
-    public void setCancellationFee(double cancellationFee) {
-        this.cancellationFee = cancellationFee;
-    }
-
     public String getCurrencyType() {
         return currencyType;
     }
@@ -103,11 +76,11 @@ public class RentalInfo implements Serializable {
         this.includeMeals = includeMeals;
     }
 
-    public boolean isChildDiscount() {
+    public double isChildDiscount() {
         return childDiscount;
     }
 
-    public void setChildDiscount(boolean childDiscount) {
+    public void setChildDiscount(double childDiscount) {
         this.childDiscount = childDiscount;
     }
 
@@ -117,6 +90,14 @@ public class RentalInfo implements Serializable {
 
     public void setPerExtraGuestCharge(double perExtraGuestCharge) {
         this.perExtraGuestCharge = perExtraGuestCharge;
+    }
+
+    public String getCancellationPolicy() {
+        return cancellationPolicy;
+    }
+
+    public void setCancellationPolicy(String cancellationPolicy) {
+        this.cancellationPolicy = cancellationPolicy;
     }
 
 }

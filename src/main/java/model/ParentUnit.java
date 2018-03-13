@@ -19,7 +19,7 @@ import org.mongodb.morphia.utils.IndexType;
 
 /**
  *
- * @author A4372949
+ * @author MGone
  */
 @Entity(noClassnameStored = true)
 @Indexes(@Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
@@ -31,12 +31,9 @@ public class ParentUnit implements Serializable {
     private String propertyDescription ;
     private UnitStyle style ;
     private ParentType parentType;
-    private int numOfUnits;
-    private int numOfFloors;
     private String ecorating;
+    private String ownerID;
 
-//    @Embedded
-//    private ParentUnitFacilities parentUnitFacilities = new ParentUnitFacilities();
     @Embedded
     private Location location;
     @Embedded
@@ -64,23 +61,6 @@ public class ParentUnit implements Serializable {
     public void setPropertyDescription(String propertyDescription) {
         this.propertyDescription = propertyDescription;
     }
-
-    public int getNumOfFloors() {
-        return numOfFloors;
-    }
-
-    public void setNumOfFloors(int numOfFloors) {
-        this.numOfFloors = numOfFloors;
-    }
-
-    public int getNumOfUnits() {
-        return numOfUnits;
-    }
-
-    public void setNumOfUnits(int numOfUnits) {
-        this.numOfUnits = numOfUnits;
-    }
-
     public Location getLocation() {
         return location;
     }
@@ -138,21 +118,20 @@ public class ParentUnit implements Serializable {
     public void setUnitName(String unitName) {
         this.unitName = unitName;
     }
-
-//    public ParentUnitFacilities getParentUnitFacilities() {
-//        return parentUnitFacilities;
-//    }
-//
-//    public void setParentUnitFacilities(ParentUnitFacilities parentUnitFacilities) {
-//        this.parentUnitFacilities = parentUnitFacilities;
-//    }
-
     public String getEcorating() {
         return ecorating;
     }
 
     public void setEcorating(String ecorating) {
         this.ecorating = ecorating;
+    }
+
+    public String getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(String ownerID) {
+        this.ownerID = ownerID;
     }
 
 

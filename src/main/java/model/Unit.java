@@ -30,24 +30,24 @@ public class Unit implements Serializable {
     private String  id= new ObjectId().toHexString();
     private String unitHeading;
     private String unitDescription;
-    private String postedBy;
     private int numOfBedrooms;
     private int numOfBathrooms;
-    private int numOfBalconies;
+    private int beds;
     private int unitNumber;
-    private int unitFloorNumber;
     private boolean active;
     private String ecorated;
     private String dateOfPosting;
-    private String dateAvailableFrom;
+    private String dateAvailableFrom;   
+    private String checkinTime ;
+    private String checkoutTime ;
     private String unitParentId;
+    private String cancellationPolicy;
     private Location location;
     private RentalType rentalType ;
     private UnitType unitType ;
     private UnitPrivacy privacy ;
     private FurnishingType furnishing ;
-    private String checkinTime ;
-    private String checkoutTime ;
+
 
     @Embedded
     private List<VibandaImage> unitImages = new ArrayList<>();
@@ -124,13 +124,15 @@ public class Unit implements Serializable {
         this.numOfBathrooms = numOfBathrooms;
     }
 
-    public int getNumOfBalconies() {
-        return numOfBalconies;
+    public int getBeds() {
+        return beds;
     }
 
-    public void setNumOfBalconies(int numOfBalconies) {
-        this.numOfBalconies = numOfBalconies;
+    public void setBeds(int beds) {
+        this.beds = beds;
     }
+
+
 
     public RentalInfo getRentalInfo() {
         return rentalInfo;
@@ -156,14 +158,6 @@ public class Unit implements Serializable {
         this.dateAvailableFrom = dateAvailableFrom;
     }
 
-    public String getPostedBy() {
-        return postedBy;
-    }
-
-    public void setPostedBy(String postedBy) {
-        this.postedBy = postedBy;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -178,14 +172,6 @@ public class Unit implements Serializable {
 
     public void setUnitNumber(int unitNumber) {
         this.unitNumber = unitNumber;
-    }
-
-    public int getUnitFloorNumber() {
-        return unitFloorNumber;
-    }
-
-    public void setUnitFloorNumber(int unitFloorNumber) {
-        this.unitFloorNumber = unitFloorNumber;
     }
 
     public List<VibandaImage> getUnitImages() {
@@ -257,6 +243,14 @@ public class Unit implements Serializable {
 
     public void setCheckoutTime(String checkoutTime) {
         this.checkoutTime = checkoutTime;
+    }
+
+    public String getCancellationPolicy() {
+        return cancellationPolicy;
+    }
+
+    public void setCancellationPolicy(String cancellationPolicy) {
+        this.cancellationPolicy = cancellationPolicy;
     }
 
 }
