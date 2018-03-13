@@ -7,8 +7,7 @@
             <div class="card-panel hoverable">
                 <h5 class="center-align">Vibanda Unit</h5>
                 <div class="row">
-                    <div class="input-field col s4">
-
+                    <div class="input-field col s6">
                         <select name="unitParent" id="unitparent">
                             <option value="" disabled selected>Unit belongs to: </option>
                             <#list data.parentUnits?keys as id>
@@ -17,29 +16,12 @@
                         </select>
                         <label>Parent property</label>
                     </div>
-                    <div class="input-field col s4">
+                    <div class="input-field col s6">
                         <input type="text" id="uname" class="form-control validate" name="unitHeading">
-                        <label for="unitHeading" data-error="wrong" data-success="right">Unit Title</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <input type="text" id="postedby" class="form-control validate" name="postedBy">
-                        <label for="postedby" data-error="wrong" data-success="right">Posted By</label>
+                        <label for="uname" data-error="wrong" data-success="right">Unit Title</label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s8">
 
-                        <textarea id="unitDesc" class="materialize-textarea" name="unitDescription"></textarea>
-                        <label for="unitDesc">Description</label>
-                    </div>
-                    <div class="input-field col s4">
-                        <select name="rentalType">
-                            <option value="" disabled selected>Rental period</option>
-                            <option value="long term">SHORT TERM</option>
-                            <option value="short term">LONG TERM</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="input-field col s3">
                         <select id="unittype" name="unitType">
@@ -73,34 +55,47 @@
                     <div class="col s2">
 
                         <input type="checkbox" class="filled-in" id="activeunit" name="active">
-                        <label for="activeunit">   Active
-                        </label>
+                        <label for="activeunit">   Active </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+
+                        <textarea id="unitDesc" class="materialize-textarea" name="unitDescription"></textarea>
+                        <label for="unitDesc">Description</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="range-field col s6">
-                        <input type="range" min="0" max="10" id="numOfBedrooms"  name="numOfBedrooms">
+                    <div class="range-field col s3">
+                        <input type="range" id="unitNumber" min="0" max="100"  name="unitNumber">
+                        <label for="unitNumber" >No. of units</label>
+                    </div>
+                    <div class="range-field col s3">
+                        <div class="md-form">
+                            <input type="range" min="0" max="100" id="beds"  name="beds">
+                            <label for="beds">No. of beds</label>
+                        </div>
+                    </div>
+                    <div class="range-field col s3">
+                        <input type="range" min="0" max="25" id="numOfBedrooms"  name="numOfBedrooms">
                         <label for="numOfBedrooms" >Bedrooms</label>
                     </div>
-                    <div class="range-field col s6">
-                        <input type="range" min="0" max="10" id="numOfBathrooms"  name="numOfBathrooms">
+                    <div class="range-field col s3">
+                        <input type="range" min="0" max="25" id="numOfBathrooms"  name="numOfBathrooms">
                         <label for="numOfBathrooms" >Bathrooms</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="range-field col s4">
-                        <input type="range" id="unitNumber" min="0" max="100"  name="unitNumber">
-                        <label for="unitNumber" >No. of units</label>
+                    <div class="input-field col s4">
+                        <select name="rentalType">
+                            <option value="" disabled selected>Rental period</option>
+                            <option value="long term">SHORT TERM</option>
+                            <option value="short term">LONG TERM</option>
+                        </select>
                     </div>
                     <div class="range-field col s4">
-                        <div class="md-form">
-                            <input type="range" min="0" max="100" id="unitFloorNumber"  name="unitFloorNumber">
-                            <label for="unitFloorNumber">Floor No.</label>
-                        </div>
-                    </div>
-                    <div class="range-field col s4">
-                        <input type="range"  min="0" max="5" id="stuff" name="stuff">
-                        <label for="stuff" data-error="wrong" data-success="right">No. of parkings</label>
+                    
                     </div>
                 </div>
                 <div class="row">
@@ -114,30 +109,38 @@
                         <input placeholder="Selected date" type="text" id="availdate" class="datepicker" name="availableFrom">
                         <label for="availdate">Date available</label>
                     </div>
+                    <div class="col s6">
+                        <input placeholder="Check in date" type="text" id="checkintime" class="datepicker" name="checkintime">
+                        <label for="checkindate">Check in time</label>
+                    </div>
 
+                    <div class="col s6">
+                        <input placeholder="Selected date" type="text" id="checkoutime" class="checkoutime" name="checkoutime">
+                        <label for="checkoutime">Check out time</label>
+                    </div>
                 </div>
 
                 <h6>Amenities</h6>  
                 <div class="row">
                     <div class="col s3">
                         <input type="checkbox" class="filled-in" name="hasAirConditioning" id="hasAirConditioning">
-                        <label for="hasAirConditioning">   AC
+                        <label for="hasAirConditioning">AC
                         </label>
                     </div>
                     <div class="col s3">
                         <input type="checkbox" class="filled-in" name="hasEnsuiteBathroom" id="hasEnsuiteBathroom">
-                        <label for="hasEnsuiteBathroom">    Ensuite bathroom
+                        <label for="hasEnsuiteBathroom">Ensuite bathroom
                         </label>
                     </div>
                     <div class="col s3">
                         <input type="checkbox" class="filled-in" name="hasCarpet">
-                        <label>     Carpet
+                        <label>Carpet
                         </label>
                     </div>
                     <div class="col s3">
 
                         <input type="checkbox" class="filled-in" name="hasFirePlace">
-                        <label>  Fireplace
+                        <label>Fireplace
                         </label>
                     </div>
                 </div>
@@ -152,19 +155,19 @@
                     <div class="col s3">
 
                         <input type="checkbox" class="filled-in" name="hasWalkinCloset" id="hasWalkinCloset">
-                        <label for="hasWalkinCloset">    Walk-in Closet
+                        <label for="hasWalkinCloset">Walk-in Closet
                         </label>
                     </div>
                     <div class="col s3">
 
                         <input type="checkbox" class="filled-in" name="hasInUnitLandry" id="hasInUnitLandry">
-                        <label for="hasInUnitLandry"> In unit laundry
+                        <label for="hasInUnitLandry">In unit laundry
                         </label>
                     </div>
                     <div class="col s3">
 
                         <input type="checkbox" class="filled-in" name="hasInUnitGarden" id="hasInUnitGarden">
-                        <label for="hasInUnitGarden">    In unit garden
+                        <label for="hasInUnitGarden">In unit garden
                         </label>
                     </div>
                 </div>
@@ -172,13 +175,13 @@
                     <div class="col s3">
 
                         <input type="checkbox" class="filled-in" name="hasCeilingFanCooling" id="hasCeilingFanCooling">
-                        <label for="hasCeilingFanCooling">     Ceiling Fan
+                        <label for="hasCeilingFanCooling">Ceiling Fan
                         </label>
                     </div>
                     <div class="col s3">
 
                         <input type="checkbox" class="filled-in" name="hasTV" id="hasTV">
-                        <label for="hasTV">     TV
+                        <label for="hasTV">TV
                         </label>
                     </div>
                     <div class="col s3">
@@ -283,7 +286,7 @@
 
                     </div>
                 </div> 
-                
+
                 <h6>Price Info</h6> 
                 <div class="row">
                     <div class="input-field col s4">

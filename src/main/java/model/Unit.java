@@ -46,6 +46,8 @@ public class Unit implements Serializable {
     private UnitType unitType ;
     private UnitPrivacy privacy ;
     private FurnishingType furnishing ;
+    private String checkinTime ;
+    private String checkoutTime ;
 
     @Embedded
     private List<VibandaImage> unitImages = new ArrayList<>();
@@ -239,6 +241,22 @@ public class Unit implements Serializable {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public String getCheckinTime() {
+        return checkinTime;
+    }
+
+    public void setCheckinTime(String checkinTime) {
+        this.checkinTime = checkinTime;
+    }
+
+    public String getCheckoutTime() {
+        return checkoutTime;
+    }
+
+    public void setCheckoutTime(String checkoutTime) {
+        this.checkoutTime = checkoutTime;
     }
 
 }
