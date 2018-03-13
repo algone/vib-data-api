@@ -21,7 +21,13 @@
                         <label for="uname" data-error="wrong" data-success="right">Unit Title</label>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="input-field col s12">
 
+                        <textarea id="unitDesc" class="materialize-textarea" name="unitDescription"></textarea>
+                        <label for="unitDesc">Description</label>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="input-field col s3">
                         <select id="unittype" name="unitType">
@@ -45,27 +51,24 @@
                             <option value="Private Room">PRIVATE ROOM</option>
                         </select>
                     </div>
-                    <div class="input-field col s4">
+                    <div class="input-field col s3">
                         <select id="furnishingtype" name="furnishingType">
                             <option value="" disabled selected>Furnishing</option>
                             <option value="Fully Furnished">FURNISHED</option>
                             <option value="Semi Furnished">SEMI_FURNISHED</option>
                         </select>
                     </div>
-                    <div class="col s2">
-
-                        <input type="checkbox" class="filled-in" id="activeunit" name="active">
-                        <label for="activeunit">   Active </label>
+                    <div class="input-field col s3">
+                        <select name="rentalType">
+                            <option value="" disabled selected>Rental period</option>
+                            <option value="long term">SHORT TERM</option>
+                            <option value="short term">LONG TERM</option>
+                        </select>
                     </div>
+
                 </div>
 
-                <div class="row">
-                    <div class="input-field col s12">
-
-                        <textarea id="unitDesc" class="materialize-textarea" name="unitDescription"></textarea>
-                        <label for="unitDesc">Description</label>
-                    </div>
-                </div>
+              
                 <div class="row">
                     <div class="range-field col s3">
                         <input type="range" id="unitNumber" min="0" max="100"  name="unitNumber">
@@ -87,15 +90,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s4">
-                        <select name="rentalType">
-                            <option value="" disabled selected>Rental period</option>
-                            <option value="long term">SHORT TERM</option>
-                            <option value="short term">LONG TERM</option>
-                        </select>
+                    <div class="col s2">
+                        <input type="checkbox" class="filled-in" id="activeunit" name="active">
+                        <label for="activeunit">   Active </label>
                     </div>
                     <div class="range-field col s4">
-                    
+
                     </div>
                 </div>
                 <div class="row">
