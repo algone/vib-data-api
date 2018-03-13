@@ -101,13 +101,13 @@
                 <div class="row">
 
                     <div class="col s6">
-                        <input placeholder="Selected date" type="text" id="postdate" class="datepicker" name="postDate">
-                        <label for="postdate">Date of posting</label>
+                        <input placeholder="Date of posting" type="text" id="postdate" class="datepicker" name="postDate">
+            
                     </div>
 
                     <div class="col s6">
-                        <input placeholder="Selected date" type="text" id="availdate" class="datepicker" name="availableFrom">
-                        <label for="availdate">Date available</label>
+                        <input placeholder="Date available" type="text" id="availdate" class="datepicker" name="availableFrom">
+
                     </div>
                     <div class="col s6">
                         <input type="text" class="timepicker" placeholder="Checkin time" id="checkintime" name="checkintime">
@@ -315,10 +315,7 @@
                     </div>
                 </div>          
                 <div class="row">
-                    <div class="col s6">
-                        <input type="checkbox" class="filled-in" name="includeMeals" id="includeMeals">
-                        <label for="includeMeals">Price include meals</label>
-                    </div>
+                  
                     <div class="input-field col s6">
                         <select name="currencyType">
                             <option value="" disabled selected>Currency</option>
@@ -326,10 +323,14 @@
                             <option value="Shillings">KSH</option>
                             <option value="Euros">EUR</option>
                         </select>
+                    </div>  
+                    <div class="col s6">
+                        <input type="checkbox" class="filled-in" name="includeMeals" id="includeMeals">
+                        <label for="includeMeals">Price include meals</label>
                     </div>
                 </div> 
                 <div class="row">
-                    <div class="input-field col s8">
+                    <div class="input-field col s12">
                         <textarea id="cancellationPolicy" class="materialize-textarea" name="cancellationPolicy" maxlength="1000"></textarea>
                         <label for="cancellationPolicy" >Cancellation Policy</label>
                     </div> 
