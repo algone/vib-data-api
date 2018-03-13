@@ -22,6 +22,9 @@ public class ParentUnitAccessibility implements Serializable {
     private boolean hasATM;
     private boolean publicTransportStation;
     private boolean hasAirport;
+    private boolean hasMall;
+    private boolean hasRestaurant;
+    private boolean hasBakery;
 
     public boolean isHasSchools() {
         return hasSchools;
@@ -77,6 +80,30 @@ public class ParentUnitAccessibility implements Serializable {
 
     public void setHasAirport(boolean hasAirport) {
         this.hasAirport = hasAirport;
+    }
+
+    public boolean isHasMall() {
+        return hasMall;
+    }
+
+    public void setHasMall(boolean hasMall) {
+        this.hasMall = hasMall;
+    }
+
+    public boolean isHasRestaurant() {
+        return hasRestaurant;
+    }
+
+    public void setHasRestaurant(boolean hasRestaurant) {
+        this.hasRestaurant = hasRestaurant;
+    }
+
+    public boolean isHasBakery() {
+        return hasBakery;
+    }
+
+    public void setHasBakery(boolean hasBakery) {
+        this.hasBakery = hasBakery;
     }
 
 }

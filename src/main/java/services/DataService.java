@@ -167,7 +167,7 @@ public class DataService implements Service {
         String parentId = unit.getUnitParentId();
         ParentUnit parent = findParent(parentId);
         unit.setLocation(parent.getLocation());
-        unit.setEcorated(parent.isEcorated());
+        unit.setEcorated(parent.getEcorating());
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(unit);
     }

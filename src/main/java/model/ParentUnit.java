@@ -33,10 +33,10 @@ public class ParentUnit implements Serializable {
     private ParentType parentType;
     private int numOfUnits;
     private int numOfFloors;
-    private boolean ecorated;
+    private String ecorating;
 
-    @Embedded
-    private ParentUnitFacilities parentUnitFacilities = new ParentUnitFacilities();
+//    @Embedded
+//    private ParentUnitFacilities parentUnitFacilities = new ParentUnitFacilities();
     @Embedded
     private Location location;
     @Embedded
@@ -139,20 +139,22 @@ public class ParentUnit implements Serializable {
         this.unitName = unitName;
     }
 
-    public ParentUnitFacilities getParentUnitFacilities() {
-        return parentUnitFacilities;
+//    public ParentUnitFacilities getParentUnitFacilities() {
+//        return parentUnitFacilities;
+//    }
+//
+//    public void setParentUnitFacilities(ParentUnitFacilities parentUnitFacilities) {
+//        this.parentUnitFacilities = parentUnitFacilities;
+//    }
+
+    public String getEcorating() {
+        return ecorating;
     }
 
-    public void setParentUnitFacilities(ParentUnitFacilities parentUnitFacilities) {
-        this.parentUnitFacilities = parentUnitFacilities;
+    public void setEcorating(String ecorating) {
+        this.ecorating = ecorating;
     }
 
-    public boolean isEcorated() {
-        return ecorated;
-    }
 
-    public void setEcorated(boolean ecorated) {
-        this.ecorated = ecorated;
-    }
 
 }

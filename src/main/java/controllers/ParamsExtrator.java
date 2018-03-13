@@ -48,32 +48,34 @@ public class ParamsExtrator {
              */
             if (key.matches("hasBanks")) {
                 vpu.getParentUnitAccessibility().setHasBanks(context.getParameter(key).contentEquals("on"));
-
             }
 
             if (key.matches("hasAirport")) {
                 vpu.getParentUnitAccessibility().setHasAirport(context.getParameter(key).contentEquals("on"));
-
             }
             if (key.matches("publicTransport")) {
                 vpu.getParentUnitAccessibility().setPublicTransportStation(context.getParameter(key).contentEquals("on"));
-
             }
             if (key.matches("hasSchools")) {
                 vpu.getParentUnitAccessibility().setHasSchools(context.getParameter(key).contentEquals("on"));
-
             }
             if (key.matches("hasATM")) {
                 vpu.getParentUnitAccessibility().setHasATM(context.getParameter(key).contentEquals("on"));
-
             }
             if (key.matches("hasParks")) {
                 vpu.getParentUnitAccessibility().setHasParks(context.getParameter(key).contentEquals("on"));
-
             }
             if (key.matches("hasGroceryStore")) {
                 vpu.getParentUnitAccessibility().setHasGroceryStore(context.getParameter(key).contentEquals("on"));
-
+            }
+            if (key.matches("hasRestaurant")) {
+                vpu.getParentUnitAccessibility().setHasRestaurant(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("hasMall")) {
+                vpu.getParentUnitAccessibility().setHasMall(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("hasBakery")) {
+                vpu.getParentUnitAccessibility().setHasBakery(context.getParameter(key).contentEquals("on"));
             }
         }
     }
@@ -84,9 +86,9 @@ public class ParamsExtrator {
          */
         for (String key : keys) {
 
-            if (key.matches("city")) {
-                vpu.getLocation().setCity(context.getParameter(key));
-            }
+//            if (key.matches("city")) {
+//                vpu.getLocation().setCity(context.getParameter(key));
+//            }
             if (key.matches("county")) {
                 vpu.getLocation().setCountyName(context.getParameter(key));
             }
@@ -112,39 +114,6 @@ public class ParamsExtrator {
             /*
         Parent Unit Facilities
              */
-            if (key.matches("wifi")) {
-                vpu.getParentUnitFacilities().setWifi(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("cable")) {
-                vpu.getParentUnitFacilities().setCable(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("fitnessCentre")) {
-                vpu.getParentUnitFacilities().setFitnessCentre(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("swimmingPool")) {
-                vpu.getParentUnitFacilities().setSwimmingPool(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("laundry")) {
-                vpu.getParentUnitFacilities().setLaundry(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("wheelchairAccessibility")) {
-                vpu.getParentUnitFacilities().setWheelchairAccessibility(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("intercomFacilities")) {
-                vpu.getParentUnitFacilities().setIntercomFacilities(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("powerBackup")) {
-                vpu.getParentUnitFacilities().setPowerBackup(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("mainDoorSecurity")) {
-                vpu.getParentUnitFacilities().setMainDoorSecurity(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("perimeterWall")) {
-                vpu.getParentUnitFacilities().setPerimeterWall(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("lift")) {
-                vpu.getParentUnitFacilities().setLift(context.getParameter(key).contentEquals("on"));
-            }
         }
     }
 
@@ -163,14 +132,14 @@ public class ParamsExtrator {
             if (key.matches("style")) {
                 vpu.setStyle(UnitStyle.valueOf(context.getParameter(key)));
             }
-            if (key.matches("numOfUnits")) {
-                vpu.setNumOfUnits(Integer.parseInt(context.getParameter(key)));
-            }
-            if (key.matches("numOfFloors")) {
-                vpu.setNumOfFloors(Integer.parseInt(context.getParameter(key)));
-            }
+//            if (key.matches("numOfUnits")) {
+//                vpu.setNumOfUnits(Integer.parseInt(context.getParameter(key)));
+//            }
+//            if (key.matches("numOfFloors")) {
+//                vpu.setNumOfFloors(Integer.parseInt(context.getParameter(key)));
+//            }
             if (key.matches("ecorated")) {
-                vpu.setPropertyDescription(context.getParameter(key));
+                vpu.setEcorating(context.getParameter(key));
             }
             if (key.matches("parentType")) {
                 vpu.setPropertyDescription(context.getParameter(key));
@@ -287,6 +256,39 @@ public class ParamsExtrator {
             if (key.matches("hasInUnitGym")) {
                 vUnit.getUnitFeature().setHasInUnitGym(context.getParameter(key).contentEquals("on"));
             }
+            if (key.matches("wifi")) {
+                vUnit.getUnitFeature().setWifi(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("cable")) {
+                vUnit.getUnitFeature().setCable(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("fitnessCentre")) {
+                vUnit.getUnitFeature().setFitnessCentre(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("swimmingPool")) {
+                vUnit.getUnitFeature().setSwimmingPool(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("laundry")) {
+                vUnit.getUnitFeature().setLaundry(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("wheelchairAccessibility")) {
+                vUnit.getUnitFeature().setWheelchairAccessibility(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("intercomFacilities")) {
+                vUnit.getUnitFeature().setIntercomFacilities(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("powerBackup")) {
+                vUnit.getUnitFeature().setPowerBackup(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("mainDoorSecurity")) {
+                vUnit.getUnitFeature().setMainDoorSecurity(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("perimeterWall")) {
+                vUnit.getUnitFeature().setPerimeterWall(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("lift")) {
+                vUnit.getUnitFeature().setLift(context.getParameter(key).contentEquals("on"));
+            }
         }
     }
 
@@ -334,7 +336,7 @@ public class ParamsExtrator {
     public ParentUnit getParent() {
         vpu.setLocation(new Location());
         vpu.setParentUnitAccessibility(new ParentUnitAccessibility());
-        vpu.setParentUnitFacilities(new ParentUnitFacilities());
+//        vpu.setParentUnitFacilities(new ParentUnitFacilities());
         vpu.setRentalUnits(new ArrayList<>());
         extractParentAttributes();
         extractParentFacilities();

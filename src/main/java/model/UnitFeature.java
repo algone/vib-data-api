@@ -16,7 +16,7 @@ import javax.persistence.Embeddable;
  * @author A4372949
  */
 @Embeddable @Access(AccessType.FIELD)
-public class UnitFeature implements Serializable {
+public class UnitFeature extends ParentUnitFacilities implements Serializable {
 
     private boolean hasAirConditioning;
     private int numOfParking;

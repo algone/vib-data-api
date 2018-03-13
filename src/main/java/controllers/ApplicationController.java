@@ -231,7 +231,7 @@ public class ApplicationController {
         ParentUnit parentUnit = new ParentUnit();
         parentUnit.setLocation(new Location());
         parentUnit.setParentUnitAccessibility(new ParentUnitAccessibility());
-        parentUnit.setParentUnitFacilities(new ParentUnitFacilities());
+//        parentUnit.setParentUnitFacilities(new ParentUnitFacilities());
         parentUnit.setRentalUnits(new ArrayList<>());
 
         VibandaImage img1 = new VibandaImage();
