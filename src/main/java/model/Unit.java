@@ -43,7 +43,7 @@ public class Unit implements Serializable {
     private String unitParentId;
     private String cancellationPolicy;
     private Location location;
-    private RentalType rentalType ;
+    private String rentalType ;
     private UnitType unitType ;
     private UnitPrivacy privacy ;
     private FurnishingType furnishing ;
@@ -76,11 +76,11 @@ public class Unit implements Serializable {
 
 
 
-    public RentalType getRentalType() {
+    public String getRentalType() {
         return rentalType;
     }
 
-    public void setRentalType(RentalType rentalType) {
+    public void setRentalType(String rentalType) {
         this.rentalType = rentalType;
     }
 

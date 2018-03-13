@@ -144,7 +144,7 @@ public class ParamsExtrator {
                 vUnit.setUnitDescription(context.getParameter(key));
             }
             if (key.matches("rentalType")) {
-                vUnit.setRentalType(RentalType.valueOf(context.getParameter(key)));
+                vUnit.setRentalType(context.getParameter(key));
             }
             if (key.matches("unitType")) {
                 vUnit.setUnitType(UnitType.valueOf(context.getParameter(key)));
