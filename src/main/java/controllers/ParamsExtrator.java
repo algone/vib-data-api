@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import model.FurnishingType;
 import model.Location;
+import model.ParentType;
 import model.ParentUnit;
 import model.ParentUnitAccessibility;
 import model.RentalInfo;
@@ -125,7 +126,7 @@ public class ParamsExtrator {
                 vpu.setEcorating(context.getParameter(key));
             }
             if (key.matches("parentType")) {
-                vpu.setPropertyDescription(context.getParameter(key));
+                vpu.setParentType(ParentType.valueOf(context.getParameter(key)));
             }
 
         }
@@ -150,10 +151,10 @@ public class ParamsExtrator {
                 vUnit.setUnitType(UnitType.valueOf(context.getParameter(key)));
             }
             if (key.matches("privacy")) {
-                vUnit.setPrivacy(UnitPrivacy.valueOf(context.getParameter(key)));
+                vUnit.setPrivacy(context.getParameter(key));
             }
             if (key.matches("furnishingType")) {
-                vUnit.setFurnishing(FurnishingType.valueOf(context.getParameter(key)));
+                vUnit.setFurnishing(context.getParameter(key));
             }
             if (key.matches("active")) {
                 vUnit.setActive(context.getParameter(key).contentEquals("on"));

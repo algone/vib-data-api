@@ -45,8 +45,8 @@ public class Unit implements Serializable {
     private Location location;
     private String rentalType ;
     private UnitType unitType ;
-    private UnitPrivacy privacy ;
-    private FurnishingType furnishing ;
+    private String privacy ;
+    private String furnishing ;
 
 
     @Embedded
@@ -190,19 +190,19 @@ public class Unit implements Serializable {
         this.unitFeature = unitFeature;
     }
 
-    public UnitPrivacy getPrivacy() {
+    public String getPrivacy() {
         return privacy;
     }
 
-    public void setPrivacy(UnitPrivacy privacy) {
+    public void setPrivacy(String privacy) {
         this.privacy = privacy;
     }
 
-    public FurnishingType getFurnishing() {
+    public String getFurnishing() {
         return furnishing;
     }
 
-    public void setFurnishing(FurnishingType furnishing) {
+    public void setFurnishing(String furnishing) {
         this.furnishing = furnishing;
     }
 
