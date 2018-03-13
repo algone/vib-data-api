@@ -68,7 +68,7 @@
 
                 </div>
 
-              
+
                 <div class="row">
                     <div class="range-field col s3">
                         <input type="range" id="unitNumber" min="0" max="100"  name="unitNumber">
@@ -110,14 +110,11 @@
                         <label for="availdate">Date available</label>
                     </div>
                     <div class="col s6">
-                         <input type="text" class="timepicker" placeholder="Check in date" id="checkintime" name="checkintime">
-                        
-                        <label for="checkindate">Check in time</label>
+                        <input type="text" class="timepicker" placeholder="Checkin time" id="checkintime" name="checkintime">
                     </div>
 
                     <div class="col s6">
-                        <input placeholder="Selected date" type="text" id="checkoutime" class="timepicker" name="checkoutime">
-                        <label for="checkoutime">Check out time</label>
+                        <input placeholder="Checkout time" type="text" id="checkoutime" class="timepicker" name="checkoutime">
                     </div>
                 </div>
 
@@ -290,14 +287,6 @@
 
                 <h6>Price Info</h6> 
                 <div class="row">
-                    <div class="input-field col s4">
-                        <select name="currencyType">
-                            <option value="" disabled selected>Currency</option>
-                            <option value="Dollars">USD</option>
-                            <option value="Shillings">KSH</option>
-                            <option value="Euros">EUR</option>
-                        </select>
-                    </div>
                     <div class="range-field col s4">
                         <input type="range" id="shortTermRentalPrice" min="0" max="100"  name="shortTermRentalPrice"/>
                         <label for="shortTermRentalPrice" data-error="wrong" data-success="right">Short term rental price</label>
@@ -306,21 +295,11 @@
                         <input type="range" id="longTermRentalPrice" min="0" max="100" name="longTermRentalPrice"/>
                         <label for="longTermRentalPrice" data-error="wrong" data-success="right">Long term rental price</label>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s8">
-                        <textarea id="cancellationPolicy" class="materialize-textarea" name="cancellationPolicy" maxlength="1000"></textarea>
-                        <label for="cancellationPolicy" >Cancellation Policy</label>
-                    </div>
-                    <div class="col s2">
-                        <input type="checkbox" class="filled-in" name="includeMeals" id="includeMeals">
-                        <label for="includeMeals">Price include meals</label>
-                    </div>
-                    <div class="range-field col s2">
+                    <div class="range-field col s4">
                         <input type="range" name="childDiscount" min="0" max="100" id="childDiscount">
                         <label for="childDiscount">Child discount(%)</label>
                     </div>
-                </div> 
+                </div>
                 <div class="row">
                     <div class="range-field col s4">
                         <input type="range" id="extraCharge" min="0" max="10000" name="extraCharge"/>
@@ -334,7 +313,28 @@
                         <input type="range" id="securityDeposit" min="0" max="10000" name="securityDeposit"/>
                         <label for="securityDeposit" data-error="wrong" data-success="right">Security Deposit</label>
                     </div>
+                </div>          
+                <div class="row">
+                    <div class="col s6">
+                        <input type="checkbox" class="filled-in" name="includeMeals" id="includeMeals">
+                        <label for="includeMeals">Price include meals</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select name="currencyType">
+                            <option value="" disabled selected>Currency</option>
+                            <option value="Dollars">USD</option>
+                            <option value="Shillings">KSH</option>
+                            <option value="Euros">EUR</option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="input-field col s8">
+                        <textarea id="cancellationPolicy" class="materialize-textarea" name="cancellationPolicy" maxlength="1000"></textarea>
+                        <label for="cancellationPolicy" >Cancellation Policy</label>
+                    </div> 
                 </div>
+
             </div>
 
             <!--div class="text-center">
