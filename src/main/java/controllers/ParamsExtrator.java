@@ -192,44 +192,38 @@ public class ParamsExtrator {
          */
         for (String key : keys) {
 
-            if (key.matches("hasCarpet")) {
-                vUnit.getUnitFeature().setHasCarpet(context.getParameter(key).contentEquals("on"));
+            if (key.matches("carpet")) {
+                vUnit.getUnitFeature().setCarpet(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("petsAllowed")) {
-                vUnit.getUnitFeature().setPetsAllowed(context.getParameter(key).contentEquals("on"));
+            if (key.matches("pets")) {
+                vUnit.getUnitFeature().setPets(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("hasWalkinCloset")) {
-                vUnit.getUnitFeature().setHasWalkinCloset(context.getParameter(key).contentEquals("on"));
+            if (key.matches("wardrobe")) {
+                vUnit.getUnitFeature().setWardrobe(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("hasInUnitLandry")) {
-                vUnit.getUnitFeature().setHasInUnitLandry(context.getParameter(key).contentEquals("on"));
+            if (key.matches("garden")) {
+                vUnit.getUnitFeature().setGarden(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("hasInUnitGarden")) {
-                vUnit.getUnitFeature().setHasInUnitGarden(context.getParameter(key).contentEquals("on"));
+            if (key.matches("fan")) {
+                vUnit.getUnitFeature().setFan(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("hasCeilingFanCooling")) {
-                vUnit.getUnitFeature().setHasCeilingFanCooling(context.getParameter(key).contentEquals("on"));
+            if (key.matches("tv")) {
+                vUnit.getUnitFeature().setTv(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("hasTV")) {
-                vUnit.getUnitFeature().setHasTV(context.getParameter(key).contentEquals("on"));
+            if (key.matches("kitchen")) {
+                vUnit.getUnitFeature().setKitchen(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("hasKitchen")) {
-                vUnit.getUnitFeature().setHasKitchen(context.getParameter(key).contentEquals("on"));
+            if (key.matches("refridgerator")) {
+                vUnit.getUnitFeature().setRefridgerator(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("hasInUnitWifi")) {
-                vUnit.getUnitFeature().setHasInUnitWifi(context.getParameter(key).contentEquals("on"));
+            if (key.matches("fireplace")) {
+                vUnit.getUnitFeature().setFireplace(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("hasRefridgerator")) {
-                vUnit.getUnitFeature().setHasRefridgerator(context.getParameter(key).contentEquals("on"));
+            if (key.matches("dishwasher")) {
+                vUnit.getUnitFeature().setDishwasher(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("hasFirePlace")) {
-                vUnit.getUnitFeature().setHasFirePlace(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("hasDishwasher")) {
-                vUnit.getUnitFeature().setHasDishwasher(context.getParameter(key).contentEquals("on"));
-            }
-            if (key.matches("hasInUnitGym")) {
-                vUnit.getUnitFeature().setHasInUnitGym(context.getParameter(key).contentEquals("on"));
+            if (key.matches("gym")) {
+                vUnit.getUnitFeature().setGym(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("wifi")) {
                 vUnit.getUnitFeature().setWifi(context.getParameter(key).contentEquals("on"));
@@ -237,29 +231,29 @@ public class ParamsExtrator {
             if (key.matches("cable")) {
                 vUnit.getUnitFeature().setCable(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("fitnessCentre")) {
-                vUnit.getUnitFeature().setFitnessCentre(context.getParameter(key).contentEquals("on"));
+            if (key.matches("fitnesscentre")) {
+                vUnit.getUnitFeature().setFitnesscentre(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("swimmingPool")) {
-                vUnit.getUnitFeature().setSwimmingPool(context.getParameter(key).contentEquals("on"));
+            if (key.matches("pool")) {
+                vUnit.getUnitFeature().setPool(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("laundry")) {
                 vUnit.getUnitFeature().setLaundry(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("wheelchairAccessibility")) {
-                vUnit.getUnitFeature().setWheelchairAccessibility(context.getParameter(key).contentEquals("on"));
+            if (key.matches("accessibility")) {
+                vUnit.getUnitFeature().setAccessibility(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("intercomFacilities")) {
-                vUnit.getUnitFeature().setIntercomFacilities(context.getParameter(key).contentEquals("on"));
+            if (key.matches("intercom")) {
+                vUnit.getUnitFeature().setIntercom(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("powerBackup")) {
-                vUnit.getUnitFeature().setPowerBackup(context.getParameter(key).contentEquals("on"));
+            if (key.matches("powerbackup")) {
+                vUnit.getUnitFeature().setPowerbackup(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("mainDoorSecurity")) {
-                vUnit.getUnitFeature().setMainDoorSecurity(context.getParameter(key).contentEquals("on"));
+            if (key.matches("maindoorsecurity")) {
+                vUnit.getUnitFeature().setMaindoorsecurity(context.getParameter(key).contentEquals("on"));
             }
-            if (key.matches("perimeterWall")) {
-                vUnit.getUnitFeature().setPerimeterWall(context.getParameter(key).contentEquals("on"));
+            if (key.matches("gated")) {
+                vUnit.getUnitFeature().setGated(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("lift")) {
                 vUnit.getUnitFeature().setLift(context.getParameter(key).contentEquals("on"));

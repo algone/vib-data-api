@@ -18,166 +18,140 @@ import javax.persistence.Embeddable;
 @Embeddable @Access(AccessType.FIELD)
 public class UnitFeature extends ParentUnitFacilities implements Serializable {
 
-    private boolean hasAirConditioning;
-    private int numOfParking;
-    private boolean hasCarpet;
-    private boolean hasFirePlace;
-    private boolean petsAllowed;
-    private boolean hasWalkinCloset;
-    private boolean hasInUnitLandry;
-    private boolean hasInUnitGarden;
-    private boolean hasCeilingFanCooling;
-    private FurnishingType furnishingType = FurnishingType.FURNISHED;
-    private boolean hasTV;
-    private boolean hasKitchen;
-    private boolean hasInUnitWifi;
-    private boolean hasRefridgerator;
-    private boolean hasDishwasher;
-    private boolean hasInUnitGym;
-    private boolean hasVerandah;
-    private boolean hasEnsuiteBathroom;
+    private boolean ac;
+    private int parking;
+    private boolean carpet;
+    private boolean fireplace;
+    private boolean pets;
+    private boolean wardrobe;
+    private boolean garden;
+    private boolean fan;
+    private boolean tv;
+    private boolean kitchen;
+    private boolean refridgerator;
+    private boolean dishwasher;
+    private boolean gym;
+    private boolean verandah;
+    private boolean ensuite;
 
-    public boolean isHasAirConditioning() {
-        return hasAirConditioning;
+    public boolean isAc() {
+        return ac;
     }
 
-    public void setHasAirConditioning(boolean hasAirConditioning) {
-        this.hasAirConditioning = hasAirConditioning;
+    public void setAc(boolean ac) {
+        this.ac = ac;
     }
 
-    public int getNumOfParking() {
-        return numOfParking;
+    public int getParking() {
+        return parking;
     }
 
-    public void setNumOfParking(int numOfParking) {
-        this.numOfParking = numOfParking;
+    public void setParking(int parking) {
+        this.parking = parking;
     }
 
-    public boolean isHasCarpet() {
-        return hasCarpet;
+    public boolean isCarpet() {
+        return carpet;
     }
 
-    public void setHasCarpet(boolean hasCarpet) {
-        this.hasCarpet = hasCarpet;
+    public void setCarpet(boolean carpet) {
+        this.carpet = carpet;
     }
 
-    public boolean isHasFirePlace() {
-        return hasFirePlace;
+    public boolean isFireplace() {
+        return fireplace;
     }
 
-    public void setHasFirePlace(boolean hasFirePlace) {
-        this.hasFirePlace = hasFirePlace;
+    public void setFireplace(boolean fireplace) {
+        this.fireplace = fireplace;
     }
 
-    public boolean isPetsAllowed() {
-        return petsAllowed;
+    public boolean isPets() {
+        return pets;
     }
 
-    public void setPetsAllowed(boolean petsAllowed) {
-        this.petsAllowed = petsAllowed;
+    public void setPets(boolean pets) {
+        this.pets = pets;
     }
 
-    public boolean isHasWalkinCloset() {
-        return hasWalkinCloset;
+    public boolean isWardrobe() {
+        return wardrobe;
     }
 
-    public void setHasWalkinCloset(boolean hasWalkinCloset) {
-        this.hasWalkinCloset = hasWalkinCloset;
+    public void setWardrobe(boolean wardrobe) {
+        this.wardrobe = wardrobe;
     }
 
-    public boolean isHasInUnitLandry() {
-        return hasInUnitLandry;
+    public boolean isGarden() {
+        return garden;
     }
 
-    public void setHasInUnitLandry(boolean hasInUnitLandry) {
-        this.hasInUnitLandry = hasInUnitLandry;
+    public void setGarden(boolean garden) {
+        this.garden = garden;
     }
 
-    public boolean isHasInUnitGarden() {
-        return hasInUnitGarden;
+    public boolean isFan() {
+        return fan;
     }
 
-    public void setHasInUnitGarden(boolean hasInUnitGarden) {
-        this.hasInUnitGarden = hasInUnitGarden;
+    public void setFan(boolean fan) {
+        this.fan = fan;
     }
 
-    public boolean isHasCeilingFanCooling() {
-        return hasCeilingFanCooling;
+
+    public boolean isTv() {
+        return tv;
     }
 
-    public void setHasCeilingFanCooling(boolean hasCeilingFanCooling) {
-        this.hasCeilingFanCooling = hasCeilingFanCooling;
+    public void setTv(boolean tv) {
+        this.tv = tv;
     }
 
-    public FurnishingType getFurnishingType() {
-        return furnishingType;
+    public boolean isKitchen() {
+        return kitchen;
     }
 
-    public void setFurnishingType(FurnishingType furnishingType) {
-        this.furnishingType = furnishingType;
+    public void setKitchen(boolean kitchen) {
+        this.kitchen = kitchen;
     }
 
-    public boolean isHasTV() {
-        return hasTV;
+    public boolean isRefridgerator() {
+        return refridgerator;
     }
 
-    public void setHasTV(boolean hasTV) {
-        this.hasTV = hasTV;
+    public void setRefridgerator(boolean refridgerator) {
+        this.refridgerator = refridgerator;
+    }
+    public boolean isDishwasher() {
+        return dishwasher;
     }
 
-    public boolean isHasKitchen() {
-        return hasKitchen;
+    public void setDishwasher(boolean dishwasher) {
+        this.dishwasher = dishwasher;
     }
 
-    public void setHasKitchen(boolean hasKitchen) {
-        this.hasKitchen = hasKitchen;
+    public boolean isGym() {
+        return gym;
     }
 
-    public boolean isHasInUnitWifi() {
-        return hasInUnitWifi;
+    public void setGym(boolean gym) {
+        this.gym = gym;
     }
 
-    public void setHasInUnitWifi(boolean hasInUnitWifi) {
-        this.hasInUnitWifi = hasInUnitWifi;
+    public boolean isVerandah() {
+        return verandah;
     }
 
-    public boolean isHasRefridgerator() {
-        return hasRefridgerator;
+    public void setVerandah(boolean verandah) {
+        this.verandah = verandah;
     }
 
-    public void setHasRefridgerator(boolean hasRefridgerator) {
-        this.hasRefridgerator = hasRefridgerator;
-    }
-    public boolean isHasDishwasher() {
-        return hasDishwasher;
+    public boolean isEnsuite() {
+        return ensuite;
     }
 
-    public void setHasDishwasher(boolean hasDishwasher) {
-        this.hasDishwasher = hasDishwasher;
-    }
-
-    public boolean isHasInUnitGym() {
-        return hasInUnitGym;
-    }
-
-    public void setHasInUnitGym(boolean hasInUnitGym) {
-        this.hasInUnitGym = hasInUnitGym;
-    }
-
-    public boolean isHasVerandah() {
-        return hasVerandah;
-    }
-
-    public void setHasVerandah(boolean hasVerandah) {
-        this.hasVerandah = hasVerandah;
-    }
-
-    public boolean isHasEnsuiteBathroom() {
-        return hasEnsuiteBathroom;
-    }
-
-    public void setHasEnsuiteBathroom(boolean hasEnsuiteBathroom) {
-        this.hasEnsuiteBathroom = hasEnsuiteBathroom;
+    public void setEnsuite(boolean ensuite) {
+        this.ensuite = ensuite;
     }
 
 }

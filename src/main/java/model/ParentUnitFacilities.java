@@ -17,14 +17,14 @@ public class ParentUnitFacilities implements Serializable {
 
     private boolean wifi ;
     private boolean cable ;
-    private boolean fitnessCentre ;
-    private boolean swimmingPool ;
+    private boolean fitnesscentre ;
+    private boolean pool ;
     private boolean laundry ;
-    private boolean wheelchairAccessibility ;
-    private boolean intercomFacilities ;
-    private boolean powerBackup ;
-    private boolean mainDoorSecurity;
-    private boolean perimeterWall ;
+    private boolean accessibility ;
+    private boolean intercom ;
+    private boolean powerbackup ;
+    private boolean maindoorsecurity;
+    private boolean gated ;
     private boolean lift ;
 
     public boolean isWifi() {
@@ -43,20 +43,20 @@ public class ParentUnitFacilities implements Serializable {
         this.cable = cable;
     }
 
-    public boolean isFitnessCentre() {
-        return fitnessCentre;
+    public boolean isFitnesscentre() {
+        return fitnesscentre;
     }
 
-    public void setFitnessCentre(boolean fitnessCentre) {
-        this.fitnessCentre = fitnessCentre;
+    public void setFitnesscentre(boolean fitnesscentre) {
+        this.fitnesscentre = fitnesscentre;
     }
 
-    public boolean isSwimmingPool() {
-        return swimmingPool;
+    public boolean isPool() {
+        return pool;
     }
 
-    public void setSwimmingPool(boolean swimmingPool) {
-        this.swimmingPool = swimmingPool;
+    public void setPool(boolean pool) {
+        this.pool = pool;
     }
 
     public boolean isLaundry() {
@@ -67,44 +67,44 @@ public class ParentUnitFacilities implements Serializable {
         this.laundry = laundry;
     }
 
-    public boolean isWheelchairAccessibility() {
-        return wheelchairAccessibility;
+    public boolean isAccessibility() {
+        return accessibility;
     }
 
-    public void setWheelchairAccessibility(boolean wheelchairAccessibility) {
-        this.wheelchairAccessibility = wheelchairAccessibility;
+    public void setAccessibility(boolean accessibility) {
+        this.accessibility = accessibility;
     }
 
-    public boolean isIntercomFacilities() {
-        return intercomFacilities;
+    public boolean isIntercom() {
+        return intercom;
     }
 
-    public void setIntercomFacilities(boolean intercomFacilities) {
-        this.intercomFacilities = intercomFacilities;
+    public void setIntercom(boolean intercom) {
+        this.intercom = intercom;
     }
 
-    public boolean isPowerBackup() {
-        return powerBackup;
+    public boolean isPowerbackup() {
+        return powerbackup;
     }
 
-    public void setPowerBackup(boolean powerBackup) {
-        this.powerBackup = powerBackup;
+    public void setPowerbackup(boolean powerbackup) {
+        this.powerbackup = powerbackup;
     }
 
-    public boolean isMainDoorSecurity() {
-        return mainDoorSecurity;
+    public boolean isMaindoorsecurity() {
+        return maindoorsecurity;
     }
 
-    public void setMainDoorSecurity(boolean mainDoorSecurity) {
-        this.mainDoorSecurity = mainDoorSecurity;
+    public void setMaindoorsecurity(boolean maindoorsecurity) {
+        this.maindoorsecurity = maindoorsecurity;
     }
 
-    public boolean isPerimeterWall() {
-        return perimeterWall;
+    public boolean isGated() {
+        return gated;
     }
 
-    public void setPerimeterWall(boolean perimeterWall) {
-        this.perimeterWall = perimeterWall;
+    public void setGated(boolean gated) {
+        this.gated = gated;
     }
 
     public boolean isLift() {

@@ -102,7 +102,7 @@
 
                     <div class="col s6">
                         <input placeholder="Date of posting" type="text" id="postdate" class="datepicker" name="postDate">
-            
+
                     </div>
 
                     <div class="col s6">
@@ -121,24 +121,24 @@
                 <h6>Amenities</h6>  
                 <div class="row">
                     <div class="col s3">
-                        <input type="checkbox" class="filled-in" name="hasAirConditioning" id="hasAirConditioning">
+                        <input type="checkbox" class="filled-in" name="ac" id="hasAirConditioning">
                         <label for="hasAirConditioning">AC
                         </label>
                     </div>
                     <div class="col s3">
-                        <input type="checkbox" class="filled-in" name="hasEnsuiteBathroom" id="hasEnsuiteBathroom">
+                        <input type="checkbox" class="filled-in" name="ensuite" id="hasEnsuiteBathroom">
                         <label for="hasEnsuiteBathroom">Ensuite bathroom
                         </label>
                     </div>
                     <div class="col s3">
-                        <input type="checkbox" class="filled-in" name="hasCarpet">
-                        <label>Carpet
+                        <input type="checkbox" class="filled-in" name="carpet" id="carpet">
+                        <label for="carpet">Carpet
                         </label>
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasFirePlace">
-                        <label>Fireplace
+                        <input type="checkbox" class="filled-in" name="fireplace" id="fireplace">
+                        <label for="fireplace">Fireplace
                         </label>
                     </div>
                 </div>
@@ -146,77 +146,71 @@
                     <!--First column-->
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="petsAllowed" id="petsAllowed">
+                        <input type="checkbox" class="filled-in" name="pets" id="petsAllowed">
                         <label for="petsAllowed"> Pets allowed 
                         </label>
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasWalkinCloset" id="hasWalkinCloset">
-                        <label for="hasWalkinCloset">Walk-in Closet
+                        <input type="checkbox" class="filled-in" name="wardrobe" id="hasWalkinCloset">
+                        <label for="hasWalkinCloset">Wardrobe
                         </label>
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasInUnitLandry" id="hasInUnitLandry">
-                        <label for="hasInUnitLandry">In unit laundry
-                        </label>
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasInUnitGarden" id="hasInUnitGarden">
-                        <label for="hasInUnitGarden">In unit garden
+                        <input type="checkbox" class="filled-in" name="garden" id="hasInUnitGarden">
+                        <label for="hasInUnitGarden">Garden
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasCeilingFanCooling" id="hasCeilingFanCooling">
+                        <input type="checkbox" class="filled-in" name="fan" id="hasCeilingFanCooling">
                         <label for="hasCeilingFanCooling">Ceiling Fan
                         </label>
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasTV" id="hasTV">
+                        <input type="checkbox" class="filled-in" name="tv" id="hasTV">
                         <label for="hasTV">TV
                         </label>
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasKitchen" id="hasKitchen">
+                        <input type="checkbox" class="filled-in" name="kitchen" id="hasKitchen">
                         <label for="hasKitchen"> Kitchen
                         </label>
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasInUnitWifi" id="hasInUnitWifi">
-                        <label for="hasInUnitWifi">    In unit WIFI
-                        </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasRefridgerator" id="hasRefridgerator">
+                        <input type="checkbox" class="filled-in" name="refridgerator" id="hasRefridgerator">
                         <label for="hasRefridgerator">   Fridge</label>
 
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasFireplace" id="hasFireplace">
+                        <input type="checkbox" class="filled-in" name="fireplace" id="hasFireplace">
                         <label for="hasFireplace">   Fireplace
                         </label>
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasDishwasher" id="hasDishwasher">
+                        <input type="checkbox" class="filled-in" name="dishwasher" id="hasDishwasher">
                         <label for="hasDishwasher">    Dishwasher
                         </label>
                     </div>
                     <div class="col s3">
 
-                        <input type="checkbox" class="filled-in" name="hasInUnitGym" id="hasInUnitGym">
+                        <input type="checkbox" class="filled-in" name="gym" id="hasInUnitGym">
                         <label for="hasInUnitGym"> In unit Gym
                         </label>
                     </div>
@@ -229,55 +223,63 @@
                     </div>
                     <div class="col s3">
                         <input type="checkbox" id="cable" name="cable" >
-                        <label for="cable">   DSTV</label>
+                        <label for="cable">Cable TV</label>
                     </div>
                     <div class="col s3">
-                        <input type="checkbox" id="fitnesscentre" name="fitnessCentre" >
-                        <label for="fitnesscentre">   <span>Gym</span>
+                        <input type="checkbox" id="fitnesscentre" name="fitnesscentre" >
+                        <label for="fitnesscentre">   
+                            <span>Fitness Center</span>
                         </label>
                     </div>
                     <div class="col s3">
-                        <input type="checkbox" id="swimmingpool" name="swimmingPool" >
-                        <label for="swimmingpool">    <span>Pool</span>
+                        <input type="checkbox" id="swimmingpool" name="pool" >
+                        <label for="swimmingpool">    
+                            <span>Swimming Pool</span>
                         </label>
                     </div>
                 </div> 
                 <div class="row">
                     <div class="col s3">
                         <input type="checkbox" id="laundry" name="laundry" >
-                        <label for="laundry">    <span>Laundry services</span>
+                        <label for="laundry">    
+                            <span>Laundry services</span>
                         </label>
                     </div>
                     <div class="col s3">
-                        <input type="checkbox" id="wheelchairaccessibility" name="wheelchairAccessibility" >
-                        <label for="wheelchairaccessibility">    <span>Disabled access</span>
+                        <input type="checkbox" id="wheelchairaccessibility" name="accessibility" >
+                        <label for="wheelchairaccessibility">    
+                            <span>Disabled access</span>
                         </label>
                     </div>
                     <div class="col s3">
-                        <input type="checkbox" id="intercomfacilities" name="intercomFacilities" >
-                        <label for="intercomfacilities">     <span>Intercom system</span>
+                        <input type="checkbox" id="intercomfacilities" name="intercom" >
+                        <label for="intercomfacilities">     
+                            <span>Intercom system</span>
                         </label>
                     </div>
                     <div class="col s3">
-                        <input type="checkbox" id="power_backup" name="powerBackup" >
-                        <label for="power_backup">      <span>Power Backup</span>
+                        <input type="checkbox" id="power_backup" name="powerbackup" >
+                        <label for="power_backup">      
+                            <span>Power Backup</span>
                         </label>
                     </div>
                 </div> 
                 <div class="row">
                     <div class="col s3">
-                        <input type="checkbox" id="perimeterWall" name="perimeterWall" >
-                        <label for="perimeterWall">      <span>Security parameter wall</span>
+                        <input type="checkbox" id="gated" name="gated" >
+                        <label for="gated">      
+                            <span>Security parameter wall</span>
                         </label>
                     </div>
                     <div class="col s3">
-                        <input type="checkbox" id="maindoorsecurity" name="mainDoorSecurity" >
-                        <label for="maindoorsecurity">    <span>Main Door Security</span>
+                        <input type="checkbox" id="maindoorsecurity" name="maindoorsecurity" >
+                        <label for="maindoorsecurity">
+                            <span>Main door security</span>
                         </label>
                     </div>
                     <div class="col s3">
                         <input type="checkbox" id="lift" name="lift" >
-                        <label for="lift">        <span>Lift</span>
+                        <label for="lift"><span>Lift</span>
                         </label>
                     </div>
                     <div class="col s3">
@@ -315,7 +317,7 @@
                     </div>
                 </div>          
                 <div class="row">
-                  
+
                     <div class="input-field col s6">
                         <select name="currencyType">
                             <option value="" disabled selected>Select Currency</option>
