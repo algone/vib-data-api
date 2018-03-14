@@ -230,7 +230,7 @@ public class DataService implements Service {
 //        JsonNode jsonNode1 = jsonData.get("place");
         JsonNode locationNode = jsonData.get("location");
 //        String place = jsonNode1.textValue();
-      String city = locationNode.get("city").textValue();
+      String city = locationNode.get("county").textValue();
         List<Unit> units = ds.createQuery(Unit.class)
                 .search(city)
                 .order("_id")
