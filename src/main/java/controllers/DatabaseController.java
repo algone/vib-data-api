@@ -113,10 +113,10 @@ public class DatabaseController {
 
         dbService.saveImage(img);
 
-        List<String> unitIds = dbService.getUnitIds();
-        Map<String, Object> data = new HashMap<>();
-        data.put("units", unitIds);
-        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("data", data);
+        List<Unit> unitIds = dbService.getAllUnits();
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("units", unitIds);
+        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds);
     }
 
     private Map<String, Object> getCloudinaryResult() throws JsonSyntaxException {
