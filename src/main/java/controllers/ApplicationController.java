@@ -31,7 +31,6 @@
 package controllers;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import ninja.Result;
 import ninja.Results;
 
@@ -43,12 +42,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//import javax.persistence.EntityManager;
-//import javax.persistence.Query;
 import model.Location;
 import model.ParentUnit;
 import model.ParentUnitAccessibility;
-import model.ParentUnitFacilities;
 import model.Unit;
 import model.VibandaImage;
 
@@ -110,6 +106,7 @@ public class ApplicationController {
 
     public Result showImageUploadForm() {
         List<Unit> unitIds = dbService.getAllUnits();
+        System.out.println("Showing image upload form");
 //        Map<String, Object> data = new HashMap<>();
 //        data.put("units", unitIds);
         return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds);
@@ -154,11 +151,7 @@ public class ApplicationController {
 
     @UnitOfWork
     public Result listAll(Context context) {
-
-//        EntityManager entityManager = entitiyManagerProvider.get();
-//        Query q = entityManager.createQuery("SELECT pu FROM ParentUnit pu");
         List<ParentUnit> vpus = dbService.getAllParents();
-
         Map<String, Object> ids = dbService.getParentIds();
         System.out.println("JSON:" + Results.json().render(vpus));
         return Results.json().render(vpus);
@@ -175,27 +168,7 @@ public class ApplicationController {
 //        return Results.json().render(img);
         return Results.noContent();
     }
-//
-//    @Transactional
-//    public Result add(Context context, ParentUnit parent) {
-//        EntityManager entityManager = entitiyManagerProvider.get();
-////        entityManager.persist(parentUnit);
-////        return Results.html().template("views/ApplicationController/index.ftl.html").render("vpus", allPUs);
-//        return Results.json().render(parent);
-//    }
 
-//    @UnitOfWork
-//    public ParentUnit findParentUnit(String unitName) {
-//
-//        EntityManager entityManager = entitiyManagerProvider.get();
-//        Query q = entityManager.createQuery("SELECT pu.unitName FROM ParentUnit pu WHERE pu.unitName LIKE '%" + unitName + "%'");
-//        //TypedQuery<Item> q = em.createQuery("SELECT i FROM Item i JOIN FETCH i.order", Item.class);
-//
-//        ParentUnit vpu = (ParentUnit) q.getSingleResult();
-//
-//        return vpu;
-//
-//    }
     @UnitOfWork
     public Result findAllUnits() {
 
@@ -231,7 +204,6 @@ public class ApplicationController {
         ParentUnit parentUnit = new ParentUnit();
         parentUnit.setLocation(new Location());
         parentUnit.setParentUnitAccessibility(new ParentUnitAccessibility());
-//        parentUnit.setParentUnitFacilities(new ParentUnitFacilities());
         parentUnit.setRentalUnits(new ArrayList<>());
 
         VibandaImage img1 = new VibandaImage();

@@ -14,7 +14,6 @@ import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,7 +23,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.inject.Singleton;
-import model.Location;
 import model.ParentUnit;
 import model.Unit;
 import model.VibandaImage;
@@ -37,7 +35,6 @@ import ninja.lifecycle.Start;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,9 +105,14 @@ public class DataService implements Service {
     public List<String> getUnitIds() {
         List<Unit> units = getAllUnits();
         List<String> unitIds = new ArrayList<>();
+     
         units.forEach((parent) -> {
+            System.out.println("adding ID: "+parent.getId());
             unitIds.add(parent.getId());
+        
         });
+        
+        System.out.println("size: "+unitIds.size());
         return unitIds;
     }
 
