@@ -15,10 +15,8 @@
                         </div>
                         <div class="card-content">
                             <p>Add one or more images to the currently defined Parent or unit. Define if you need the image to be a cover image or to be used as the parent image</p>
-
                             <div class="row">
-
-                                <div class="file-field input-field col s10">
+                                <div class="file-field input-field col s12">
                                     <div class="waves-effect waves-light btn">
                                         <span>Select Image File</span>
                                         <input type="file" multiple name="unitImageFile">
@@ -27,29 +25,17 @@
                                         <input class="file-path validate" type="text" placeholder="Upload one or more files" name="imageName">
                                     </div>
                                 </div>
-                                <div class="col s2">
-
-                                    <input type="checkbox" id="useAsParentImage" name="useAsParentImage" >
-                                    <label for="useAsParentImage">  Set as parent cover image
-                                    </label>
-                                </div>
-
                             </div>
+
                             <div class="row">
-                                <div class="input-field col s10">
+                                <div class="input-field col s12">
                                     <textarea id="imagedescription" class="materialize-textarea" name="imageDescription"></textarea>
                                     <label for="imageDescription">Image description</label>
                                 </div>
-
-                                <div class="col s2">
-
-                                    <input type="checkbox" id="coverImage" name="coverImage" >
-                                    <label for="coverImage">  Set as unit cover image
-                                    </label>
-                                </div>
                             </div>
+                            
                             <div class="row">
-                                <div class=" input-field col s12">
+                                  <div class=" input-field col s4">
                                     <select name="unitId" id="unitid">
                                         <option value="" disabled selected>Choose Unit</option>
                                         <#list units as unit>
@@ -57,10 +43,18 @@
                                         </#list>
                                     </select>
                                     <label>Select Unit</label>
+                                </div> 
+                                <div class="col s4">
+                                    <input type="checkbox" id="coverImage" name="coverImage" >
+                                    <label for="coverImage">  Set as unit cover image
+                                    </label>
+                                </div>
+                                <div class="col s4">
+                                    <input type="checkbox" id="useAsParentImage" name="useAsParentImage" >
+                                    <label for="useAsParentImage">  Set as parent cover image
+                                    </label>
                                 </div>
                             </div>
-
-
                         </div>
                         <div class="card-action">
                             <button class="btn waves-effect waves-light right" type="submit" onclick="M.toast({html: 'Image Added'})">Upload Image
