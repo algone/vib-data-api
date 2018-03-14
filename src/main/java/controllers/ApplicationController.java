@@ -69,39 +69,28 @@ public class ApplicationController {
     VibandaImageService imgService;
     @Inject
     ReverseRouter reverseRouter;
-//    @Inject
-//    Provider<EntityManager> entitiyManagerProvider;
-
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
 
     public Result index() {
        List<ParentUnit> vpus = dbService.getAllParents();
         return Results.html().template("views/ApplicationController/index.ftl.html").render("parents", vpus);
-
     }
 
     public Result showUpload() {
-
         return Results.html().template("views/ApplicationController/index_wiz.ftl.html");
-
     }
 
     public Result showParentUnitForm() {
-
         return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html");
-
     }
 
     public Result showUnitForm() {
         Map<String, Object> parents = dbService.getParentIds();
-
         Map<String, Object> data = new HashMap<>();
         data.put("parentUnits", parents);
         data.put("msg", "");
-
         return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
-
     }
 
     public Result showImageUploadForm() {
@@ -116,13 +105,10 @@ public class ApplicationController {
     public Result addUnit(Context context) {
         ParamsExtrator pe = new ParamsExtrator(context);
         Unit vUnit = pe.getUnit();
-
         vUnit.getUnitImages().addAll(unitImages);
         unitImages.clear();
         units.add(vUnit);
-//        return Results.noContent();
         return Results.json().render(units);
-//return Results.html().template("views/ApplicationController/unitUpload.ftl.html")
     }
 
     @Transactional
@@ -130,17 +116,8 @@ public class ApplicationController {
             @Param("parentUnitImage") FileItem parentUnitImage,
             @Param("puImageDescription") String parentUnitImageDesc) throws Exception {
         VibandaImage image = saveParentImage(parentUnitImage, parentUnitImageDesc);
-
         ParentUnit vpu = new ParamsExtrator(context).getParent();
-        
         vpu.getParentImages().add(image);
-
-        /*
-        Add Pricing info
-         */
-//        vpu.getRentalUnits().addAll(units);
-//        EntityManager entityManager = entitiyManagerProvider.get();
-//        entityManager.persist(vpu);
         units.clear();
 
 //        return Results.html().template("views/ApplicationController/index.ftl.html");
@@ -152,8 +129,8 @@ public class ApplicationController {
     @UnitOfWork
     public Result listAll(Context context) {
         List<ParentUnit> vpus = dbService.getAllParents();
-        Map<String, Object> ids = dbService.getParentIds();
-        System.out.println("JSON:" + Results.json().render(vpus));
+//        Map<String, Object> ids = dbService.getParentIds();
+//        System.out.println("JSON:" + Results.json().render(vpus));
         return Results.json().render(vpus);
 
     }
