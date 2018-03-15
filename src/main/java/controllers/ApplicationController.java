@@ -56,6 +56,7 @@ import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItem;
 import ninja.uploads.FileProvider;
 import org.apache.commons.io.FileUtils;
+import org.bson.Document;
 import services.DataService;
 import services.VibandaImageService;
 
@@ -90,6 +91,16 @@ public class ApplicationController {
         Map<String, Object> data = new HashMap<>();
         data.put("parentUnits", parents);
         data.put("msg", "");
+        
+               List<Document> counties = dbService.getCounties();
+      
+            for (Document county : counties) {
+                if(county.get("ke_counties")!=null){
+                    List<Document> countyDocs = (List<Document>)county.get("ke_counties");
+                    data.put("counties", countyDocs);
+                }
+
+            }
         return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
     }
 

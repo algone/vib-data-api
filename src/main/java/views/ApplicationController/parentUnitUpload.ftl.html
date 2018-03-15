@@ -77,12 +77,17 @@
 
                 </div>
                 <div class="row">
-                    <!--div class="input-field col s6">  
-                        <input type="text" id="city" class="validate" name="city" >
-                        <label for="city" data-error="wrong" data-success="right">City </label>
-                    </div-->
-                    <div class="input-field col s12">
-                        <input type="text" id="county" class="validate" name="county" >
+                    <div class="input-field col s6">
+
+                        <select id="county" name="county">
+                            <option value="" disabled selected>Select county</option>
+                            <#list data.counties as county>
+                            <option value="${county.name}">${county.name}</option>
+                            </#list>
+                        </select>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="text" id="county1" class="validate" name="county" >
                         <label for="county" data-error="wrong" data-success="right">County</label>
                     </div>
                 </div>
