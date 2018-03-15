@@ -7,9 +7,6 @@ package services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
@@ -186,6 +183,7 @@ public class DataService implements Service {
         ParentUnit parent = findParent(parentId);
         unit.setLocation(parent.getLocation());
         unit.setEcorated(parent.getEcorating());
+        unit.setParentType(parent.getParentType());
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(unit);
     }

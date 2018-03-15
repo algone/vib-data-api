@@ -47,6 +47,7 @@ public class Unit implements Serializable {
     private UnitType unitType ;
     private String privacy ;
     private String furnishing ;
+    private ParentType parentType;
 
 
     @Embedded
@@ -251,6 +252,14 @@ public class Unit implements Serializable {
 
     public void setCancellationPolicy(String cancellationPolicy) {
         this.cancellationPolicy = cancellationPolicy;
+    }
+
+    public ParentType getParentType() {
+        return parentType;
+    }
+
+    public void setParentType(ParentType parentType) {
+        this.parentType = parentType;
     }
 
 }
