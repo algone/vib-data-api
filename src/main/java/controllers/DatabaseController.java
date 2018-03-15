@@ -208,7 +208,8 @@ public class DatabaseController {
       
             for (Document county : counties) {
                 if(county.get("ke_counties")!=null){
-                    return Results.json().render(county.get("ke_counties"));
+                    List<Document> docs = (List<Document>)county.get("ke_counties");
+                    return Results.json().render(docs);
                 }
 
             }
