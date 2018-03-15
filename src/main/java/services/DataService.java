@@ -5,9 +5,11 @@
  */
 package services;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import com.mongodb.DBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
@@ -46,7 +48,7 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class DataService implements Service {
 
-  final static Logger LOG = LoggerFactory.getLogger(DataService.class);
+    final static Logger LOG = LoggerFactory.getLogger(DataService.class);
     @Inject
     private MongoDB mongoDB;
     private Datastore ds;
@@ -105,15 +107,25 @@ public class DataService implements Service {
     public List<String> getUnitIds() {
         List<Unit> units = getAllUnits();
         List<String> unitIds = new ArrayList<>();
-     
+
         units.forEach((parent) -> {
-            System.out.println("adding ID: "+parent.getId());
+            System.out.println("adding ID: " + parent.getId());
             unitIds.add(parent.getId());
-        
+
         });
-        
-        System.out.println("size: "+unitIds.size());
+
+        System.out.println("size: " + unitIds.size());
         return unitIds;
+    }
+
+    public List<Document> getCounties() {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+
+        MongoCollection<Document> countiesCol = ds.getMongo().getDatabase("mongolab-amazon-vibanda").getCollection("counties");
+
+        List<Document> foundDocument = countiesCol.find().into(new ArrayList<>());
+
+        return foundDocument;
     }
 
     @Override
@@ -230,7 +242,7 @@ public class DataService implements Service {
 //        JsonNode jsonNode1 = jsonData.get("place");
         JsonNode locationNode = jsonData.get("location");
 //        String place = jsonNode1.textValue();
-      String county = locationNode.get("countyName").textValue();
+        String county = locationNode.get("countyName").textValue();
         List<Unit> units = ds.createQuery(Unit.class)
                 .search(county)
                 .order("_id")

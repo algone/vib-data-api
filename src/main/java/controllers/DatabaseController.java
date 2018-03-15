@@ -35,6 +35,7 @@ import ninja.params.PathParam;
 import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItem;
 import ninja.uploads.FileProvider;
+import org.bson.Document;
 import services.DataService;
 import services.VibandaImageService;
 
@@ -200,6 +201,11 @@ public class DatabaseController {
     public Result findUnitImages(@PathParam("unitId") String id) {
         List<VibandaImage> vui = dbService.findUnitImages(id);
         return Results.json().render(vui);
+    }
+    
+        public Result findCounties(Context context) {
+        List<Document> counties = dbService.getCounties();
+        return Results.json().render(counties);
     }
 
     public Result search(Context context) {

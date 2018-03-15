@@ -57,6 +57,7 @@ public class Routes implements ApplicationRoutes {
         
         //Search
         router.POST().route("/api/search").with(DatabaseController::search);
+        router.GET().route("/api/counties").with(DatabaseController::findCounties);
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
