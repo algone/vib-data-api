@@ -205,9 +205,12 @@ public class DatabaseController {
     
         public Result findCounties(Context context) {
         List<Document> counties = dbService.getCounties();
-        
+      
             for (Document county : counties) {
-                
+                if(county.get("ke_counties")!=null){
+                    return Results.json().render(county.get("ke_counties"));
+                }
+
             }
         return Results.json().render(counties);
     }
