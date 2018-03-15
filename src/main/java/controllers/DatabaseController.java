@@ -205,6 +205,10 @@ public class DatabaseController {
     
         public Result findCounties(Context context) {
         List<Document> counties = dbService.getCounties();
+        
+            for (Document county : counties) {
+                
+            }
         return Results.json().render(counties);
     }
 

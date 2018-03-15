@@ -7,6 +7,7 @@ package services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -14,6 +15,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
+import static com.mongodb.client.model.Projections.include;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -123,7 +125,9 @@ public class DataService implements Service {
 
         MongoCollection<Document> countiesCol = ds.getMongo().getDatabase("mongolab-amazon-vibanda").getCollection("counties");
 
-        List<Document> foundDocument = countiesCol.find().into(new ArrayList<>());
+        List<Document> foundDocument = countiesCol.find().projection(include("ke_counties"))                
+                .into(new ArrayList<>());
+       
 
         return foundDocument;
     }
