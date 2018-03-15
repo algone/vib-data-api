@@ -83,6 +83,16 @@ public class ApplicationController {
     }
 
     public Result showParentUnitForm() {
+                       List<Document> counties = dbService.getCounties();
+      
+            for (Document county : counties) {
+                if(county.get("ke_counties")!=null){
+                    List<Document> countyDocs = (List<Document>)county.get("ke_counties");
+                    
+                    return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html").render("counties", countyDocs);
+                }
+
+            }
         return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html");
     }
 
@@ -91,16 +101,6 @@ public class ApplicationController {
         Map<String, Object> data = new HashMap<>();
         data.put("parentUnits", parents);
         data.put("msg", "");
-        
-               List<Document> counties = dbService.getCounties();
-      
-            for (Document county : counties) {
-                if(county.get("ke_counties")!=null){
-                    List<Document> countyDocs = (List<Document>)county.get("ke_counties");
-                    data.put("counties", countyDocs);
-                }
-
-            }
         return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
     }
 
