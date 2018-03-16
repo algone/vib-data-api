@@ -308,7 +308,7 @@
                 </div>          
                 <div class="row">
 
-                    <div class="input-field col s6">
+                    <div class="input-field col s3">
                         <select name="currencyType">
                             <option value="" disabled selected>Select Currency</option>
                             <option value="Dollars">USD</option>
@@ -316,9 +316,29 @@
                             <option value="Euros">EUR</option>
                         </select>
                     </div>  
-                    <div class="col s6">
-                        <input type="checkbox" class="filled-in" name="includeMeals" id="includeMeals">
-                        <label for="includeMeals">Price include meals</label>
+                    <div class="col s9">
+
+                        <label >Price include meals</label>
+                        <div class="row">
+                            <div class="col s4">
+                                <p>
+                                    <input class="with-gap" name="includeMeals" type="radio" id="bf" checked />
+                                    <label for="bf">Breakfast</label>
+                                </p>
+                            </div>
+                            <div class="col s4">
+                                <p>
+                                    <input class="with-gap" name="includeMeals" type="radio" id="hb" checked />
+                                    <label for="hb">Half-board</label>
+                                </p>
+                            </div>
+                            <div class="col s4">
+                                <p>
+                                    <input class="with-gap" name="includeMeals" type="radio" id="fb" checked />
+                                    <label for="fb">Full-board</label>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div> 
                 <div class="row">
