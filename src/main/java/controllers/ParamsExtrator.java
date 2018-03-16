@@ -258,6 +258,15 @@ public class ParamsExtrator {
             if (key.matches("lift")) {
                 vUnit.getUnitFeature().setLift(context.getParameter(key).contentEquals("on"));
             }
+            if (key.matches("breakfast")) {
+                vUnit.getUnitFeature().setBreakfast(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("parking")) {
+                vUnit.getUnitFeature().setParking(context.getParameter(key).contentEquals("on"));
+            }
+            if (key.matches("verandah")) {
+                vUnit.getUnitFeature().setParking(context.getParameter(key).contentEquals("on"));
+            }
         }
     }
 

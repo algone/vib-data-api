@@ -19,7 +19,7 @@ import javax.persistence.Embeddable;
 public class UnitFeature extends ParentUnitFacilities implements Serializable {
 
     private boolean ac;
-    private int parking;
+    private boolean parking;
     private boolean carpet;
     private boolean fireplace;
     private boolean pets;
@@ -33,6 +33,7 @@ public class UnitFeature extends ParentUnitFacilities implements Serializable {
     private boolean gym;
     private boolean verandah;
     private boolean ensuite;
+    private boolean breakfast;
 
     public boolean isAc() {
         return ac;
@@ -42,13 +43,14 @@ public class UnitFeature extends ParentUnitFacilities implements Serializable {
         this.ac = ac;
     }
 
-    public int getParking() {
+    public boolean isParking() {
         return parking;
     }
 
-    public void setParking(int parking) {
+    public void setParking(boolean parking) {
         this.parking = parking;
     }
+
 
     public boolean isCarpet() {
         return carpet;
@@ -152,6 +154,14 @@ public class UnitFeature extends ParentUnitFacilities implements Serializable {
 
     public void setEnsuite(boolean ensuite) {
         this.ensuite = ensuite;
+    }
+
+    public boolean isBreakfast() {
+        return breakfast;
+    }
+
+    public void setBreakfast(boolean breakfast) {
+        this.breakfast = breakfast;
     }
 
 }
