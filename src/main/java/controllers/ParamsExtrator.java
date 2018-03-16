@@ -297,7 +297,7 @@ public class ParamsExtrator {
                 vUnit.getRentalInfo().setPerExtraGuestCharge(Double.parseDouble(context.getParameter(key)));
             }
             if (key.matches("includeMeals")) {
-                vUnit.getRentalInfo().setIncludeMeals(context.getParameter(key).contentEquals("on"));
+                vUnit.getRentalInfo().setIncludeMeals(context.getParameter(key));
             }
             if (key.matches("childDiscount")) {
                 vUnit.getRentalInfo().setChildDiscount(Double.parseDouble(context.getParameter(key)));

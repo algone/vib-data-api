@@ -24,7 +24,7 @@ public class RentalInfo implements Serializable {
     private double longTermRentalPrice;
     private String cancellationPolicy;
     private String currencyType = "US Dollars";
-    private boolean includeMeals;
+    private String includeMeals;
     private double childDiscount;
     private double perExtraGuestCharge;
 
@@ -68,13 +68,15 @@ public class RentalInfo implements Serializable {
         this.currencyType = currencyType;
     }
 
-    public boolean isIncludeMeals() {
+    public String getIncludeMeals() {
         return includeMeals;
     }
 
-    public void setIncludeMeals(boolean includeMeals) {
+    public void setIncludeMeals(String includeMeals) {
         this.includeMeals = includeMeals;
     }
+
+
 
     public double isChildDiscount() {
         return childDiscount;
