@@ -265,7 +265,7 @@ public class ParamsExtrator {
                 vUnit.getUnitFeature().setParking(context.getParameter(key).contentEquals("on"));
             }
             if (key.matches("verandah")) {
-                vUnit.getUnitFeature().setParking(context.getParameter(key).contentEquals("on"));
+                vUnit.getUnitFeature().setVerandah(context.getParameter(key).contentEquals("on"));
             }
         }
     }
