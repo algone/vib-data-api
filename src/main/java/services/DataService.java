@@ -12,6 +12,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
+import static com.mongodb.client.model.Projections.elemMatch;
 import static com.mongodb.client.model.Projections.include;
 import java.io.File;
 import java.io.FileInputStream;
@@ -144,8 +145,7 @@ public class DataService implements Service {
 
         MongoCollection<Document> destinations = ds.getMongo().getDatabase("mongolab-amazon-vibanda").getCollection("destinations");
 
-        List<Document> topDestinations = destinations.find().projection(include("vibanda_regions")).limit(10)
-                .into(new ArrayList<>());
+        List<Document> topDestinations = destinations.find(elemMatch("vibanda_regions")).limit(10).into(new ArrayList<>());
 
         return topDestinations;
     }
