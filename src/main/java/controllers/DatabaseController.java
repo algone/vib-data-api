@@ -202,23 +202,32 @@ public class DatabaseController {
         List<VibandaImage> vui = dbService.findUnitImages(id);
         return Results.json().render(vui);
     }
-    
-        public Result findCounties(Context context) {
-        List<Document> counties = dbService.getCounties();
-      
-            for (Document county : counties) {
-                if(county.get("ke_counties")!=null){
-                    List<Document> docs = (List<Document>)county.get("ke_counties");
-                    return Results.json().render(docs);
-                }
 
+    public Result findCounties(Context context) {
+        List<Document> counties = dbService.getCounties();
+
+        for (Document county : counties) {
+            if (county.get("ke_counties") != null) {
+                List<Document> docs = (List<Document>) county.get("ke_counties");
+                return Results.json().render(docs);
             }
+
+        }
         return Results.json().render(counties);
+    }
+
+    public Result findDestinations(Context context) {
+        List<Document> destinations = dbService.getDestinations();
+        return Results.json().render(destinations);
+    }
+        public Result findTopDestinations(Context context) {
+        List<Document> topDestinations = dbService.getTopDestinations();
+        return Results.json().render(topDestinations);
     }
 
     public Result search(Context context) {
         InputStream is = null;
-        JsonNode actualObj =null;
+        JsonNode actualObj = null;
         try {
             is = context.getInputStream();
             String jsonString = new BufferedReader(new InputStreamReader(is))
@@ -227,17 +236,17 @@ public class DatabaseController {
             actualObj = objectMapper.readTree(jsonString);
 
             List<Unit> res = dbService.searchUnits(actualObj);
-          return Results.json().render(res);
+            return Results.json().render(res);
         } catch (IOException ex) {
-             return Results.internalServerError();
+            return Results.internalServerError();
         } finally {
             try {
                 is.close();
             } catch (IOException ex) {
-               return Results.internalServerError();
+                return Results.internalServerError();
             }
-        }  
+        }
 
     }
-    
+
 }

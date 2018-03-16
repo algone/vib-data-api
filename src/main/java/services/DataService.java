@@ -122,11 +122,32 @@ public class DataService implements Service {
 
         MongoCollection<Document> countiesCol = ds.getMongo().getDatabase("mongolab-amazon-vibanda").getCollection("counties");
 
-        List<Document> foundDocument = countiesCol.find().projection(include("ke_counties"))                
+        List<Document> foundDocument = countiesCol.find().projection(include("ke_counties"))
                 .into(new ArrayList<>());
-       
 
         return foundDocument;
+    }
+
+    public List<Document> getDestinations() {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+
+        MongoCollection<Document> destinations = ds.getMongo().getDatabase("mongolab-amazon-vibanda").getCollection("destinations");
+
+        List<Document> allDestinations = destinations.find().projection(include("vibanda_regions"))
+                .into(new ArrayList<>());
+
+        return allDestinations;
+    }
+
+    public List<Document> getTopDestinations() {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+
+        MongoCollection<Document> destinations = ds.getMongo().getDatabase("mongolab-amazon-vibanda").getCollection("destinations");
+
+        List<Document> topDestinations = destinations.find().limit(10).projection(include("vibanda_regions"))
+                .into(new ArrayList<>());
+
+        return topDestinations;
     }
 
     @Override
