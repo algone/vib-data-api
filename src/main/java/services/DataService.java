@@ -144,7 +144,7 @@ public class DataService implements Service {
 
         MongoCollection<Document> destinations = ds.getMongo().getDatabase("mongolab-amazon-vibanda").getCollection("destinations");
 
-        List<Document> topDestinations = destinations.find().limit(10).projection(include("vibanda_regions"))
+        List<Document> topDestinations = destinations.find().projection(include("vibanda_regions")).limit(10)
                 .into(new ArrayList<>());
 
         return topDestinations;
