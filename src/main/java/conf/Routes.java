@@ -55,6 +55,13 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/form/addParent").with(ApplicationController::showParentUnitForm);
         router.GET().route("/form/addUnit").with(ApplicationController::showUnitForm);
         
+        //Login and logout
+        router.GET().route("/form/login").with(ApplicationController::showLoginForm);
+        router.GET().route("/form/register").with(ApplicationController::showRegisterForm);
+        
+        router.POST().route("/user/login").with(ApplicationController::login);
+        router.POST().route("/user/register").with(ApplicationController::register);
+        
         //Search
         router.POST().route("/api/search").with(DatabaseController::search);
         router.GET().route("/api/counties").with(DatabaseController::findCounties);

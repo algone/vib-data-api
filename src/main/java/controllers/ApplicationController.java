@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import model.Host;
 import model.Location;
 import model.ParentUnit;
 import model.ParentUnitAccessibility;
@@ -49,6 +50,7 @@ import model.Unit;
 import model.VibandaImage;
 
 import ninja.Context;
+import ninja.FilterWith;
 import ninja.ReverseRouter;
 import ninja.jpa.UnitOfWork;
 import ninja.params.Param;
@@ -73,8 +75,9 @@ public class ApplicationController {
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
 
+    @FilterWith(SecureFilter.class)
     public Result index() {
-       List<ParentUnit> vpus = dbService.getAllParents();
+        List<ParentUnit> vpus = dbService.getAllParents();
         return Results.html().template("views/ApplicationController/index.ftl.html").render("parents", vpus);
     }
 
@@ -83,17 +86,33 @@ public class ApplicationController {
     }
 
     public Result showParentUnitForm() {
-                       List<Document> counties = dbService.getCounties();
-      
-            for (Document county : counties) {
-                if(county.get("ke_counties")!=null){
-                    List<Document> countyDocs = (List<Document>)county.get("ke_counties");
-                    
-                    return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html").render("counties", countyDocs);
-                }
+        List<Document> counties = dbService.getCounties();
 
+        for (Document county : counties) {
+            if (county.get("ke_counties") != null) {
+                List<Document> countyDocs = (List<Document>) county.get("ke_counties");
+
+                return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html").render("counties", countyDocs);
             }
+
+        }
         return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html");
+    }
+
+    public Result showLoginForm() {
+//        Map<String, Object> parents = dbService.getParentIds();
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("parentUnits", parents);
+//        data.put("msg", "");
+        return Results.html().template("views/layout/login.ftl.html");
+    }
+
+    public Result showRegisterForm() {
+//        Map<String, Object> parents = dbService.getParentIds();
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("parentUnits", parents);
+//        data.put("msg", "");
+        return Results.html().template("views/layout/register.ftl.html");
     }
 
     public Result showUnitForm() {
@@ -205,5 +224,63 @@ public class ApplicationController {
 //        return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
     }
 //
+
+    @UnitOfWork
+    public Result login(@Param("email") String email, @Param("password") String pass, Context context) {
+
+        Host user = dbService.userExists(email);
+
+        if (user != null) {
+
+            //User exists ...go to demo page
+            if (context.getSession().get("userId") != null) {
+                //additionally check if userId matches the provided email
+                return Results.html().template("views/ApplicationController/index.ftl.html").render("msg", user.getUserName());
+            }
+            context.getSession().put("userId", user.getEmail());
+
+            return Results.html().template("/views/ApplicationController/index.ftl.html").render("msg", "Welcome " + user.getUserName());
+        } else {
+            //User does not exists ... go to login page
+            context.getSession().clear();
+            return Results.html().template("/views/layout/register.ftl.html").render("msg", "Login");
+        }
+
+    }
+
+    @Transactional
+    public Result register(@Param("userName") String userName,
+            @Param("email") String email,
+            @Param("password") String pass,
+            @Param("firstName") String fname,
+            @Param("lastName") String lname,
+            Context context) {
+        Host user = dbService.userExists(email);
+
+        if (user != null) {
+            //User exists ...go to login page and log in
+
+            return Results.html().template("/views/layout/signin.ftl.html").render("msg", "User " + userName + " already exists, got to login");
+        } else {
+            //User does not exists ... go to login page
+            Host host = new Host();
+            host.setUserName(userName);
+            host.setEmail(email);
+            host.setPassword(pass);
+            host.setFirstName(fname);
+            host.setLastName(lname);
+
+            dbService.addHost(host);
+            return Results.html().template("/views/layout/login.ftl.html").render("msg", userName);
+        }
+    }
+
+    @javax.inject.Inject
+    public Result logout(Context context) {
+        context.getSession().clear();
+        String msg = "User session invalidated, log in again";
+        return Results.html().template("views/layout/login.ftl.html").render("msg", msg);
+
+    }
 
 }

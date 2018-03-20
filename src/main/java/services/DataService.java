@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.inject.Singleton;
+import model.Host;
 import model.ParentUnit;
 import model.Unit;
 import model.VibandaImage;
@@ -271,5 +272,18 @@ public class DataService implements Service {
                 .asList();
 
         return units;
+    }
+
+    public Host userExists(String email) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        Query<Host> query = ds.createQuery(Host.class);
+        Query<Host> result = query.field("email").equal(email);
+        return result.get();
+    }
+
+    public void addHost(Host host) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+                ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        ds.save(host);
     }
 }

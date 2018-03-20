@@ -15,7 +15,6 @@ import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
-import org.mongodb.morphia.annotations.Reference;
 import org.mongodb.morphia.utils.IndexType;
 
 /**
@@ -23,11 +22,12 @@ import org.mongodb.morphia.utils.IndexType;
  * @author A4372949
  */
 @Entity
-@Indexes(@Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
+@Indexes(
+        @Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
 public class Unit implements Serializable {
 
     @Id
-    private String  id= new ObjectId().toHexString();
+    private String id = new ObjectId().toHexString();
     private String unitHeading;
     private String unitDescription;
     private int numOfBedrooms;
@@ -37,18 +37,17 @@ public class Unit implements Serializable {
     private boolean active;
     private String ecorated;
     private String dateOfPosting;
-    private String dateAvailableFrom;   
-    private String checkinTime ;
-    private String checkoutTime ;
+    private String dateAvailableFrom;
+    private String checkinTime;
+    private String checkoutTime;
     private String unitParentId;
     private String cancellationPolicy;
     private Location location;
-    private String rentalType ;
-    private UnitType unitType ;
-    private String privacy ;
-    private String furnishing ;
+    private String rentalType;
+    private UnitType unitType;
+    private String privacy;
+    private String furnishing;
     private ParentType parentType;
-
 
     @Embedded
     private List<VibandaImage> unitImages = new ArrayList<>();
@@ -56,8 +55,10 @@ public class Unit implements Serializable {
     private UnitFeature unitFeature;
     @Embedded
     private RentalInfo rentalInfo;
-    @Reference
+    @Embedded
     private List<Rating> unitRatings = new ArrayList<>();
+    @Embedded
+    private List<Review> unitReviews = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -74,8 +75,6 @@ public class Unit implements Serializable {
     public void setUnitParentId(String unitParentId) {
         this.unitParentId = unitParentId;
     }
-
-
 
     public String getRentalType() {
         return rentalType;
@@ -132,8 +131,6 @@ public class Unit implements Serializable {
     public void setBeds(int beds) {
         this.beds = beds;
     }
-
-
 
     public RentalInfo getRentalInfo() {
         return rentalInfo;
@@ -214,6 +211,7 @@ public class Unit implements Serializable {
     public void setUnitRatings(List<Rating> unitRatings) {
         this.unitRatings = unitRatings;
     }
+
     public String getEcorated() {
         return ecorated;
     }
@@ -260,6 +258,14 @@ public class Unit implements Serializable {
 
     public void setParentType(ParentType parentType) {
         this.parentType = parentType;
+    }
+
+    public List<Review> getUnitReviews() {
+        return unitReviews;
+    }
+
+    public void setUnitReviews(List<Review> unitReviews) {
+        this.unitReviews = unitReviews;
     }
 
 }
