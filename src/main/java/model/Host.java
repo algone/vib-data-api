@@ -37,10 +37,8 @@ public class Host implements Serializable {
     private boolean verified;
     private String aboutHost;
     private String whenJoined;
-    private List<String> achievements;
+    private String[] achievements;
     private int hostRating;
-@Embedded
-    private List<Review> hostReviews;
 
     public String getId() {
         return id;
@@ -90,13 +88,15 @@ public class Host implements Serializable {
         this.whenJoined = whenJoined;
     }
 
-    public List<String> getAchievements() {
+    public String[] getAchievements() {
         return achievements;
     }
 
-    public void setAchievements(List<String> achievements) {
+    public void setAchievements(String[] achievements) {
         this.achievements = achievements;
     }
+
+
 
     public int getHostRating() {
         return hostRating;
@@ -104,14 +104,6 @@ public class Host implements Serializable {
 
     public void setHostRating(int hostRating) {
         this.hostRating = hostRating;
-    }
-
-    public List<Review> getHostReviews() {
-        return hostReviews;
-    }
-
-    public void setHostReviews(List<Review> hostReviews) {
-        this.hostReviews = hostReviews;
     }
 
     public String getEmail() {
