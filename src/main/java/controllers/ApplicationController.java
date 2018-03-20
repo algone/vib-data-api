@@ -269,7 +269,7 @@ public class ApplicationController {
             host.setPassword(pass);
             host.setFirstName(fname);
             host.setLastName(lname);
-
+host.setHostReviews(new ArrayList<>());
             dbService.addHost(host);
             return Results.html().template("/views/layout/login.ftl.html").render("msg", userName);
         }

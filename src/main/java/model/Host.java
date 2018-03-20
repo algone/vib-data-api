@@ -9,11 +9,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
+import org.mongodb.morphia.annotations.Property;
 import org.mongodb.morphia.utils.IndexType;
 
 /**
@@ -24,6 +26,7 @@ import org.mongodb.morphia.utils.IndexType;
 @Indexes(@Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
 public class Host implements Serializable {
     @Id
+    @Property("id")
     private String id = new ObjectId().toHexString();
     private String userName;
     private String firstName;
@@ -34,9 +37,10 @@ public class Host implements Serializable {
     private boolean verified;
     private String aboutHost;
     private String whenJoined;
-    private List<String> achievements = new ArrayList<>();
+    private List<String> achievements;
     private int hostRating;
-    private List<Review> hostReviews = new ArrayList<>();
+@Embedded
+    private List<Review> hostReviews;
 
     public String getId() {
         return id;

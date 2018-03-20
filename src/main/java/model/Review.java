@@ -5,30 +5,19 @@
  */
 package model;
 
-import java.io.Serializable;
-import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
 
 /**
  *
  * @author algone
  */
-@Embedded
-public class Review implements Serializable {
-    private String reviewId = new ObjectId().toHexString();
+@Entity
+public class Review extends BaseEntity{
     private String reviewerName;
     private String eviewerAvatar;
     private String dateOfReviev;
     private String reviewTitle;
     private String rewiewText;
-
-    public String getReviewId() {
-        return reviewId;
-    }
-
-    public void setReviewId(String reviewId) {
-        this.reviewId = reviewId;
-    }
 
     public String getReviewerName() {
         return reviewerName;
