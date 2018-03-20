@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
@@ -37,7 +36,6 @@ public class Host implements Serializable {
     private String whenJoined;
     private List<String> achievements = new ArrayList<>();
     private int hostRating;
-    @Embedded
     private List<Review> hostReviews = new ArrayList<>();
 
     public String getId() {

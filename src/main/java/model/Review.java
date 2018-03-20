@@ -7,16 +7,14 @@ package model;
 
 import java.io.Serializable;
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Embedded;
 
 /**
  *
  * @author algone
  */
-@Entity
+@Embedded
 public class Review implements Serializable {
-@Id
     private String reviewId = new ObjectId().toHexString();
     private String reviewerName;
     private String eviewerAvatar;
