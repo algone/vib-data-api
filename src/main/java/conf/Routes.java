@@ -46,6 +46,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/units").with(ApplicationController::findAllUnits);
         router.GET().route("/api/units/{unitId}").with(DatabaseController::findUnit);
         router.GET().route("/api/units/{parentId}/units").with(DatabaseController::getUnitsByParentId);
+        
 
         //Images api
         router.GET().route("/api/images/{unitId}").with(DatabaseController::findUnitImages);
@@ -54,13 +55,20 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/form/uploadImage").with(ApplicationController::showImageUploadForm);
         router.GET().route("/form/addParent").with(ApplicationController::showParentUnitForm);
         router.GET().route("/form/addUnit").with(ApplicationController::showUnitForm);
+        router.GET().route("/form/unit/review").with(ApplicationController::showUnitReviewForm);
         
         //Login and logout
         router.GET().route("/form/login").with(ApplicationController::showLoginForm);
         router.GET().route("/form/register").with(ApplicationController::showRegisterForm);
+        router.GET().route("/form/host/review").with(ApplicationController::showHostReviewForm);
+
         
+        //Host login/registration/profileupdate/reviews/ratings
         router.POST().route("/user/login").with(ApplicationController::login);
         router.POST().route("/user/register").with(ApplicationController::register);
+        router.POST().route("/api/host/review").with(ApplicationController::logout);
+        
+
         
         //Search
         router.POST().route("/api/search").with(DatabaseController::search);

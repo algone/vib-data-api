@@ -84,10 +84,12 @@
                     <i class="material-icons">edit</i>
                 </a>
                 <ul>
-                    <li><a class="btn-floating blue tooltipped " data-position="left" id="err" data-delay="50" data-tooltip="Home" href="/"><i class="material-icons">view_comfy</i></a></li>
-                    <li><a class="btn-floating blue tooltipped " data-position="left" id="err" data-delay="50" data-tooltip="Add parent" href="/form/addParent" ><i class="material-icons">location_city</i></a></li>
-                    <li><a class="btn-floating blue tooltipped " data-position="left" id="err" data-delay="50" data-tooltip="Add unit" href="/form/addUnit"><i class="material-icons">hotel</i></a></li>
-                    <li><a class="btn-floating blue tooltipped " data-position="left" id="err" data-delay="50" data-tooltip="Upload image" href="/form/uploadImage"><i class="material-icons">photo_camera</i></a></li>
+                    <li><a class="btn-floating blue tooltipped " data-position="left" id="homepage" data-delay="50" data-tooltip="Home" href="/"><i class="material-icons">view_comfy</i></a></li>
+                    <li><a class="btn-floating blue tooltipped " data-position="left" id="parentpg" data-delay="50" data-tooltip="Add parent" href="/form/addParent" ><i class="material-icons">location_city</i></a></li>
+                    <li><a class="btn-floating blue tooltipped " data-position="left" id="unitpg" data-delay="50" data-tooltip="Add unit" href="/form/addUnit"><i class="material-icons">hotel</i></a></li>
+                    <li><a class="btn-floating blue tooltipped " data-position="left" id="imagepg" data-delay="50" data-tooltip="Upload image" href="/form/uploadImage"><i class="material-icons">photo_camera</i></a></li>
+                <li><a class="btn-floating blue tooltipped " data-position="left" id="hostrevpg" data-delay="50" data-tooltip="Review Host" href="/form/host/review"><i class="material-icons">rate_review</i></a></li>
+                <li><a class="btn-floating blue tooltipped " data-position="left" id="unitrevpg" data-delay="50" data-tooltip="Review Unit" href="/form/unit/review"><i class="material-icons">star_rate</i></a></li>
                 </ul>
             </div>
         </div>
@@ -127,6 +129,18 @@
                     ampmclickable: true, // make AM PM clickable
                     aftershow: function () {} //Function for after opening timepicker
                 });
+                
+                  $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: false, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false // Stops event propagation
+    }
+  );
             })(jQuery); // end of jQuery name space
             var map = L.map('map').setView(new L.LatLng(0.051472, 37.645604), 7);
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {

@@ -71,6 +71,7 @@ public class DataService implements Service {
 
     @Override
     public void addParent(ParentUnit vpu) {
+        this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(vpu);
     }
@@ -153,6 +154,7 @@ public class DataService implements Service {
     @Override
     public void saveImage(VibandaImage img) {
         System.out.println("Persisting image to mongolab....");
+        this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(img);
     }
@@ -205,6 +207,7 @@ public class DataService implements Service {
         unit.setLocation(parent.getLocation());
         unit.setEcorated(parent.getEcorating());
         unit.setParentType(parent.getParentType());
+        this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(unit);
     }
@@ -276,14 +279,19 @@ public class DataService implements Service {
 
     public Host userExists(String email) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        
         Query<Host> query = ds.createQuery(Host.class);
         Query<Host> result = query.field("email").equal(email);
         return result.get();
     }
 
     public void addHost(Host host) {
+        
+        this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        
                 ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(host);
     }
+
 }

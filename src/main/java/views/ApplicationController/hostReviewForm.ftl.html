@@ -1,0 +1,84 @@
+<#import "../layout/defaultLayout.ftl.html" as layout> 
+<@layout.myLayout "Home page">    
+
+
+<div class="row">
+
+
+    <div id="test3" > 
+        <form action="/api/host/review" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col s12">
+
+                    <div class="card ">
+                        <div class="card-image">
+                            <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
+                            <span class="card-title">Reviews</span>
+                        </div>
+                        <div class="card-stacked">
+                        <div class="card-content">
+                            <p>To help ensure a great experience for everyone, we ask both guests to leave public reviews after every stay</p>
+                            <div class="row">
+                                <div class=" input-field col s6">
+                                    <select name="unitId" id="unitid">
+                                        <option value="" disabled selected>Host to review</option>
+                                        <#list units as unit>
+                                        <option value="${unit.id}">${unit.unitHeading}</option>
+                                        </#list>
+                                    </select>
+
+                                </div> 
+                                <div class="file-field input-field col s6">
+                                    <div class="waves-effect waves-light btn-floating">
+                                        <i class="material-icons">add_a_photo</i>
+                                        <input type="file" multiple name="avatar">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Select avatar" name="reviewerAvatar">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">  
+                                    <input type="text" id="reviewerName" class="validate" name="reviewerName" >
+                                    <label for="reviewerName" data-error="wrong" data-success="right">Reviewer Name</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input type="text" class="datepicker" name="dateOfReviev" id="dateOfReviev" placeholder="Review date">
+                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">  
+                                    <input type="text" id="reviewTitle" class="validate" name="reviewTitle" >
+                                    <label for="reviewTitle" data-error="wrong" data-success="right">Review Title</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="rewiewText" class="materialize-textarea" name="rewiewText"></textarea>
+                                    <label for="rewiewText">Review Text</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class=" range-field col s12">
+                                    <label for="rateit" class="">Rating</label>
+                                    <input type="range" id="rateit" min="1" max="5"  name="rating"/>
+                                </div> 
+
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="btn waves-effect waves-light" type="submit" onclick="M.toast({html: 'Image Added'})">Send Review
+                                
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</@layout.myLayout>

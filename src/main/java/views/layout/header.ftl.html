@@ -1,7 +1,26 @@
 <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container">
         <a id="logo-container" href="#" class="brand-logo">Vibanda Data Api</a>
-        
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/form/login">login</a></li>
+            <li><a href="/form/register">register</a></li>
+            <#if host??>
+            <li>
+                <a class='dropdown-button ' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons right">account_circle</i>
+                    Hello  
+                    ${host.userName}
+                </a>
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li><a href="/user/logout" >logout</a></li>
+                </ul>
+            </li>
+            </#if>
+            <li>
+                <a href="/user/logout" >logout</a>
+                <!--button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    
+                </button--></li>
+        </ul>
 
     </div>
 </nav>

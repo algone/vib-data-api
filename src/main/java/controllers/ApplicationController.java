@@ -65,7 +65,7 @@ import services.VibandaImageService;
 @FileProvider(DiskFileItemProvider.class)
 @Singleton
 public class ApplicationController {
-    
+
     @Inject
     DataService dbService;
     @Inject
@@ -74,31 +74,30 @@ public class ApplicationController {
     ReverseRouter reverseRouter;
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
-    
+
     @FilterWith(SecureFilter.class)
-    public Result index() {
+    public Result index(Context context) {
         List<ParentUnit> vpus = dbService.getAllParents();
-        return Results.html().template("views/ApplicationController/index.ftl.html").render("parents", vpus);
+        Host host = dbService.userExists(context.getSession().get("userId"));
+        return Results.html().template("views/ApplicationController/index.ftl.html").render("host", host).render("parents", vpus);
     }
-    
+
     public Result showUpload() {
         return Results.html().template("views/ApplicationController/index_wiz.ftl.html");
     }
-    
+
     public Result showParentUnitForm() {
         List<Document> counties = dbService.getCounties();
-        
+
         for (Document county : counties) {
             if (county.get("ke_counties") != null) {
                 List<Document> countyDocs = (List<Document>) county.get("ke_counties");
-                
                 return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html").render("counties", countyDocs);
             }
-            
         }
         return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html");
     }
-    
+
     public Result showLoginForm() {
 //        Map<String, Object> parents = dbService.getParentIds();
 //        Map<String, Object> data = new HashMap<>();
@@ -106,7 +105,7 @@ public class ApplicationController {
 //        data.put("msg", "");
         return Results.html().template("views/layout/login.ftl.html");
     }
-    
+
     public Result showRegisterForm() {
 //        Map<String, Object> parents = dbService.getParentIds();
 //        Map<String, Object> data = new HashMap<>();
@@ -114,7 +113,7 @@ public class ApplicationController {
 //        data.put("msg", "");
         return Results.html().template("views/layout/register.ftl.html");
     }
-    
+
     public Result showUnitForm() {
         Map<String, Object> parents = dbService.getParentIds();
         Map<String, Object> data = new HashMap<>();
@@ -122,16 +121,29 @@ public class ApplicationController {
         data.put("msg", "");
         return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
     }
-    
+
     public Result showImageUploadForm() {
         List<Unit> unitIds = dbService.getAllUnits();
         System.out.println("Showing image upload form");
 //        Map<String, Object> data = new HashMap<>();
 //        data.put("units", unitIds);
         return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds);
-        
+
+    }
+
+    public Result showHostReviewForm() {
+        List<Unit> unitIds = dbService.getAllUnits();
+        System.out.println("Showing image upload form");
+        return Results.html().template("views/ApplicationController/hostReviewForm.ftl.html").render("units", unitIds);
     }
     
+        public Result showUnitReviewForm() {
+        List<Unit> unitIds = dbService.getAllUnits();
+        System.out.println("Showing image upload form");
+        return Results.html().template("views/ApplicationController/unitReviewForm.ftl.html").render("units", unitIds);
+
+    }
+
     public Result addUnit(Context context) {
         ParamsExtrator pe = new ParamsExtrator(context);
         Unit vUnit = pe.getUnit();
@@ -140,51 +152,48 @@ public class ApplicationController {
         units.add(vUnit);
         return Results.json().render(units);
     }
-    
+
     @Transactional
-    public Result addParent(Context context,
-            @Param("parentUnitImage") FileItem parentUnitImage,
-            @Param("puImageDescription") String parentUnitImageDesc) throws Exception {
-        VibandaImage image = saveParentImage(parentUnitImage, parentUnitImageDesc);
+    public Result addParent(Context context) throws Exception {
         ParentUnit vpu = new ParamsExtrator(context).getParent();
-        vpu.getParentImages().add(image);
+
         units.clear();
 
 //        return Results.html().template("views/ApplicationController/index.ftl.html");
         dbService.addParent(vpu);
         return Results.json().render(vpu);
-        
+
     }
-    
+
     @UnitOfWork
     public Result listAll(Context context) {
         List<ParentUnit> vpus = dbService.getAllParents();
 //        Map<String, Object> ids = dbService.getParentIds();
 //        System.out.println("JSON:" + Results.json().render(vpus));
         return Results.json().render(vpus);
-        
+
     }
-    
+
     public Result uploadUnitImage(Context context,
             @Param("unitImageFile") FileItem unitImageFile,
             @Param("imageName") String imageName,
             @Param("imageDescription") String imageDescription) throws Exception {
-        
+
         VibandaImage img = saveUnitImage(unitImageFile, imageDescription);
         unitImages.add(img);
 //        return Results.json().render(img);
         return Results.noContent();
     }
-    
+
     @UnitOfWork
     public Result findAllUnits() {
-        
+
         List<Unit> vunits = dbService.getAllUnits();
         System.out.println("JSON:" + vunits);
         return Results.json().render(vunits);
-        
+
     }
-    
+
     private VibandaImage saveParentImage(FileItem imageFile, String imageDescription) throws IOException {
         File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
         File destFile = new File(defDir, imageFile.getFileName());
@@ -194,7 +203,7 @@ public class ApplicationController {
         img.setImageDescription(imageDescription);
         return img;
     }
-    
+
     private VibandaImage saveUnitImage(FileItem imageFile, String imageDescription) throws IOException {
         System.out.println("Working Directory = "
                 + System.getProperty("user.dir"));
@@ -206,15 +215,15 @@ public class ApplicationController {
         img.setImageDescription(imageDescription);
         return img;
     }
-    
+
     public Result createParentUnit(Context context) {
         ParentUnit parentUnit = new ParentUnit();
         parentUnit.setLocation(new Location());
         parentUnit.setParentUnitAccessibility(new ParentUnitAccessibility());
         parentUnit.setRentalUnits(new ArrayList<>());
-        
+
         VibandaImage img1 = new VibandaImage();
-        
+
         img1.setImageDescription("Image1 descr");
         img1.setImageUrl("some/image/url/img.jpg");
         img1.setImageId("img1");
@@ -227,27 +236,39 @@ public class ApplicationController {
 
     @UnitOfWork
     public Result login(@Param("email") String email, @Param("password") String pass, Context context) {
-        
-        Host user = dbService.userExists(email);
-        
-        if (user != null) {
 
+        Host user = dbService.userExists(email);
+
+        if (user != null) {
+            System.out.println("User already registered: " + user.getEmail());
             //User exists ...go to demo page
-            if (context.getSession().get("userId") != null) {
-                //additionally check if userId matches the provided email
-                return Results.html().template("views/ApplicationController/index.ftl.html").render("msg", user.getUserName());
+            System.out.println("Authenticating user ....");
+            if (user.getPassword().matches(pass)) {
+                System.out.println("User is authorized ....creating session");
+                if (context.getSession().get("userId") == null) {
+                    System.out.println("User does not have an active session....setting user session and redirecting to index.html");
+                    context.getSession().put("userId", user.getEmail());
+
+                } else {
+                    System.out.println("User already have an active session ....redirecting to index.html");
+                }
+//                return Results.redirect("/");
+                return Results.redirect("/");
+            } else {
+                System.out.println("User not authorized ....check credentials ... redirecting to login");
+                return Results.html().template("/views/layout/login.ftl.html");
             }
-            context.getSession().put("userId", user.getEmail());
-            
-            return Results.html().template("/views/ApplicationController/index.ftl.html").render("msg", "Welcome " + user.getUserName());
+
+//            return Results.html().template("/views/ApplicationController/index.ftl.html").render("msg", "Welcome " + user.getUserName());
         } else {
             //User does not exists ... go to login page
+            System.out.println("User not found: User does not exists ... go to login page");
             context.getSession().clear();
-            return Results.html().template("/views/layout/register.ftl.html").render("msg", "Login");
+            return Results.html().template("/views/layout/register.ftl.html");
         }
-        
+
     }
-    
+
     @Transactional
     public Result register(@Param("userName") String userName,
             @Param("email") String email,
@@ -256,7 +277,7 @@ public class ApplicationController {
             @Param("lastName") String lname,
             Context context) {
         Host user = dbService.userExists(email);
-        
+
         if (user != null) {
             //User exists ...go to login page and log in
 
@@ -269,18 +290,18 @@ public class ApplicationController {
             host.setPassword(pass);
             host.setFirstName(fname);
             host.setLastName(lname);
-            host.setHostReviews(new ArrayList<>());
             dbService.addHost(host);
             return Results.html().template("/views/layout/login.ftl.html").render("msg", userName);
         }
     }
-    
-    @javax.inject.Inject
+
     public Result logout(Context context) {
-        context.getSession().clear();
+//        context.getSession().clear();
         String msg = "User session invalidated, log in again";
-        return Results.html().template("views/layout/login.ftl.html").render("msg", msg);
-        
+
+        System.out.println("User session invalidated, log in again");
+        return Results.html().redirect("/");
+
     }
-    
+
 }

@@ -15,7 +15,6 @@ import org.mongodb.morphia.annotations.Field;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Index;
 import org.mongodb.morphia.annotations.Indexes;
-import org.mongodb.morphia.annotations.Property;
 import org.mongodb.morphia.utils.IndexType;
 
 /**
@@ -23,10 +22,11 @@ import org.mongodb.morphia.utils.IndexType;
  * @author algone
  */
 @Entity
-@Indexes(@Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
+@Indexes(
+        @Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
 public class Host implements Serializable {
+
     @Id
-    @Property("id")
     private String id = new ObjectId().toHexString();
     private String userName;
     private String firstName;
@@ -37,8 +37,11 @@ public class Host implements Serializable {
     private boolean verified;
     private String aboutHost;
     private String whenJoined;
-    private String[] achievements;
     private int hostRating;
+    @Embedded
+    private List<String> achievements= new ArrayList<>();
+    @Embedded
+    private List<Review> hostReviews = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -88,15 +91,21 @@ public class Host implements Serializable {
         this.whenJoined = whenJoined;
     }
 
-    public String[] getAchievements() {
+    public List<String> getAchievements() {
         return achievements;
     }
 
-    public void setAchievements(String[] achievements) {
+    public void setAchievements(List<String> achievements) {
         this.achievements = achievements;
     }
 
+    public List<Review> getHostReviews() {
+        return hostReviews;
+    }
 
+    public void setHostReviews(List<Review> hostReviews) {
+        this.hostReviews = hostReviews;
+    }
 
     public int getHostRating() {
         return hostRating;

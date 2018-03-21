@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.io.Serializable;
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 
 /**
@@ -12,12 +14,14 @@ import org.mongodb.morphia.annotations.Entity;
  * @author algone
  */
 @Entity
-public class Review extends BaseEntity{
+@Embedded
+public class Review extends BaseEntity implements Serializable{
     private String reviewerName;
-    private String eviewerAvatar;
+    private String reviewerAvatar;
     private String dateOfReviev;
     private String reviewTitle;
     private String rewiewText;
+    private Rating rating;
 
     public String getReviewerName() {
         return reviewerName;
@@ -27,12 +31,12 @@ public class Review extends BaseEntity{
         this.reviewerName = reviewerName;
     }
 
-    public String getEviewerAvatar() {
-        return eviewerAvatar;
+    public String getReviewerAvatar() {
+        return reviewerAvatar;
     }
 
-    public void setEviewerAvatar(String eviewerAvatar) {
-        this.eviewerAvatar = eviewerAvatar;
+    public void setReviewerAvatar(String reviewerAvatar) {
+        this.reviewerAvatar = reviewerAvatar;
     }
 
     public String getDateOfReviev() {
@@ -57,6 +61,14 @@ public class Review extends BaseEntity{
 
     public void setRewiewText(String rewiewText) {
         this.rewiewText = rewiewText;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
 }

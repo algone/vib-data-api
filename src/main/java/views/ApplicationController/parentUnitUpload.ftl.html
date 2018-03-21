@@ -81,9 +81,11 @@
 
                         <select id="county" name="county">
                             <option value="" disabled selected>Select county</option>
+                            <#if counties?has_content>
                             <#list counties as county>
                             <option value="${county.name}">${county.name}</option>
                             </#list>
+                            </#if>
                         </select>
                     </div>
                     <!--div class="input-field col s6">

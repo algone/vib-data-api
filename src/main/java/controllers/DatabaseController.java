@@ -220,7 +220,8 @@ public class DatabaseController {
         List<Document> destinations = dbService.getDestinations();
         return Results.json().render(destinations);
     }
-        public Result findTopDestinations(Context context) {
+
+    public Result findTopDestinations(Context context) {
         List<Document> topDestinations = dbService.getTopDestinations();
         return Results.json().render(topDestinations);
     }

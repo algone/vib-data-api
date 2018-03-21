@@ -18,18 +18,27 @@ import ninja.Results;
 public class SecureFilter implements Filter {
 
     /** If a username is saved we assume the session is valid */
-    public final String USERNAME = "username";
+    public final String USERNAME = "userId";
 
     @Override
     public Result filter(FilterChain chain, Context context) {
 
         // if we got no cookies we break:
-        if (context.getSession() == null
-                || context.getSession().get(USERNAME) == null) {
-
+        System.out.println(context.getRequestPath());
+        
+        if(context.getRequestPath().equals("/user/logout")){
+            context.getSession().clear();
+            return Results.forbidden().html().template("/views/system/logout.ftl.html");
+        }
+        if (
+                context.getSession() == null
+                || 
+                context.getSession().get(USERNAME) == null) {
+           
             return Results.forbidden().html().template("/views/system/403forbidden.ftl.html");
 
         } else {
+
             return chain.next(context);
         }
 

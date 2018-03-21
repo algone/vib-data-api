@@ -34,6 +34,7 @@ public class ParamsExtrator {
 
     public ParamsExtrator(Context context) {
         vpu = new ParentUnit();
+        vpu.setOwnerID(context.getSession().get("userId"));
         this.context = context;
         this.keys = context.getParameters().keySet();
 
