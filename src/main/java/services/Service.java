@@ -59,7 +59,7 @@ public interface Service {
      * @param parentId
      * @return ParentUnit with Matching Id
      */
-    public ParentUnit findParent(String parentId);
+    public ParentUnit findParentUnitById(String parentId);
 
     /**
      *Lists all Units belonging to a ParentUnit with a given Id
@@ -73,14 +73,14 @@ public interface Service {
      * @param unitId
      * @return
      */
-    public Unit findUnit(String unitId);
+    public Unit findUnitById(String unitId);
 
     /**
      *Retrieves all images belonging to the Unit with a given Unit id
      * @param unitId
      * @return List of Images
      */
-    public List<VibandaImage> findUnitImages(String unitId);
+    public List<VibandaImage> findUnitImagesById(String unitId);
 
     /**
      *Retrieves all Parents Units in the DB

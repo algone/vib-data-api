@@ -69,7 +69,7 @@ public class DatabaseController {
     }
 
     public Result findParent(@PathParam("parentId") String id) {
-        ParentUnit parent = dbService.findParent(id);
+        ParentUnit parent = dbService.findParentUnitById(id);
         return Results.json().render(parent);
 
     }
@@ -161,7 +161,7 @@ public class DatabaseController {
         VibandaImage image = new VibandaImage();
         image.setImageUrl("assets/img/images/" + imageName);
         image.setImageDescription(imageDescription);
-        dbService.upload(unitImageFile.getFile().getAbsolutePath(), imageName);
+        dbService.uploadToGridFS(unitImageFile.getFile().getAbsolutePath(), imageName);
         return Results.noContent();
 
     }
@@ -182,18 +182,18 @@ public class DatabaseController {
         return Results.json().render(hosts);
     }
         public Result findHost(Context context, @PathParam("hostId") String id) {
-         Host host = dbService.getHost(id);
+         Host host = dbService.getHostById(id);
         return Results.json().render(host);
     }
 
     public Result findUnit(@PathParam("unitId") String id) {
-        Unit vu = dbService.findUnit(id);
+        Unit vu = dbService.findUnitById(id);
 
         return Results.json().render(vu);
     }
 
     public Result findParentUnit(@PathParam("parentId") String id) {
-        ParentUnit vpu = dbService.findParent(id);
+        ParentUnit vpu = dbService.findParentUnitById(id);
         return Results.json().render(vpu);
     }
 
@@ -214,7 +214,7 @@ public class DatabaseController {
     }
 
     public Result findUnitImages(@PathParam("unitId") String id) {
-        List<VibandaImage> vui = dbService.findUnitImages(id);
+        List<VibandaImage> vui = dbService.findUnitImagesById(id);
         return Results.json().render(vui);
     }
 
@@ -226,7 +226,6 @@ public class DatabaseController {
                 List<Document> docs = (List<Document>) county.get("ke_counties");
                 return Results.json().render(docs);
             }
-
         }
         return Results.json().render(counties);
     }
@@ -235,7 +234,10 @@ public class DatabaseController {
         List<Document> destinations = dbService.getDestinations();
         return Results.json().render(destinations);
     }
-
+    public Result findHostUnits(@PathParam("hostId") String id) {
+        List<Unit> units = dbService.findHostUnits(id);
+        return Results.json().render(units);
+    }
     public Result findTopDestinations(Context context) {
         List<Document> topDestinations = dbService.getTopDestinations();
         return Results.json().render(topDestinations);
@@ -271,15 +273,15 @@ public class DatabaseController {
             @Param("reviewTitle") String title,
             @Param("reviewerName") String reviewer,
             @Param("dateOfReviev") String reviewDate,
-            @Param("hostId") String hostId,
-            @Param("rating") int rating) {
+            @Param("identifier") String id,
+            @Param("rating") int rating,@PathParam("revtype") String revType) {
 
         Review rev = new Review();
         rev.setReviewTitle(title);
         rev.setReviewText(text);
         rev.setReviewerName(reviewer);
         Map uploadParams = ObjectUtils.asMap(
-                "tags", context.getSession().get("userId")
+                "tags", id
         );
 
         try {
@@ -296,7 +298,7 @@ public class DatabaseController {
         rate.setIpAddress(context.getRemoteAddr());
         rev.setRating(rate);
 
-        dbService.storeReview(rev,context.getSession().get("userId"));
+        dbService.storeReview(rev,id,revType);
         return Results.noContent();
 
     }

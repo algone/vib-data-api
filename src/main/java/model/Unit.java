@@ -55,8 +55,8 @@ public class Unit implements Serializable {
     private UnitFeature unitFeature;
     @Embedded
     private RentalInfo rentalInfo;
-    @Embedded
-    private List<Rating> unitRatings = new ArrayList<>();
+    
+    private double unitRating ;
     @Embedded
     private List<Review> unitReviews = new ArrayList<>();
 
@@ -204,13 +204,15 @@ public class Unit implements Serializable {
         this.furnishing = furnishing;
     }
 
-    public List<Rating> getUnitRatings() {
-        return unitRatings;
+    public double getUnitRating() {
+        return unitRating;
     }
 
-    public void setUnitRatings(List<Rating> unitRatings) {
-        this.unitRatings = unitRatings;
+    public void setUnitRating(double unitRating) {
+        this.unitRating = unitRating;
     }
+
+
 
     public String getEcorated() {
         return ecorated;

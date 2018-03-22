@@ -55,18 +55,18 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/form/uploadImage").with(ApplicationController::showImageUploadForm);
         router.GET().route("/form/addParent").with(ApplicationController::showParentUnitForm);
         router.GET().route("/form/addUnit").with(ApplicationController::showUnitForm);
-        router.GET().route("/form/unit/review").with(ApplicationController::showUnitReviewForm);
+        router.GET().route("/form/unit/review").with(ApplicationController::showReviewForm);
         
         //Login and logout
         router.GET().route("/form/login").with(ApplicationController::showLoginForm);
         router.GET().route("/form/register").with(ApplicationController::showRegisterForm);
-        router.GET().route("/form/host/review").with(ApplicationController::showHostReviewForm);
+        router.GET().route("/form/host/review").with(ApplicationController::showReviewForm);
 
         
         //Host login/registration/profileupdate/reviews/ratings
         router.POST().route("/user/login").with(ApplicationController::login);
         router.POST().route("/user/register").with(ApplicationController::register);
-        router.POST().route("/api/host/review").with(DatabaseController::addReview);
+        router.POST().route("/api/{revtype}/review").with(DatabaseController::addReview);
         
 
         
@@ -77,6 +77,8 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/destinations/top").with(DatabaseController::findTopDestinations);
         router.GET().route("/api/hosts").with(DatabaseController::listAllHosts);
         router.GET().route("/api/hosts/{hostId}").with(DatabaseController::findHost);
+        router.GET().route("/api/units/{hostId}").with(DatabaseController::findHostUnits);
+        
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

@@ -29,71 +29,33 @@
         <![endif]-->
 
         <style>
-            .google-maps {
-                position: relative;
-                padding-bottom: 75%; 
-                height: 300px;
-                overflow: hidden;
-            }
-            #map {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-            }
 
-            #geocode-selector {
-                position: absolute;
-                left: 10px;
-                bottom: 10px;
-                z-index: 10000;
-            }
-
-            #geocode-selector button {
-                border: 1px solid #aaa;
-                border-radius: 4px;
-                padding: 12px 24px;
-                margin-left: 24px;
-                font-size: 1.2em;
-                font-weight: bold;
-                transition: background-color 0.25s ease-out;
-                outline: none;
-            }
-
-            #geocode-selector button:hover {
-                background-color: white;
-            }
-
-            #geocode-selector .selected {
-                background-color: #0078A8;
-                color: white;
-            }
-
-            #geocode-selector .selected:hover {
-                background-color: #49e;
-            }      
         </style>
     </head>
     <body>
+
         <#include "header.ftl.html"/>
         <div class="container">
             <div class="section">  
                 <#nested/>
+                <#if host??>
+                <div class="fixed-action-btn  click-to-toggle">
+                    <a class="btn-floating btn-large red" pulse>
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <ul>
+                        <li><a class="btn-floating blue tooltipped " data-position="left" id="homepage" data-delay="50" data-tooltip="Home" href="/"><i class="material-icons">view_comfy</i></a></li>
+                        <li><a class="btn-floating blue tooltipped " data-position="left" id="parentpg" data-delay="50" data-tooltip="Add parent" href="/form/addParent" ><i class="material-icons">location_city</i></a></li>
+                        <li><a class="btn-floating blue tooltipped " data-position="left" id="unitpg" data-delay="50" data-tooltip="Add unit" href="/form/addUnit"><i class="material-icons">hotel</i></a></li>
+                        <li><a class="btn-floating blue tooltipped " data-position="left" id="imagepg" data-delay="50" data-tooltip="Upload image" href="/form/uploadImage"><i class="material-icons">photo_camera</i></a></li>
+                        <li><a class="btn-floating blue tooltipped " data-position="left" id="hostrevpg" data-delay="50" data-tooltip="Review Host" href="/form/host/review"><i class="material-icons">rate_review</i></a></li>
+                        <li><a class="btn-floating blue tooltipped " data-position="left" id="unitrevpg" data-delay="50" data-tooltip="Review Unit" href="/form/unit/review"><i class="material-icons">star_rate</i></a></li>
+                    </ul>
+                </div>
+                </#if>
             </div>
-            <div class="fixed-action-btn  click-to-toggle">
-                <a class="btn-floating btn-large red" pulse>
-                    <i class="material-icons">edit</i>
-                </a>
-                <ul>
-                    <li><a class="btn-floating blue tooltipped " data-position="left" id="homepage" data-delay="50" data-tooltip="Home" href="/"><i class="material-icons">view_comfy</i></a></li>
-                    <li><a class="btn-floating blue tooltipped " data-position="left" id="parentpg" data-delay="50" data-tooltip="Add parent" href="/form/addParent" ><i class="material-icons">location_city</i></a></li>
-                    <li><a class="btn-floating blue tooltipped " data-position="left" id="unitpg" data-delay="50" data-tooltip="Add unit" href="/form/addUnit"><i class="material-icons">hotel</i></a></li>
-                    <li><a class="btn-floating blue tooltipped " data-position="left" id="imagepg" data-delay="50" data-tooltip="Upload image" href="/form/uploadImage"><i class="material-icons">photo_camera</i></a></li>
-                <li><a class="btn-floating blue tooltipped " data-position="left" id="hostrevpg" data-delay="50" data-tooltip="Review Host" href="/form/host/review"><i class="material-icons">rate_review</i></a></li>
-                <li><a class="btn-floating blue tooltipped " data-position="left" id="unitrevpg" data-delay="50" data-tooltip="Review Unit" href="/form/unit/review"><i class="material-icons">star_rate</i></a></li>
-                </ul>
-            </div>
-        </div>
 
+        </div>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="../../assets/js/materialize.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
@@ -104,8 +66,6 @@
             (function ($) {
                 // Material Select Initialization
                 $(document).ready(function () {
-
-
                     $('select').material_select();
                     $('.datepicker').pickadate({
                         selectMonths: true, // Creates a dropdown to control month
@@ -129,18 +89,18 @@
                     ampmclickable: true, // make AM PM clickable
                     aftershow: function () {} //Function for after opening timepicker
                 });
-                
-                  $('.dropdown-button').dropdown({
-      inDuration: 300,
-      outDuration: 225,
-      constrainWidth: false, // Does not change width of dropdown to that of the activator
-      hover: true, // Activate on hover
-      gutter: 0, // Spacing from edge
-      belowOrigin: false, // Displays dropdown below the button
-      alignment: 'left', // Displays dropdown with edge aligned to the left of button
-      stopPropagation: false // Stops event propagation
-    }
-  );
+
+                $('.dropdown-button').dropdown({
+                    inDuration: 300,
+                    outDuration: 225,
+                    constrainWidth: false, // Does not change width of dropdown to that of the activator
+                    hover: true, // Activate on hover
+                    gutter: 0, // Spacing from edge
+                    belowOrigin: false, // Displays dropdown below the button
+                    alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                    stopPropagation: false // Stops event propagation
+                }
+                );
             })(jQuery); // end of jQuery name space
             var map = L.map('map').setView(new L.LatLng(0.051472, 37.645604), 7);
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -148,22 +108,19 @@
             }).addTo(map);
             var geocoder = L.Control.geocoder({
                 defaultMarkGeocode: false
-            })
-                    .on('markgeocode', function (e) {
-                        var bbox = e.geocode.bbox;
-                        var poly = L.polygon([
-                            bbox.getSouthEast(),
-                            bbox.getNorthEast(),
-                            bbox.getNorthWest(),
-                            bbox.getSouthWest()
-                        ]).addTo(map);
-                        map.fitBounds(poly.getBounds());
-                    })
-                    .addTo(map);
+            }).on('markgeocode', function (e) {
+                var bbox = e.geocode.bbox;
+                var poly = L.polygon([
+                    bbox.getSouthEast(),
+                    bbox.getNorthEast(),
+                    bbox.getNorthWest(),
+                    bbox.getSouthWest()
+                ]).addTo(map);
+                map.fitBounds(poly.getBounds());
+            }).addTo(map);
+
             var c = new L.Control.Coordinates();
-
             c.addTo(map);
-
             map.on('click', function (e) {
                 c.setCoordinates(e);
             });

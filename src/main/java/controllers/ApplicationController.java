@@ -76,72 +76,63 @@ public class ApplicationController {
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
 
-    @FilterWith(SecureFilter.class)
+//    @FilterWith(SecureFilter.class)
     public Result index(Context context) {
-        List<ParentUnit> vpus = dbService.getAllParents();
-        Host host = dbService.userExists(context.getSession().get("userId"));
-        return Results.html().template("views/ApplicationController/index.ftl.html").render("host", host).render("parents", vpus);
+        String userId = context.getSession().get("userId");
+        List<ParentUnit> vpus = dbService.getHostParentUnits(userId);
+        String userName = context.getSession().get("userName");
+        return Results.html().template("views/ApplicationController/index.ftl.html").render("host", userName).render("parents", vpus);
     }
 
-    public Result showUpload() {
-        return Results.html().template("views/ApplicationController/index_wiz.ftl.html");
-    }
-
-    public Result showParentUnitForm() {
+    public Result showParentUnitForm(Context context) {
         List<Document> counties = dbService.getCounties();
-
+        List<Document> countyDocs = null;
         for (Document county : counties) {
             if (county.get("ke_counties") != null) {
-                List<Document> countyDocs = (List<Document>) county.get("ke_counties");
-                return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html").render("counties", countyDocs);
+                countyDocs = (List<Document>) county.get("ke_counties");
+                break;
             }
         }
-        return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html");
+        String userName = context.getSession().get("userName");
+        return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html").render("counties", countyDocs).render("host", userName);
     }
 
     public Result showLoginForm() {
-//        Map<String, Object> parents = dbService.getParentIds();
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("parentUnits", parents);
-//        data.put("msg", "");
         return Results.html().template("views/layout/login.ftl.html");
     }
 
     public Result showRegisterForm() {
-//        Map<String, Object> parents = dbService.getParentIds();
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("parentUnits", parents);
-//        data.put("msg", "");
         return Results.html().template("views/layout/register.ftl.html");
     }
 
-    public Result showUnitForm() {
-        Map<String, Object> parents = dbService.getParentIds();
-        Map<String, Object> data = new HashMap<>();
-        data.put("parentUnits", parents);
-        data.put("msg", "");
-        return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
+    public Result showUnitForm(Context context) {
+        String userId = context.getSession().get("userId");
+        List<ParentUnit> hostPus = dbService.getHostParentUnits(userId);
+        return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", hostPus).render("host", context.getSession().get("userName"));
     }
 
-    public Result showImageUploadForm() {
+    public Result showImageUploadForm(Context context) {
         List<Unit> unitIds = dbService.getAllUnits();
         System.out.println("Showing image upload form");
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("units", unitIds);
-        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds);
+        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds).render("host", context.getSession().get("userName"));
 
     }
 
-    public Result showHostReviewForm() {
-        List<Host> hosts = dbService.getAllHosts();
-        System.out.println("Showing image upload form");
-        return Results.html().template("views/ApplicationController/hostReviewForm.ftl.html").render("hosts", hosts);
-    }
-    
-        public Result showUnitReviewForm() {
-        List<Unit> unitIds = dbService.getAllUnits();
-        System.out.println("Showing image upload form");
-        return Results.html().template("views/ApplicationController/unitReviewForm.ftl.html").render("units", unitIds);
+    public Result showReviewForm(Context context) {
+        boolean isReviewingUnit = context.getRequestPath().contains("/form/unit/review");
+        if (isReviewingUnit) {
+            System.out.println("Reviewing a UNIT");
+            List<Unit> allUnits = dbService.getAllUnits();
+            return Results.html().template("views/ApplicationController/reviewForm.ftl.html")
+                    .render("units", allUnits).render("title", "Unit")
+                    .render("host", context.getSession().get("userName"));
+        } else {
+            System.out.println("Reviewing a HOST");
+            List<Host> hosts = dbService.getAllHosts();
+            return Results.html().template("views/ApplicationController/reviewForm.ftl.html")
+                    .render("hosts", hosts).render("title", "Host")
+                    .render("host", context.getSession().get("userName"));
+        }
 
     }
 
@@ -154,23 +145,9 @@ public class ApplicationController {
         return Results.json().render(units);
     }
 
-    @Transactional
-    public Result addParent(Context context) throws Exception {
-        ParentUnit vpu = new ParamsExtrator(context).getParent();
-
-        units.clear();
-
-//        return Results.html().template("views/ApplicationController/index.ftl.html");
-        dbService.addParent(vpu);
-        return Results.json().render(vpu);
-
-    }
-
     @UnitOfWork
     public Result listAll(Context context) {
         List<ParentUnit> vpus = dbService.getAllParents();
-//        Map<String, Object> ids = dbService.getParentIds();
-//        System.out.println("JSON:" + Results.json().render(vpus));
         return Results.json().render(vpus);
 
     }
@@ -182,7 +159,6 @@ public class ApplicationController {
 
         VibandaImage img = saveUnitImage(unitImageFile, imageDescription);
         unitImages.add(img);
-//        return Results.json().render(img);
         return Results.noContent();
     }
 
@@ -238,7 +214,7 @@ public class ApplicationController {
     @UnitOfWork
     public Result login(@Param("email") String email, @Param("password") String pass, Context context) {
 
-        Host user = dbService.userExists(email);
+        Host user = dbService.getHost(email);
 
         if (user != null) {
             System.out.println("User already registered: " + user.getEmail());
@@ -249,18 +225,16 @@ public class ApplicationController {
                 if (context.getSession().get("userId") == null) {
                     System.out.println("User does not have an active session....setting user session and redirecting to index.html");
                     context.getSession().put("userId", user.getEmail());
-
+                    context.getSession().put("userName", user.getUserName());
                 } else {
                     System.out.println("User already have an active session ....redirecting to index.html");
                 }
-//                return Results.redirect("/");
                 return Results.redirect("/");
             } else {
                 System.out.println("User not authorized ....check credentials ... redirecting to login");
                 return Results.html().template("/views/layout/login.ftl.html");
             }
 
-//            return Results.html().template("/views/ApplicationController/index.ftl.html").render("msg", "Welcome " + user.getUserName());
         } else {
             //User does not exists ... go to login page
             System.out.println("User not found: User does not exists ... go to login page");
@@ -277,7 +251,7 @@ public class ApplicationController {
             @Param("firstName") String fname,
             @Param("lastName") String lname,
             Context context) {
-        Host user = dbService.userExists(email);
+        Host user = dbService.getHost(email);
 
         if (user != null) {
             //User exists ...go to login page and log in
@@ -292,7 +266,7 @@ public class ApplicationController {
             host.setFirstName(fname);
             host.setLastName(lname);
             host.setWhenJoined(ZonedDateTime.now().toString());
-           
+
             dbService.addHost(host);
             return Results.html().template("/views/layout/login.ftl.html").render("msg", userName);
         }

@@ -170,7 +170,16 @@ public class DataService implements Service {
         return parents;
     }
 
-    public ObjectId upload(String filePath, String fileName) {
+    public List<ParentUnit> getHostParentUnits(String hostId) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        final Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
+        Query<ParentUnit> result = query.field("ownerID").equal(hostId);
+
+        List<ParentUnit> parents = result.asList();
+        return parents;
+    }
+
+    public ObjectId uploadToGridFS(String filePath, String fileName) {
         System.out.println("Calling upload...");
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
         ObjectId fileId = null;
@@ -188,20 +197,25 @@ public class DataService implements Service {
             fileId = gridBucket.uploadFromStream(fileName, inputStream, uploadOptions);
 
         } catch (Exception e) {
-            e.printStackTrace();
         } finally {
-//            mongoClient.close();
         }
         return fileId;
     }
 
-    public void storeReview(Review rev, String userId) {
+    public void storeReview(Review rev, String identifier, String revType) {
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-                Query<Host> query = ds.createQuery(Host.class);
-        Query<Host> updateQuery = query.field("email").equal(userId);
-        UpdateOperations<Host> ops = ds.createUpdateOperations(Host.class).addToSet("hostReviews", rev);
-       ds.update(updateQuery, ops); 
+        if (revType.equalsIgnoreCase("Host")) {
+            Query<Host> query = ds.createQuery(Host.class);
+            Query<Host> updateQuery = query.field("email").equal(identifier);
+            UpdateOperations<Host> ops = ds.createUpdateOperations(Host.class).addToSet("hostReviews", rev);
+            ds.update(updateQuery, ops);
+        } else {
+            Query<Unit> query = ds.createQuery(Unit.class);
+            Query<Unit> updateQuery = query.field("id").equal(identifier);
+            UpdateOperations<Unit> ops = ds.createUpdateOperations(Unit.class).addToSet("unitReviews", rev);
+            ds.update(updateQuery, ops);
+        }
     }
 
     @Override
@@ -217,17 +231,17 @@ public class DataService implements Service {
         return query.asList();
     }
 
-    public Host getHost(String hostId) {
+    public Host getHostById(String hostEmail) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Host> query = ds.createQuery(Host.class);
-        Query<Host> result = query.field("email").equal(hostId);
+        Query<Host> result = query.field("email").equal(hostEmail);
         return result.get();
     }
 
     @Override
     public void addUnit(Unit unit) {
         String parentId = unit.getUnitParentId();
-        ParentUnit parent = findParent(parentId);
+        ParentUnit parent = findParentUnitById(parentId);
         unit.setLocation(parent.getLocation());
         unit.setEcorated(parent.getEcorating());
         unit.setParentType(parent.getParentType());
@@ -253,7 +267,7 @@ public class DataService implements Service {
     }
 
     @Override
-    public ParentUnit findParent(String parentId) {
+    public ParentUnit findParentUnitById(String parentId) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
         Query<ParentUnit> result = query.field("id").equal(parentId);
@@ -261,15 +275,26 @@ public class DataService implements Service {
     }
 
     @Override
-    public Unit findUnit(String unitId) {
+    public Unit findUnitById(String unitId) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Unit> query = ds.createQuery(Unit.class);
         Query<Unit> result = query.field("id").equal(unitId);
         return result.get();
     }
 
+    public List<Unit> findHostUnits(String email) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        System.out.println("HOST ID: "+email);
+        Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
+        Query<ParentUnit> parents = query.field("ownerID").equal(email);
+        List<Unit> hostUnits =new ArrayList<>();
+        
+
+        return hostUnits;
+    }
+
     @Override
-    public List<VibandaImage> findUnitImages(String unitId) {
+    public List<VibandaImage> findUnitImagesById(String unitId) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<VibandaImage> query = ds.createQuery(VibandaImage.class);
         Query<VibandaImage> result = query.field("unitId").equal(unitId);
@@ -283,6 +308,7 @@ public class DataService implements Service {
         Query<Unit> result = query.field("unitParentId").equal(parentId);
         return result.asList();
     }
+
 
     @Override
     public List<Unit> searchUnits(JsonNode jsonData) {
@@ -301,11 +327,10 @@ public class DataService implements Service {
         return units;
     }
 
-    public Host userExists(String email) {
+    public Host getHost(String hostEmail) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-
         Query<Host> query = ds.createQuery(Host.class);
-        Query<Host> result = query.field("email").equal(email);
+        Query<Host> result = query.field("email").equal(hostEmail);
         return result.get();
     }
 

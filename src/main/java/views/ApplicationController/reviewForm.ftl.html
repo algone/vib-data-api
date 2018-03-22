@@ -6,25 +6,33 @@
 
 
     <div id="test3" > 
-        <form action="/api/host/review" method="post" enctype="multipart/form-data">
+        <form action="/api/${title}/review" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col s12">
 
                     <div class="card ">
                         <div class="card-image">
                             <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
-                            <span class="card-title">Reviews</span>
+                            <span class="card-title">Review ${title}</span>
                         </div>
                         <div class="card-stacked">
                         <div class="card-content">
                             <p>To help ensure a great experience for everyone, we ask both guests to leave public reviews after every stay</p>
                             <div class="row">
                                 <div class=" input-field col s6">
-                                    <select name="hostId" id="unitid">
-                                        <option value="" disabled selected>Host to review</option>
+                                    <select name="identifier" id="unitid">
+                                        <option value="" disabled selected>${title} to review</option>
+                                        <#if hosts??>
                                         <#list hosts as host>
                                         <option value="${host.email}">${host.userName}</option>
                                         </#list>
+                                        </#if>
+                                        
+                                        <#if units??>
+                                            <#list units as unit>
+                                        <option value="${unit.id}">${unit.unitHeading}</option>
+                                        </#list>
+                                        </#if>
                                     </select>
 
                                 </div> 

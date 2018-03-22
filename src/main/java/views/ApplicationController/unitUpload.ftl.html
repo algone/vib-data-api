@@ -10,8 +10,8 @@
                     <div class="input-field col s6">
                         <select name="unitParent" id="unitparent">
                             <option value="" disabled selected>Unit belongs to: </option>
-                            <#list data.parentUnits?keys as id>
-                            <option value="${id}" class="circle" >${data.parentUnits[id].unitName}</option>
+                            <#list data as pu>
+                            <option value="${pu.ownerID}" class="circle" >${pu.unitName}</option>
                             </#list>
                         </select>
                         <label>Parent property</label>
@@ -358,7 +358,7 @@
             <!--div class="text-center">
                 <button class="btn-floating peach-gradient btn-lg"  onclick="M.toast({html: 'I am a toast'})">Add</button>
             </div-->
-            <button class="btn waves-effect waves-light right" type="submit" onclick="M.toast({html: '${data.msg!Added}'})">Add Unit
+            <button class="btn waves-effect waves-light right" type="submit" onclick="M.toast({html: 'Unit Added'})">Add Unit
                 <i class="material-icons right">cloud_upload</i>
             </button>
         </form>

@@ -1,8 +1,12 @@
 <#import "../layout/defaultLayout.ftl.html" as layout>
 <@layout.myLayout "User Login">
+   <!--img class="responsive-img" src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg"-->
 <div class="container">
+ 
     <div class="row">
         <form class="col s12" method="POST" action="/user/login">
+             <div class="card-panel hoverable small">
+                   <h5 class="center-align">Login</h5>
             <div class="row">
                 <div class="input-field col s12">
                     <input id="email" type="email" class="validate" name="email">
@@ -23,9 +27,10 @@
                 </div>
                 
                 <div class="col s6">
-                  Not yet a user?, please Register  <a class="waves-effect waves-teal btn-flat" href="/form/register">REGISTER HERE</a>
+                  Not yet a user?  <a class="waves-effect waves-teal btn-flat" href="/form/register">Sign Up HERE</a>
                 </div>
             </div>
+                 </div>
         </form>
     </div>
 
