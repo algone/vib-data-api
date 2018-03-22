@@ -66,7 +66,7 @@ public class Routes implements ApplicationRoutes {
         //Host login/registration/profileupdate/reviews/ratings
         router.POST().route("/user/login").with(ApplicationController::login);
         router.POST().route("/user/register").with(ApplicationController::register);
-        router.POST().route("/api/host/review").with(ApplicationController::logout);
+        router.POST().route("/api/host/review").with(DatabaseController::addReview);
         
 
         
@@ -75,6 +75,8 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/counties").with(DatabaseController::findCounties);
         router.GET().route("/api/destinations/all").with(DatabaseController::findDestinations);
         router.GET().route("/api/destinations/top").with(DatabaseController::findTopDestinations);
+        router.GET().route("/api/hosts").with(DatabaseController::listAllHosts);
+        router.GET().route("/api/hosts/{hostId}").with(DatabaseController::findHost);
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

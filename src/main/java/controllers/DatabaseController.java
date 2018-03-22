@@ -19,11 +19,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import model.Host;
 import model.ParentUnit;
+import model.Rating;
+import model.Review;
 import model.Unit;
 import model.VibandaImage;
 import ninja.Context;
@@ -171,6 +177,15 @@ public class DatabaseController {
         return Results.json().render(vus);
     }
 
+    public Result listAllHosts(Context context) {
+        List<Host> hosts = dbService.getAllHosts();
+        return Results.json().render(hosts);
+    }
+        public Result findHost(Context context, @PathParam("hostId") String id) {
+         Host host = dbService.getHost(id);
+        return Results.json().render(host);
+    }
+
     public Result findUnit(@PathParam("unitId") String id) {
         Unit vu = dbService.findUnit(id);
 
@@ -250,4 +265,39 @@ public class DatabaseController {
 
     }
 
+    public Result addReview(Context context,
+            @Param("avatar") FileItem avatarImage,
+            @Param("reviewText") String text,
+            @Param("reviewTitle") String title,
+            @Param("reviewerName") String reviewer,
+            @Param("dateOfReviev") String reviewDate,
+            @Param("hostId") String hostId,
+            @Param("rating") int rating) {
+
+        Review rev = new Review();
+        rev.setReviewTitle(title);
+        rev.setReviewText(text);
+        rev.setReviewerName(reviewer);
+        Map uploadParams = ObjectUtils.asMap(
+                "tags", context.getSession().get("userId")
+        );
+
+        try {
+            Map result = imgService.uploadImage(avatarImage.getFile(), uploadParams);
+            String url = (String) result.get("url");
+            rev.setReviewerAvatar(url);
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Rating rate = new Rating();
+        rate.setDate(reviewDate);
+        rate.setRating(rating);
+        rate.setIpAddress(context.getRemoteAddr());
+        rev.setRating(rate);
+
+        dbService.storeReview(rev,context.getSession().get("userId"));
+        return Results.noContent();
+
+    }
 }

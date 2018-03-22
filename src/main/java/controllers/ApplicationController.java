@@ -38,6 +38,7 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -132,9 +133,9 @@ public class ApplicationController {
     }
 
     public Result showHostReviewForm() {
-        List<Unit> unitIds = dbService.getAllUnits();
+        List<Host> hosts = dbService.getAllHosts();
         System.out.println("Showing image upload form");
-        return Results.html().template("views/ApplicationController/hostReviewForm.ftl.html").render("units", unitIds);
+        return Results.html().template("views/ApplicationController/hostReviewForm.ftl.html").render("hosts", hosts);
     }
     
         public Result showUnitReviewForm() {
@@ -290,6 +291,8 @@ public class ApplicationController {
             host.setPassword(pass);
             host.setFirstName(fname);
             host.setLastName(lname);
+            host.setWhenJoined(ZonedDateTime.now().toString());
+           
             dbService.addHost(host);
             return Results.html().template("/views/layout/login.ftl.html").render("msg", userName);
         }

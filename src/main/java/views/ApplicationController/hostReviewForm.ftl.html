@@ -20,10 +20,10 @@
                             <p>To help ensure a great experience for everyone, we ask both guests to leave public reviews after every stay</p>
                             <div class="row">
                                 <div class=" input-field col s6">
-                                    <select name="unitId" id="unitid">
+                                    <select name="hostId" id="unitid">
                                         <option value="" disabled selected>Host to review</option>
-                                        <#list units as unit>
-                                        <option value="${unit.id}">${unit.unitHeading}</option>
+                                        <#list hosts as host>
+                                        <option value="${host.email}">${host.userName}</option>
                                         </#list>
                                     </select>
 
@@ -56,8 +56,8 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <textarea id="rewiewText" class="materialize-textarea" name="rewiewText"></textarea>
-                                    <label for="rewiewText">Review Text</label>
+                                    <textarea id="rewiewText" class="materialize-textarea" name="reviewText"></textarea>
+                                    <label for="reviewText">Review Text</label>
                                 </div>
                             </div>
 

@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.inject.Singleton;
 import model.Host;
 import model.ParentUnit;
+import model.Review;
 import model.Unit;
 import model.VibandaImage;
 import net.binggl.ninja.mongodb.MongoDB;
@@ -38,6 +39,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -193,11 +195,33 @@ public class DataService implements Service {
         return fileId;
     }
 
+    public void storeReview(Review rev, String userId) {
+        this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+                Query<Host> query = ds.createQuery(Host.class);
+        Query<Host> updateQuery = query.field("email").equal(userId);
+        UpdateOperations<Host> ops = ds.createUpdateOperations(Host.class).addToSet("hostReviews", rev);
+       ds.update(updateQuery, ops); 
+    }
+
     @Override
     public List<Unit> getAllUnits() {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Unit> query = ds.createQuery(Unit.class);
         return query.asList();
+    }
+
+    public List<Host> getAllHosts() {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        Query<Host> query = ds.createQuery(Host.class);
+        return query.asList();
+    }
+
+    public Host getHost(String hostId) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        Query<Host> query = ds.createQuery(Host.class);
+        Query<Host> result = query.field("email").equal(hostId);
+        return result.get();
     }
 
     @Override
@@ -279,18 +303,16 @@ public class DataService implements Service {
 
     public Host userExists(String email) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-        
+
         Query<Host> query = ds.createQuery(Host.class);
         Query<Host> result = query.field("email").equal(email);
         return result.get();
     }
 
     public void addHost(Host host) {
-        
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
+        this.mongoDB.getMorphia().getMapper().getOptions().setStoreNulls(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-        
-                ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(host);
     }
 

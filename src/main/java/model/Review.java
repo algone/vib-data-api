@@ -20,7 +20,7 @@ public class Review extends BaseEntity implements Serializable{
     private String reviewerAvatar;
     private String dateOfReviev;
     private String reviewTitle;
-    private String rewiewText;
+    private String reviewText;
     private Rating rating;
 
     public String getReviewerName() {
@@ -55,12 +55,12 @@ public class Review extends BaseEntity implements Serializable{
         this.reviewTitle = reviewTitle;
     }
 
-    public String getRewiewText() {
-        return rewiewText;
+    public String getReviewText() {
+        return reviewText;
     }
 
-    public void setRewiewText(String rewiewText) {
-        this.rewiewText = rewiewText;
+    public void setReviewText(String reviewText) {
+        this.reviewText = reviewText;
     }
 
     public Rating getRating() {

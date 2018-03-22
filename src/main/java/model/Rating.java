@@ -20,7 +20,7 @@ public class Rating {
     @Id
     private ObjectId ratingId = new ObjectId();
     private int rating;
-    private Date date;
+    private String date;
     private String ipAddress;
 
     public ObjectId getRatingId() {
@@ -39,13 +39,15 @@ public class Rating {
         this.rating = rating;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
+
+
 
     public String getIpAddress() {
         return ipAddress;

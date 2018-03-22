@@ -33,7 +33,7 @@ public class Host implements Serializable {
     private String lastName;
     private String password;
     private String email;
-    private String imageUrl;
+    private String imageUrl ="http://res.cloudinary.com/vibanda/image/upload/v1521676951/cr42yjg5wwiedzoxs8jy.png";
     private boolean verified;
     private String aboutHost;
     private String whenJoined;
