@@ -18,6 +18,7 @@
 package conf;
 
 import controllers.SecureFilter;
+import de.svenkubiak.ninja.auth.filters.AuthenticationFilter;
 import java.util.List;
 import ninja.Filter;
 
@@ -26,6 +27,7 @@ public class Filters implements ninja.application.ApplicationFilters {
     @Override
     public void addFilters(List<Class<? extends Filter>> filters) {
         // Add your application - wide filters here
-         filters.add(SecureFilter.class);
+//         filters.add(SecureFilter.class);
+//filters.add(AuthenticationFilter.class);
     }
 }

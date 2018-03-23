@@ -40,9 +40,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import model.Host;
 import model.Location;
 import model.ParentUnit;
@@ -60,24 +58,31 @@ import ninja.uploads.FileItem;
 import ninja.uploads.FileProvider;
 import org.apache.commons.io.FileUtils;
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.DataService;
+import services.VibandaAuthService;
 import services.VibandaImageService;
 
 @FileProvider(DiskFileItemProvider.class)
 @Singleton
 public class ApplicationController {
 
+    Logger LOG = LoggerFactory.getLogger(ApplicationController.class);
     @Inject
     DataService dbService;
     @Inject
     VibandaImageService imgService;
     @Inject
+    VibandaAuthService authService;
+    @Inject
     ReverseRouter reverseRouter;
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
 
-//    @FilterWith(SecureFilter.class)
+    @FilterWith(AuthenticationFilter.class)
     public Result index(Context context) {
+        LOG.info("We are here.....");
         String userId = context.getSession().get("userId");
         List<ParentUnit> vpus = dbService.getHostParentUnits(userId);
         String userName = context.getSession().get("userName");
@@ -98,6 +103,7 @@ public class ApplicationController {
     }
 
     public Result showLoginForm() {
+        LOG.info("SHOWING LOGIN FORM");
         return Results.html().template("views/layout/login.ftl.html");
     }
 
@@ -213,35 +219,51 @@ public class ApplicationController {
 
     @UnitOfWork
     public Result login(@Param("email") String email, @Param("password") String pass, Context context) {
-
         Host user = dbService.getHost(email);
-
         if (user != null) {
-            System.out.println("User already registered: " + user.getEmail());
-            //User exists ...go to demo page
-            System.out.println("Authenticating user ....");
-            if (user.getPassword().matches(pass)) {
-                System.out.println("User is authorized ....creating session");
-                if (context.getSession().get("userId") == null) {
-                    System.out.println("User does not have an active session....setting user session and redirecting to index.html");
-                    context.getSession().put("userId", user.getEmail());
-                    context.getSession().put("userName", user.getUserName());
-                } else {
-                    System.out.println("User already have an active session ....redirecting to index.html");
-                }
+            LOG.info("User exists: " + user.getUserName() + " PASS :" + user.getPassword());
+            boolean isValid = authService.authenticate(pass, user.getPassword());
+            LOG.info("User is Authenticated: " + isValid);
+            if (isValid) {
+                authService.login(context, email, isValid);
+                context.getSession().put("userName", user.getUserName());
                 return Results.redirect("/");
             } else {
-                System.out.println("User not authorized ....check credentials ... redirecting to login");
+                LOG.info("Wrong credentials ... redirecting to login");
                 return Results.html().template("/views/layout/login.ftl.html");
             }
-
         } else {
-            //User does not exists ... go to login page
-            System.out.println("User not found: User does not exists ... go to login page");
-            context.getSession().clear();
+            LOG.info("User does not exists: " + email + "... go register");
             return Results.html().template("/views/layout/register.ftl.html");
         }
 
+//        System.out.println("Authenticated user ...." + context.getSession().get(NinjaKey.AUTHENTICATED_USER.get()));
+//        if (user != null) {
+//
+//            System.out.println("User already registered: " + user.getEmail());
+//            //User exists ...go to demo page
+//            System.out.println("Authenticating user ....");
+//            if (user.getPassword().matches(pass)) {
+//                System.out.println("User is authorized ....creating session");
+//                if (context.getSession().get("userId") == null) {
+//                    System.out.println("User does not have an active session....setting user session and redirecting to index.html");
+//                    context.getSession().put("userId", user.getEmail());
+//                    context.getSession().put("userName", user.getUserName());
+//                } else {
+//                    System.out.println("User already have an active session ....redirecting to index.html");
+//                }
+//                return Results.redirect("/");
+//            } else {
+//                System.out.println("User not authorized ....check credentials ... redirecting to login");
+//                return Results.html().template("/views/layout/login.ftl.html");
+//            }
+//
+//        } else {
+//            //User does not exists ... go to login page
+//            System.out.println("User not found: User does not exists ... go to login page");
+//            context.getSession().clear();
+//            return Results.html().template("/views/layout/register.ftl.html");
+//        }
     }
 
     @Transactional
@@ -262,7 +284,7 @@ public class ApplicationController {
             Host host = new Host();
             host.setUserName(userName);
             host.setEmail(email);
-            host.setPassword(pass);
+            host.setPassword(authService.getHashedPassword(pass));
             host.setFirstName(fname);
             host.setLastName(lname);
             host.setWhenJoined(ZonedDateTime.now().toString());
@@ -274,10 +296,11 @@ public class ApplicationController {
 
     public Result logout(Context context) {
 //        context.getSession().clear();
-        String msg = "User session invalidated, log in again";
+        LOG.info("User session invalidated, log in again");
+        authService.logout(context);
+//        String msg = "User session invalidated, log in again";
 
-        System.out.println("User session invalidated, log in again");
-        return Results.html().redirect("/");
+        return Results.html().redirect("/form/login");
 
     }
 

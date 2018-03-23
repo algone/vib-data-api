@@ -37,6 +37,7 @@ public class Module extends AbstractModule {
         bind(FileItemProvider.class).to(MemoryFileItemProvider.class);
         bind(Service.class).to(DataService.class);
         bind(ImageService.class).to(VibandaImageService.class);
+//        bind(Authentications.class);
   
     }
 

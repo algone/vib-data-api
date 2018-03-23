@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +39,7 @@ import ninja.lifecycle.Start;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.CriteriaContainerImpl;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.slf4j.Logger;
@@ -284,11 +286,14 @@ public class DataService implements Service {
 
     public List<Unit> findHostUnits(String email) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-        System.out.println("HOST ID: "+email);
-        Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
-        Query<ParentUnit> parents = query.field("ownerID").equal(email);
-        List<Unit> hostUnits =new ArrayList<>();
-        
+        LOG.info("HOST ID: " + email);
+        Query<ParentUnit> query = ds.createQuery(ParentUnit.class).field("ownerID").equal(email);
+        List<Unit> hostUnits = new ArrayList<>();
+
+        for (ParentUnit parentUnit : query) {
+            List<Unit> units = findUnitsByParentId(parentUnit.getId());
+            hostUnits.addAll(units);
+        }
 
         return hostUnits;
     }
@@ -305,10 +310,10 @@ public class DataService implements Service {
     public List<Unit> findUnitsByParentId(String parentId) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Unit> query = ds.createQuery(Unit.class);
+        LOG.info("INCOMING ID: "+parentId);
         Query<Unit> result = query.field("unitParentId").equal(parentId);
         return result.asList();
     }
-
 
     @Override
     public List<Unit> searchUnits(JsonNode jsonData) {

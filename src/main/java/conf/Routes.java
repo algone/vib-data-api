@@ -67,7 +67,7 @@ public class Routes implements ApplicationRoutes {
         router.POST().route("/user/login").with(ApplicationController::login);
         router.POST().route("/user/register").with(ApplicationController::register);
         router.POST().route("/api/{revtype}/review").with(DatabaseController::addReview);
-        
+        router.POST().route("/user/logout").with(ApplicationController::logout);
 
         
         //Search
@@ -77,7 +77,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/destinations/top").with(DatabaseController::findTopDestinations);
         router.GET().route("/api/hosts").with(DatabaseController::listAllHosts);
         router.GET().route("/api/hosts/{hostId}").with(DatabaseController::findHost);
-        router.GET().route("/api/units/{hostId}").with(DatabaseController::findHostUnits);
+        router.GET().route("/api/hostunits/{hostId}").with(DatabaseController::findHostUnits);
         
 
         ///////////////////////////////////////////////////////////////////////
@@ -94,3 +94,4 @@ public class Routes implements ApplicationRoutes {
     }
 
 }
+////

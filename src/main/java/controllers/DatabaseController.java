@@ -15,16 +15,14 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.svenkubiak.ninja.auth.filters.AuthenticationFilter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import model.Host;
 import model.ParentUnit;
@@ -33,6 +31,7 @@ import model.Review;
 import model.Unit;
 import model.VibandaImage;
 import ninja.Context;
+import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 import ninja.ReverseRouter;
@@ -42,6 +41,8 @@ import ninja.uploads.DiskFileItemProvider;
 import ninja.uploads.FileItem;
 import ninja.uploads.FileProvider;
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.DataService;
 import services.VibandaImageService;
 
@@ -53,6 +54,7 @@ import services.VibandaImageService;
 @FileProvider(DiskFileItemProvider.class)
 public class DatabaseController {
 
+    Logger LOG = LoggerFactory.getLogger(DatabaseController.class);
     @Inject
     ReverseRouter reverseRouter;
 
@@ -181,8 +183,9 @@ public class DatabaseController {
         List<Host> hosts = dbService.getAllHosts();
         return Results.json().render(hosts);
     }
-        public Result findHost(Context context, @PathParam("hostId") String id) {
-         Host host = dbService.getHostById(id);
+
+    public Result findHost(Context context, @PathParam("hostId") String id) {
+        Host host = dbService.getHostById(id);
         return Results.json().render(host);
     }
 
@@ -220,7 +223,6 @@ public class DatabaseController {
 
     public Result findCounties(Context context) {
         List<Document> counties = dbService.getCounties();
-
         for (Document county : counties) {
             if (county.get("ke_counties") != null) {
                 List<Document> docs = (List<Document>) county.get("ke_counties");
@@ -234,10 +236,15 @@ public class DatabaseController {
         List<Document> destinations = dbService.getDestinations();
         return Results.json().render(destinations);
     }
-    public Result findHostUnits(@PathParam("hostId") String id) {
+
+    @FilterWith(AuthenticationFilter.class)
+    public Result findHostUnits(Context context, @PathParam("hostId") String id) {
+        LOG.info("Retrieving Units for host: " + id);
         List<Unit> units = dbService.findHostUnits(id);
+//        units.add(new ParentUnit());
         return Results.json().render(units);
     }
+
     public Result findTopDestinations(Context context) {
         List<Document> topDestinations = dbService.getTopDestinations();
         return Results.json().render(topDestinations);
@@ -274,7 +281,7 @@ public class DatabaseController {
             @Param("reviewerName") String reviewer,
             @Param("dateOfReviev") String reviewDate,
             @Param("identifier") String id,
-            @Param("rating") int rating,@PathParam("revtype") String revType) {
+            @Param("rating") int rating, @PathParam("revtype") String revType) {
 
         Review rev = new Review();
         rev.setReviewTitle(title);
@@ -283,22 +290,20 @@ public class DatabaseController {
         Map uploadParams = ObjectUtils.asMap(
                 "tags", id
         );
-
         try {
             Map result = imgService.uploadImage(avatarImage.getFile(), uploadParams);
             String url = (String) result.get("url");
             rev.setReviewerAvatar(url);
         } catch (IOException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            rev.setReviewerAvatar("http://res.cloudinary.com/vibanda/image/upload/v1521676951/cr42yjg5wwiedzoxs8jy.png");
 
+        }
         Rating rate = new Rating();
         rate.setDate(reviewDate);
         rate.setRating(rating);
         rate.setIpAddress(context.getRemoteAddr());
         rev.setRating(rate);
-
-        dbService.storeReview(rev,id,revType);
+        dbService.storeReview(rev, id, revType);
         return Results.noContent();
 
     }
