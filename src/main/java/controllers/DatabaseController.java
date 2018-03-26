@@ -83,7 +83,7 @@ public class DatabaseController {
 
         dbService.addParent(vpu);
 
-        return reverseRouter.with(ApplicationController::showParentUnitForm)
+        return reverseRouter.with(ApplicationController::showUnitForm)
                 .redirect();
     }
 
@@ -215,7 +215,8 @@ public class DatabaseController {
 //        data.put("parentUnits", parents);
 //        data.put("msg", vUnit.getId() + " Added!");
         dbService.addUnit(vUnit);
-        return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", hostPus).render("host",context.getSession().get("userName") );
+        return reverseRouter.with(ApplicationController::showImageUploadForm).redirect();
+       // return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", hostPus).render("host",context.getSession().get("userName") );
     }
 
     public Result findUnitImages(@PathParam("unitId") String id) {

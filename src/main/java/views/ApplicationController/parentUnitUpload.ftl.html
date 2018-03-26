@@ -2,7 +2,7 @@
 <@layout.myLayout "Home page">    
 <form method="post" action="/api/parents/add" >
     <div class="card-panel hoverable"> 
-        <h5 class="center-align">Vibanda Parent Unit</h5>
+        <h5 class="center-align">Add a Parent (Main) Unit</h5>
 
         <div class="row">
             <div class="input-field col s8">
@@ -64,126 +64,99 @@
 
         <h6>Address and Location</h6>
         <div class="row "> 
-            <div class="col s6">
-                <div class="row">       
-                    <div class="input-field col s6">  
-                        <input type="text" id="street" class="validate" name="street" >
-                        <label for="street" data-error="wrong" data-success="right">Street, number</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input type="text" id="fulladdress" class="materialize-textarea" name="address" >
-                        <label for="fulladdress" class="">Address2</label>
-                    </div>
 
-                </div>
-                <div class="row">
-                    <div class="input-field col s6">
-
-                        <select id="county" name="county">
-                            <option value="" disabled selected>Select county</option>
-                            <#if counties?has_content>
-                            <#list counties as county>
-                            <option value="${county.name}">${county.name}</option>
-                            </#list>
-                            </#if>
-                        </select>
-                    </div>
-                    <!--div class="input-field col s6">
-                        <input type="text" id="county1" class="validate" name="county" >
-                        <label for="county" data-error="wrong" data-success="right">County</label>
-                    </div-->
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s6">  
-                        <input type="text" id="lat" class="validate" name="lat" >
-                        <label for="lat" data-error="wrong" data-success="right">Lat </label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input type="text" id="lon" class="validate" name="lon" >
-                        <label for="lon" data-error="wrong" data-success="right">Lon </label>
-                    </div>
-                </div>
+            <div class="input-field col s4">  
+                <input type="text" id="street" class="validate" name="street" >
+                <label for="street" data-error="wrong" data-success="right">Street, number</label>
             </div>
-            <div class="col s6 google-maps">
+            <div class="input-field col s4">
+                <input type="text" id="fulladdress" class="materialize-textarea" name="address" >
+                <label for="fulladdress" class="">Address2</label>
+            </div>
+            <div class="input-field col s4">
+
+                <select id="county" name="county">
+                    <option value="" disabled selected>Select county</option>
+                    <#if counties?has_content>
+                    <#list counties as county>
+                    <option value="${county.name}">${county.name}</option>
+                    </#list>
+                    </#if>
+                </select>
+            </div>
+        </div>
+        <div class="row "> 
+            <div class="col s12 google-maps">
                 <p>Get Coordinates</p>
                 <div id="map"></div>
-                <div id="geocode-selector"></div>
+                <!--div id="geocode-selector"></div-->
 
+            </div>          
+        </div>
+        <div class="row "> 
+            <div class="col s4">
+                <div class="row">
+                    <div class="input-field col s6">  
+                        <input type="text" id="lat" class="validate" name="lat" placeholder="Lat">
+                        <!--label for="lat" data-error="wrong" data-success="right">Lat </label-->
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="text" id="lon" class="validate" name="lon" placeholder="Lon">
+                        <!--label for="lon" data-error="wrong" data-success="right">Lon </label-->
+                    </div>
+                </div>
             </div>
         </div>
 
-
-
-        <!--div class="row">
-            <div class="input-field col s4">
-                <p class="range-field ">
-                    <input type="range" id="total_floors" class="form-control" min="0" max="10"  name="numOfFloors" />
-                </p>
-                <label for="total_floors" class="">No. of Floors</label>
-            </div>
-            <div class="input-field col s4">
-                <p class="range-field ">
-                    <input type="range" id="number_of_Units" min="0" max="10"  class="form-control" name="numOfUnits" >
-                </p>
-                <label for="number_of_Units" class="">Number of Units</label>
-            </div>
-            <div class="input-field col s4">
-                <label for="num_elevators" class="">No. of Elevators</label>
-                <p class="range-field">
-                    <input type="range" id="num_elevators" class="form-control" min="0" max="10" name="elevators"/>
-                </p>
-            </div>
-        </div-->     
         <h6>Whats available in the area?</h6>
         <div class="row">
-            <div class="col s4">
+            <div class="col s2">
 
                 <input type="checkbox" id="hasschools" name="hasSchools" >
                 <label for="hasschools">    <span>School</span></label>
             </div>
 
-            <div class="col s4">
+            <div class="col s2">
 
                 <input type="checkbox" id="hasparks"  name="hasParks" >
                 <label for="hasparks">    <span>Park</span></label>
             </div>
 
-            <div class="col s4">
+            <div class="col s2">
                 <input type="checkbox" id="hasbanks" name="hasBanks" >
                 <label for="hasbanks">    <span>Bank</span></label>
             </div>
-        </div> 
-        <div class="row">
-            <div class="col s4">
+            <div class="col s2">
 
                 <input type="checkbox" id="grocery" name="hasGroceryStore" >
                 <label for="grocery">    <span>Grocery store</span></label>
             </div>
-            <div class="col s4">
+            <div class="col s2">
                 <input type="checkbox" id="publictransport" name="publicTransport" >
                 <label for="publictransport">    <span>Public transport</span></label>
             </div>
-            <div class="col s4">
+
+        </div> 
+        <div class="row">
+            <div class="col s2">
                 <input type="checkbox" id="airport" name="hasAirport" >
                 <label for="airport">     <span>Airport</span></label>
             </div>
-        </div> 
-        <div class="row">
-            <div class="col s4">
+            <div class="col s2">
 
                 <input type="checkbox" id="mall" name="hasMall" >
                 <label for="mall">    <span>Mall</span></label>
             </div>
-            <div class="col s4">
+            <div class="col s2">
                 <input type="checkbox" id="restaurant" name="hasRestaurant" >
                 <label for="restaurant">    <span>Restaurant</span></label>
             </div>
-            <div class="col s4">
+            <div class="col s2">
                 <input type="checkbox" id="bakery" name="hasBakery" >
                 <label for="bakery">     <span>Bakery</span></label>
             </div>
-        </div>
+        </div> 
+
         <div class="row">
             <button class="btn waves-effect waves-light right" type="submit">Save
                 <i class="material-icons right">add_circle</i>
