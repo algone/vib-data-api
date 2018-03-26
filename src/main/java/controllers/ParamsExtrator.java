@@ -7,26 +7,27 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Set;
-import model.FurnishingType;
 import model.Location;
 import model.ParentType;
 import model.ParentUnit;
 import model.ParentUnitAccessibility;
 import model.RentalInfo;
-import model.RentalType;
 import model.Unit;
 import model.UnitFeature;
-import model.UnitPrivacy;
 import model.UnitStyle;
 import model.UnitType;
 import ninja.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import services.NinjaKey;
+import services.VibandaAuthService;
 
 /**
  *
  * @author algone
  */
 public class ParamsExtrator {
-
+private static final Logger LOG = LoggerFactory.getLogger(ParamsExtrator.class); 
     private Context context;
     private Set<String> keys;
     private ParentUnit vpu;
@@ -34,7 +35,8 @@ public class ParamsExtrator {
 
     public ParamsExtrator(Context context) {
         vpu = new ParentUnit();
-        vpu.setOwnerID(context.getSession().get("userId"));
+        LOG.info("OWNER ID: "+context.getSession().get(NinjaKey.AUTHENTICATED_USER.get()));
+        vpu.setOwnerID(context.getSession().get(NinjaKey.AUTHENTICATED_USER.get()));
         this.context = context;
         this.keys = context.getParameters().keySet();
 

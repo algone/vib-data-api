@@ -1,29 +1,29 @@
 <#import "../layout/defaultLayout.ftl.html" as layout> 
 <@layout.myLayout "Home page"> 
 
-        <div class="row">
+<div class="row">
 
-            <#if parents?has_content>
-            <#list parents?chunk(2) as row> 
-            <#list row as parent>  
-            <div class="col s12 m6">
-                <div class="card ">
-                    <div class="card-image">
-                        <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
-                        <span class="card-title">${parent.unitName}</span>
-                        <a class="btn-floating halfway-fab waves-effect waves-light red">
-                            <i class="material-icons">add</i>
-                        </a>
-                    </div>
-                    <div class="card-content">
-                        <p class="truncate">${parent.propertyDescription}</p>
-                    </div>
-                </div>
-            </div>  
-            </#list>
-            </#list>
-            </#if>
+    <#if parents?has_content>
+    <#list parents?chunk(2) as row> 
+    <#list row as parent>  
+    <div class="col s12 m6">
+        <div class="card ">
+            <div class="card-image">
+                <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
+                <span class="card-title">${parent.unitName}</span>
+                <a class="btn-floating halfway-fab waves-effect waves-light red">
+                    <i class="material-icons">add</i>
+                </a>
+            </div>
+            <div class="card-content">
+                <p class="truncate">${parent.propertyDescription}</p>
+            </div>
         </div>
+    </div>  
+    </#list>
+    </#list>
+    </#if>
+</div>
 
 
 </@layout.myLayout>

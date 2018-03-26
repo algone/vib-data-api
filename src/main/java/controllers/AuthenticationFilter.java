@@ -34,6 +34,11 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public Result filter(FilterChain filterChain, Context context) {
+         if (context.getRequestPath().equals("/user/logout")) {
+             authentications.logout(context);
+//            context.getSession().clear();
+            return Results.forbidden().html().template("/views/system/logout.ftl.html");
+        } 
         if (StringUtils.isBlank(StringUtils.trimToNull(authentications.getAuthenticatedUser(context)))) {
 
             String redirect = ninjaProperties.get(NinjaKey.AUTH_REDIRECT_URL.get());

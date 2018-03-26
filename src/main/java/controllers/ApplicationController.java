@@ -83,17 +83,25 @@ public class ApplicationController {
     @FilterWith(AuthenticationFilter.class)
     public Result index(Context context) {
         LOG.info("We are here.....");
-        String userId = context.getSession().get("userId");
+        String userId = authService.getAuthenticatedUser(context);
+        
+        LOG.info("USER: "+userId);
         List<ParentUnit> vpus = dbService.getHostParentUnits(userId);
         String userName = context.getSession().get("userName");
-        return Results.html().template("views/ApplicationController/index.ftl.html").render("host", userName).render("parents", vpus);
+        LOG.info("USER NAME: "+userName +" with "+vpus.size()+ " parents");
+        
+        Host profile = dbService.getHost(userId);
+      
+        return Results.html().template("views/ApplicationController/index.ftl.html").render("host", userName).render("parents", vpus).render("profile",profile);
     }
 
     public Result showParentUnitForm(Context context) {
         List<Document> counties = dbService.getCounties();
+        LOG.info("Retrieving counties.....");
         List<Document> countyDocs = null;
         for (Document county : counties) {
             if (county.get("ke_counties") != null) {
+                LOG.info("Found counties.....");
                 countyDocs = (List<Document>) county.get("ke_counties");
                 break;
             }
@@ -112,13 +120,12 @@ public class ApplicationController {
     }
 
     public Result showUnitForm(Context context) {
-        String userId = context.getSession().get("userId");
-        List<ParentUnit> hostPus = dbService.getHostParentUnits(userId);
+        List<ParentUnit> hostPus = dbService.getHostParentUnits(authService.getAuthenticatedUser(context));
         return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", hostPus).render("host", context.getSession().get("userName"));
     }
 
     public Result showImageUploadForm(Context context) {
-        List<Unit> unitIds = dbService.getAllUnits();
+        List<Unit> unitIds = dbService.findHostUnits(authService.getAuthenticatedUser(context));
         System.out.println("Showing image upload form");
         return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds).render("host", context.getSession().get("userName"));
 

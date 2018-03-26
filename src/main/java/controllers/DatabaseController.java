@@ -44,6 +44,7 @@ import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.DataService;
+import services.VibandaAuthService;
 import services.VibandaImageService;
 
 /**
@@ -57,7 +58,8 @@ public class DatabaseController {
     Logger LOG = LoggerFactory.getLogger(DatabaseController.class);
     @Inject
     ReverseRouter reverseRouter;
-
+    @Inject
+    VibandaAuthService authService;
     @Inject
     ObjectMapper objectMapper;
     @Inject
@@ -81,8 +83,7 @@ public class DatabaseController {
 
         dbService.addParent(vpu);
 
-//        return Results.html().template("views/ApplicationController/index.ftl.html");
-        return reverseRouter.with(ApplicationController::index)
+        return reverseRouter.with(ApplicationController::showParentUnitForm)
                 .redirect();
     }
 
@@ -125,7 +126,7 @@ public class DatabaseController {
         List<Unit> unitIds = dbService.getAllUnits();
 //        Map<String, Object> data = new HashMap<>();
 //        data.put("units", unitIds);
-        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds);
+        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds).render("host",context.getSession().get("userName") );
     }
 
     private Map<String, Object> getCloudinaryResult() throws JsonSyntaxException {
@@ -208,12 +209,13 @@ public class DatabaseController {
     public Result addUnit(Context context) {
         ParamsExtrator pe = new ParamsExtrator(context);
         Unit vUnit = pe.getUnit();
-        Map<String, Object> parents = dbService.getParentIds();
-        Map<String, Object> data = new HashMap<>();
-        data.put("parentUnits", parents);
-        data.put("msg", vUnit.getId() + " Added!");
+        List<ParentUnit> hostPus = dbService.getHostParentUnits(authService.getAuthenticatedUser(context));
+//        Map<String, Object> parents = dbService.getParentIds();
+//        Map<String, Object> data = new HashMap<>();
+//        data.put("parentUnits", parents);
+//        data.put("msg", vUnit.getId() + " Added!");
         dbService.addUnit(vUnit);
-        return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", data);
+        return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", hostPus).render("host",context.getSession().get("userName") );
     }
 
     public Result findUnitImages(@PathParam("unitId") String id) {
@@ -304,7 +306,9 @@ public class DatabaseController {
         rate.setIpAddress(context.getRemoteAddr());
         rev.setRating(rate);
         dbService.storeReview(rev, id, revType);
-        return Results.noContent();
+//        return Results.noContent();
+        return reverseRouter.with(ApplicationController::showReviewForm)
+                .redirect();
 
     }
 }

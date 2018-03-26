@@ -11,7 +11,7 @@
                         <select name="unitParent" id="unitparent">
                             <option value="" disabled selected>Unit belongs to: </option>
                             <#list data as pu>
-                            <option value="${pu.ownerID}" class="circle" >${pu.unitName}</option>
+                            <option value="${pu.id}" class="circle" >${pu.unitName}</option>
                             </#list>
                         </select>
                         <label>Parent property</label>

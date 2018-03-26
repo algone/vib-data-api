@@ -243,7 +243,9 @@ public class DataService implements Service {
     @Override
     public void addUnit(Unit unit) {
         String parentId = unit.getUnitParentId();
+        LOG.info("UNIT PARENT ID: "+parentId);
         ParentUnit parent = findParentUnitById(parentId);
+        LOG.info("PARENT ID: "+parentId);
         unit.setLocation(parent.getLocation());
         unit.setEcorated(parent.getEcorating());
         unit.setParentType(parent.getParentType());
@@ -273,6 +275,7 @@ public class DataService implements Service {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
         Query<ParentUnit> result = query.field("id").equal(parentId);
+        LOG.info("FOUND PARENT: "+result.get().getId());
         return result.get();
     }
 
