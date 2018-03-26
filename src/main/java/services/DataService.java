@@ -249,6 +249,7 @@ public class DataService implements Service {
         unit.setLocation(parent.getLocation());
         unit.setEcorated(parent.getEcorating());
         unit.setParentType(parent.getParentType());
+        unit.setUnitStyle(parent.getStyle());
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(unit);

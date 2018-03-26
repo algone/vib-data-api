@@ -48,6 +48,7 @@ public class Unit implements Serializable {
     private String privacy;
     private String furnishing;
     private ParentType parentType;
+    private UnitStyle unitStyle;
 
     @Embedded
     private List<VibandaImage> unitImages = new ArrayList<>();
@@ -268,6 +269,14 @@ public class Unit implements Serializable {
 
     public void setUnitReviews(List<Review> unitReviews) {
         this.unitReviews = unitReviews;
+    }
+
+    public UnitStyle getUnitStyle() {
+        return unitStyle;
+    }
+
+    public void setUnitStyle(UnitStyle unitStyle) {
+        this.unitStyle = unitStyle;
     }
 
 }
