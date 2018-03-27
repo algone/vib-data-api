@@ -36,15 +36,11 @@ import ninja.Results;
 
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
-import java.io.File;
-import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import model.Host;
-import model.Location;
 import model.ParentUnit;
-import model.ParentUnitAccessibility;
 import model.Unit;
 import model.VibandaImage;
 
@@ -54,9 +50,7 @@ import ninja.ReverseRouter;
 import ninja.jpa.UnitOfWork;
 import ninja.params.Param;
 import ninja.uploads.DiskFileItemProvider;
-import ninja.uploads.FileItem;
 import ninja.uploads.FileProvider;
-import org.apache.commons.io.FileUtils;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +60,7 @@ import services.VibandaImageService;
 
 @FileProvider(DiskFileItemProvider.class)
 @Singleton
+
 public class ApplicationController {
 
     Logger LOG = LoggerFactory.getLogger(ApplicationController.class);
@@ -80,7 +75,7 @@ public class ApplicationController {
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
 
-    @FilterWith(AuthenticationFilter.class)
+  @FilterWith(AuthenticationFilter.class) 
     public Result index(Context context) {
         LOG.info("We are here.....");
         String userId = authService.getAuthenticatedUser(context);
@@ -149,81 +144,6 @@ public class ApplicationController {
 
     }
 
-    public Result addUnit(Context context) {
-        ParamsExtrator pe = new ParamsExtrator(context);
-        Unit vUnit = pe.getUnit();
-        vUnit.getUnitImages().addAll(unitImages);
-        unitImages.clear();
-        units.add(vUnit);
-        return Results.json().render(units);
-    }
-
-    @UnitOfWork
-    public Result listAll(Context context) {
-        List<ParentUnit> vpus = dbService.getAllParents();
-        return Results.json().render(vpus);
-
-    }
-
-    public Result uploadUnitImage(Context context,
-            @Param("unitImageFile") FileItem unitImageFile,
-            @Param("imageName") String imageName,
-            @Param("imageDescription") String imageDescription) throws Exception {
-
-        VibandaImage img = saveUnitImage(unitImageFile, imageDescription);
-        unitImages.add(img);
-        return Results.noContent();
-    }
-
-    @UnitOfWork
-    public Result findAllUnits() {
-
-        List<Unit> vunits = dbService.getAllUnits();
-        System.out.println("JSON:" + vunits);
-        return Results.json().render(vunits);
-
-    }
-
-    private VibandaImage saveParentImage(FileItem imageFile, String imageDescription) throws IOException {
-        File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
-        File destFile = new File(defDir, imageFile.getFileName());
-        FileUtils.copyFile(imageFile.getFile(), destFile);
-        VibandaImage img = new VibandaImage();
-        img.setImageUrl("assets/img/images/" + imageFile.getFileName());
-        img.setImageDescription(imageDescription);
-        return img;
-    }
-
-    private VibandaImage saveUnitImage(FileItem imageFile, String imageDescription) throws IOException {
-        System.out.println("Working Directory = "
-                + System.getProperty("user.dir"));
-        File defDir = new File(System.getProperty("user.dir") + "/src/main/java/assets/img/images");
-        File destFile = new File(defDir, imageFile.getFileName());
-        FileUtils.copyFile(imageFile.getFile(), destFile);
-        VibandaImage img = new VibandaImage();
-        img.setImageUrl("assets/img/images/" + imageFile.getFileName());
-        img.setImageDescription(imageDescription);
-        return img;
-    }
-
-    public Result createParentUnit(Context context) {
-        ParentUnit parentUnit = new ParentUnit();
-        parentUnit.setLocation(new Location());
-        parentUnit.setParentUnitAccessibility(new ParentUnitAccessibility());
-        parentUnit.setRentalUnits(new ArrayList<>());
-
-        VibandaImage img1 = new VibandaImage();
-
-        img1.setImageDescription("Image1 descr");
-        img1.setImageUrl("some/image/url/img.jpg");
-        img1.setImageId("img1");
-        parentUnit.getParentImages().add(img1);
-        dbService.addParent(parentUnit);
-        return Results.json().render(img1);
-//        return Results.html().template("views/ApplicationController/index.ftl.html").render("pu", parentUnit);
-    }
-//
-
     @UnitOfWork
     public Result login(@Param("email") String email, @Param("password") String pass, Context context) {
         Host user = dbService.getHost(email);
@@ -243,34 +163,6 @@ public class ApplicationController {
             LOG.info("User does not exists: " + email + "... go register");
             return Results.html().template("/views/layout/register.ftl.html");
         }
-
-//        System.out.println("Authenticated user ...." + context.getSession().get(NinjaKey.AUTHENTICATED_USER.get()));
-//        if (user != null) {
-//
-//            System.out.println("User already registered: " + user.getEmail());
-//            //User exists ...go to demo page
-//            System.out.println("Authenticating user ....");
-//            if (user.getPassword().matches(pass)) {
-//                System.out.println("User is authorized ....creating session");
-//                if (context.getSession().get("userId") == null) {
-//                    System.out.println("User does not have an active session....setting user session and redirecting to index.html");
-//                    context.getSession().put("userId", user.getEmail());
-//                    context.getSession().put("userName", user.getUserName());
-//                } else {
-//                    System.out.println("User already have an active session ....redirecting to index.html");
-//                }
-//                return Results.redirect("/");
-//            } else {
-//                System.out.println("User not authorized ....check credentials ... redirecting to login");
-//                return Results.html().template("/views/layout/login.ftl.html");
-//            }
-//
-//        } else {
-//            //User does not exists ... go to login page
-//            System.out.println("User not found: User does not exists ... go to login page");
-//            context.getSession().clear();
-//            return Results.html().template("/views/layout/register.ftl.html");
-//        }
     }
 
     @Transactional

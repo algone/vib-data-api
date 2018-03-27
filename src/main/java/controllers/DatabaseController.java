@@ -67,10 +67,7 @@ public class DatabaseController {
     @Inject
     VibandaImageService imgService;
 
-    public Result deleteParent(@PathParam("parentId") long productId) {
-        dbService.deleteParent(productId);
-        return Results.noContent();
-    }
+
 
     public Result findParent(@PathParam("parentId") String id) {
         ParentUnit parent = dbService.findParentUnitById(id);
@@ -78,14 +75,7 @@ public class DatabaseController {
 
     }
 
-    public Result addParent(Context context) {
-        ParentUnit vpu = new ParamsExtrator(context).getParent();
 
-        dbService.addParent(vpu);
-
-        return reverseRouter.with(ApplicationController::showUnitForm)
-                .redirect();
-    }
 
     public Result uploadImage(Context context, @Param("unitImageFile") FileItem unitImageFile,
             @Param("imageName") String imageName,
@@ -206,18 +196,7 @@ public class DatabaseController {
         return Results.json().render(vpu);
     }
 
-    public Result addUnit(Context context) {
-        ParamsExtrator pe = new ParamsExtrator(context);
-        Unit vUnit = pe.getUnit();
-        List<ParentUnit> hostPus = dbService.getHostParentUnits(authService.getAuthenticatedUser(context));
-//        Map<String, Object> parents = dbService.getParentIds();
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("parentUnits", parents);
-//        data.put("msg", vUnit.getId() + " Added!");
-        dbService.addUnit(vUnit);
-        return reverseRouter.with(ApplicationController::showImageUploadForm).redirect();
-       // return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", hostPus).render("host",context.getSession().get("userName") );
-    }
+
 
     public Result findUnitImages(@PathParam("unitId") String id) {
         List<VibandaImage> vui = dbService.findUnitImagesById(id);

@@ -19,7 +19,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +38,6 @@ import ninja.lifecycle.Start;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.CriteriaContainerImpl;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.slf4j.Logger;
@@ -243,9 +241,9 @@ public class DataService implements Service {
     @Override
     public void addUnit(Unit unit) {
         String parentId = unit.getUnitParentId();
-        LOG.info("UNIT PARENT ID: "+parentId);
+        LOG.info("UNIT PARENT ID: " + parentId);
         ParentUnit parent = findParentUnitById(parentId);
-        LOG.info("PARENT ID: "+parentId);
+        LOG.info("PARENT ID: " + parentId);
         unit.setLocation(parent.getLocation());
         unit.setEcorated(parent.getEcorating());
         unit.setParentType(parent.getParentType());
@@ -276,7 +274,15 @@ public class DataService implements Service {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
         Query<ParentUnit> result = query.field("id").equal(parentId);
-        LOG.info("FOUND PARENT: "+result.get().getId());
+        LOG.info("FOUND PARENT: " + result.get().getId());
+        return result.get();
+    }
+
+    public ParentUnit findParentByUnitId(String unitId) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
+        Query<ParentUnit> result = query.field("id").equal(unitId);
+        LOG.info("FOUND PARENT: " + result.get().getId());
         return result.get();
     }
 
@@ -314,7 +320,7 @@ public class DataService implements Service {
     public List<Unit> findUnitsByParentId(String parentId) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Unit> query = ds.createQuery(Unit.class);
-        LOG.info("INCOMING ID: "+parentId);
+        LOG.info("INCOMING ID: " + parentId);
         Query<Unit> result = query.field("unitParentId").equal(parentId);
         return result.asList();
     }
@@ -348,6 +354,14 @@ public class DataService implements Service {
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreNulls(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(host);
+    }
+
+    public List<Unit> findUnitsByHostId(String hostId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<Unit> searchUnits(String searchWord) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

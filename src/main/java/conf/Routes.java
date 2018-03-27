@@ -20,6 +20,8 @@ import ninja.Router;
 import ninja.application.ApplicationRoutes;
 import controllers.ApplicationController;
 import controllers.DatabaseController;
+import controllers.ParentController;
+import controllers.UnitController;
 
 public class Routes implements ApplicationRoutes {
 
@@ -29,33 +31,21 @@ public class Routes implements ApplicationRoutes {
          * Root, defaults to index page
          */
         router.GET().route("/").with(ApplicationController::index);
-        /**
-         * Adds a new ParentUnit
-         */
-        router.POST().route("/api/parents/add").with(DatabaseController::addParent);
-        /**
-         *Deletes a ParentUnit from DB
-         */
-        router.DELETE().route("/api/parents/{parentId}/delete").with(DatabaseController::deleteParent);
-        router.POST().route("/api/images/upload").with(DatabaseController::addImage);
-        router.POST().route("/api/images/upload2").with(DatabaseController::uploadImage);
-        router.GET().route("/api/parents").with(DatabaseController::listAll);
-        router.GET().route("/api/parents/{parentId}").with(DatabaseController::findParent);
 
-        router.POST().route("/api/units/add").with(DatabaseController::addUnit);
-        router.GET().route("/api/units").with(ApplicationController::findAllUnits);
-        router.GET().route("/api/units/{unitId}").with(DatabaseController::findUnit);
-        router.GET().route("/api/units/{parentId}/units").with(DatabaseController::getUnitsByParentId);
+        router.POST().route("/api/images/upload2").with(DatabaseController::uploadImage);
+        router.GET().route("/form/uploadImage").with(ApplicationController::showImageUploadForm);
+        router.GET().route("/form/addParent").with(ApplicationController::showParentUnitForm);
+        router.GET().route("/form/addUnit").with(ApplicationController::showUnitForm);
+        router.GET().route("/form/unit/review").with(ApplicationController::showReviewForm);
+
+
         
 
         //Images api
         router.GET().route("/api/images/{unitId}").with(DatabaseController::findUnitImages);
 
-        router.GET().route("/create").with(ApplicationController::createParentUnit);
-        router.GET().route("/form/uploadImage").with(ApplicationController::showImageUploadForm);
-        router.GET().route("/form/addParent").with(ApplicationController::showParentUnitForm);
-        router.GET().route("/form/addUnit").with(ApplicationController::showUnitForm);
-        router.GET().route("/form/unit/review").with(ApplicationController::showReviewForm);
+//        router.GET().route("/create").with(ApplicationController::createParentUnit);
+
         
         //Login and logout
         router.GET().route("/form/login").with(ApplicationController::showLoginForm);
@@ -78,8 +68,28 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/hosts").with(DatabaseController::listAllHosts);
         router.GET().route("/api/hosts/{hostId}").with(DatabaseController::findHost);
         router.GET().route("/api/hostunits/{hostId}").with(DatabaseController::findHostUnits);
-        
 
+
+        ///////////////////////////////////////////////////////////////////////
+        // Parents API
+        /////////////////////////////////////////////////////////////////////// 
+        router.POST().route("/api/parents/add").with(ParentController::addParent);        
+        router.GET().route("/api/parents/all").with(ParentController::getAllParents);
+        router.GET().route("/api/parent/{parentId}").with(ParentController::getParent);
+        router.GET().route("/api/parents/host/{hostId}").with(ParentController::getParentByHostId);
+        router.GET().route("/api/parents/unit/{unitId}").with(ParentController::getParentByUnitId);
+        router.DELETE().route("/api/parents/{parentId}/delete").with(ParentController::deleteParent);
+        
+        ///////////////////////////////////////////////////////////////////////
+        // Units API
+        /////////////////////////////////////////////////////////////////////// 
+        router.POST().route("/api/units/add").with(UnitController::addUnit);
+        router.GET().route("/api/units/all").with(UnitController::getAllUnits);
+        router.GET().route("/api/unit/{unitId}").with(UnitController::getUnit);
+        router.GET().route("/api/units/parent/{parentId}").with(UnitController::getUnitsByParentId);
+        router.GET().route("/api/units/unit/{hostId}").with(UnitController::getUnitsByHostId);
+        router.DELETE().route("/api/units/{unitId}/delete").with(UnitController::deleteUnit);
+        
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
         ///////////////////////////////////////////////////////////////////////    
