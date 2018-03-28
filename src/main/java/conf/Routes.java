@@ -38,28 +38,20 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/form/addUnit").with(ApplicationController::showUnitForm);
         router.GET().route("/form/unit/review").with(ApplicationController::showReviewForm);
 
-
-        
-
         //Images api
         router.GET().route("/api/images/{unitId}").with(DatabaseController::findUnitImages);
 
 //        router.GET().route("/create").with(ApplicationController::createParentUnit);
-
-        
         //Login and logout
         router.GET().route("/form/login").with(ApplicationController::showLoginForm);
         router.GET().route("/form/register").with(ApplicationController::showRegisterForm);
         router.GET().route("/form/host/review").with(ApplicationController::showReviewForm);
 
-        
         //Host login/registration/profileupdate/reviews/ratings
         router.POST().route("/user/login").with(ApplicationController::login);
         router.POST().route("/user/register").with(ApplicationController::register);
-        router.POST().route("/api/{revtype}/review").with(DatabaseController::addReview);
         router.POST().route("/user/logout").with(ApplicationController::logout);
 
-        
         //Search
         router.POST().route("/api/search").with(DatabaseController::search);
         router.GET().route("/api/counties").with(DatabaseController::findCounties);
@@ -68,18 +60,18 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/hosts").with(DatabaseController::listAllHosts);
         router.GET().route("/api/hosts/{hostId}").with(DatabaseController::findHost);
         router.GET().route("/api/hostunits/{hostId}").with(DatabaseController::findHostUnits);
-
+        router.POST().route("/api/{revtype}/review").with(DatabaseController::addReview);
 
         ///////////////////////////////////////////////////////////////////////
         // Parents API
         /////////////////////////////////////////////////////////////////////// 
-        router.POST().route("/api/parents/add").with(ParentController::addParent);        
+        router.POST().route("/api/parents/add").with(ParentController::addParent);
         router.GET().route("/api/parents/all").with(ParentController::getAllParents);
         router.GET().route("/api/parent/{parentId}").with(ParentController::getParent);
         router.GET().route("/api/parents/host/{hostId}").with(ParentController::getParentByHostId);
         router.GET().route("/api/parents/unit/{unitId}").with(ParentController::getParentByUnitId);
         router.DELETE().route("/api/parents/{parentId}/delete").with(ParentController::deleteParent);
-        
+
         ///////////////////////////////////////////////////////////////////////
         // Units API
         /////////////////////////////////////////////////////////////////////// 
@@ -89,7 +81,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/api/units/parent/{parentId}").with(UnitController::getUnitsByParentId);
         router.GET().route("/api/units/unit/{hostId}").with(UnitController::getUnitsByHostId);
         router.DELETE().route("/api/units/{unitId}/delete").with(UnitController::deleteUnit);
-        
+
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
         ///////////////////////////////////////////////////////////////////////    
@@ -100,7 +92,7 @@ public class Routes implements ApplicationRoutes {
         ///////////////////////////////////////////////////////////////////////
         // Index / Catchall shows index page
         ///////////////////////////////////////////////////////////////////////
-        router.GET().route("/.*").with(ApplicationController::index);
+//        router.GET().route("/.*").with(ApplicationController::index);
     }
 
 }

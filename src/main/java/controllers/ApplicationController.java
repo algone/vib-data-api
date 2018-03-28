@@ -75,19 +75,20 @@ public class ApplicationController {
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
 
-  @FilterWith(AuthenticationFilter.class) 
+   @FilterWith(AuthenticationFilter.class)
+    
     public Result index(Context context) {
         LOG.info("We are here.....");
         String userId = authService.getAuthenticatedUser(context);
-        
-        LOG.info("USER: "+userId);
+
+        LOG.info("USER: " + userId);
         List<ParentUnit> vpus = dbService.getHostParentUnits(userId);
         String userName = context.getSession().get("userName");
-        LOG.info("USER NAME: "+userName +" with "+vpus.size()+ " parents");
-        
+        LOG.info("USER NAME: " + userName + " with " + vpus.size() + " parents");
+
         Host profile = dbService.getHost(userId);
-      
-        return Results.html().template("views/ApplicationController/index.ftl.html").render("host", userName).render("parents", vpus).render("profile",profile);
+
+        return Results.html().template("views/ApplicationController/index.ftl.html").render("host", userName).render("parents", vpus).render("profile", profile);
     }
 
     public Result showParentUnitForm(Context context) {

@@ -2,6 +2,7 @@
 <@layout.myLayout "Home page"> 
 
 <div class="row">
+    <#if (session.authenticateduser)??>
 
     <#if parents?has_content>
     <#list parents?chunk(2) as row> 
@@ -23,6 +24,8 @@
     </#list>
     </#list>
     </#if>
+
+    </#if> 
 </div>
 
 
