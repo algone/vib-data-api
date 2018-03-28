@@ -9,15 +9,31 @@
     <#list row as parent>  
     <div class="col s12 m6">
         <div class="card ">
-            <div class="card-image">
+            <div class="card-image  ">
                 <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
                 <span class="card-title">${parent.unitName}</span>
-                <a class="btn-floating halfway-fab waves-effect waves-light red">
+                <a class="activator btn-floating halfway-fab waves-effect waves-light red">
                     <i class="material-icons">add</i>
                 </a>
             </div>
             <div class="card-content">
                 <p class="truncate">${parent.propertyDescription}</p>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                <#if parent.parentImages?has_content>
+                <#list parent.parentImages as image>
+            
+                  <div class="card small">
+                      <div class="card-image  ">
+                <img src="${image.imageUrl}">
+                <span class="card-title">Image ${image?index}</span>
+            </div>
+    <!-- Card Content -->
+  </div>
+                </#list>
+                </#if>
             </div>
         </div>
     </div>  

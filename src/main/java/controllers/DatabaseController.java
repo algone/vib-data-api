@@ -63,7 +63,6 @@ public class DatabaseController {
     @Inject
     VibandaImageService imgService;
 
-
     public Result uploadImage(Context context, @Param("unitImageFile") FileItem unitImageFile,
             @Param("imageName") String imageName,
             @Param("coverImage") boolean isCoverImage,
@@ -81,9 +80,10 @@ public class DatabaseController {
         Map result = imgService.uploadImage(unitImageFile.getFile(), uploadParams);
 
         VibandaImage img = new VibandaImage();
-        String url = (String) result.get("url");
-        img.setImageId((String) result.get("public_id"));
+        String url = (String) result.getOrDefault("url","http://res.cloudinary.com/vibanda/image/upload/v1522110675/r7qn1ggtb2ncrcvywzth.jpg");
+        img.setImageId((String) result.getOrDefault("public_id","xxxxxxxxxxxxxxxxxxxxxxxxxxxx"));
         img.setImageUrl(url);
+
         img.setUnitId(unitId);
         img.setImageDescription((String) uploadParams.get("tags"));
         String iscover = context.getParameter("coverImage");
@@ -101,7 +101,7 @@ public class DatabaseController {
         dbService.saveImage(img);
 
         List<Unit> unitIds = dbService.getAllUnits();
-        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds).render("host",context.getSession().get("userName") );
+        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds).render("host", context.getSession().get("userName"));
     }
 
     private Map<String, Object> getCloudinaryResult() throws JsonSyntaxException {
@@ -200,14 +200,12 @@ public class DatabaseController {
         Map uploadParams = ObjectUtils.asMap(
                 "tags", id
         );
-        try {
-            Map result = imgService.uploadImage(avatarImage.getFile(), uploadParams);
-            String url = (String) result.get("url");
-            rev.setReviewerAvatar(url);
-        } catch (IOException ex) {
-            rev.setReviewerAvatar("http://res.cloudinary.com/vibanda/image/upload/v1521676951/cr42yjg5wwiedzoxs8jy.png");
 
-        }
+        Map result = imgService.uploadImage(avatarImage.getFile(), uploadParams);
+
+        String url = (String) result.getOrDefault("url", "http://res.cloudinary.com/vibanda/image/upload/v1521676951/cr42yjg5wwiedzoxs8jy.png");
+        rev.setReviewerAvatar(url);
+
         Rating rate = new Rating();
         rate.setDate(reviewDate);
         rate.setRating(rating);

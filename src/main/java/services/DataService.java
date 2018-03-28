@@ -161,12 +161,26 @@ public class DataService implements Service {
     public void saveImage(VibandaImage img) {
         System.out.println("Persisting image to mongolab....");
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
+         this.mongoDB.getMorphia().getMapper().getOptions().setStoreNulls(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(img);
 
         Query<Unit> updateQuery = ds.createQuery(Unit.class).field("id").equal(img.getUnitId());
-        UpdateOperations<Unit> ops = ds.createUpdateOperations(Unit.class).addToSet("unitImages", img);
-        ds.update(updateQuery, ops);
+
+        if (updateQuery.get() != null) {
+
+            Unit unit = updateQuery.get();
+
+            if (img.isIsCoverImage()) {
+                Query<ParentUnit> parentQuery = ds.createQuery(ParentUnit.class).field("id").equal(unit.getUnitParentId());
+                UpdateOperations<ParentUnit> ops = ds.createUpdateOperations(ParentUnit.class).addToSet("parentImages", img);
+                ds.update(parentQuery, ops);
+            }
+
+            UpdateOperations<Unit> ops = ds.createUpdateOperations(Unit.class).addToSet("unitImages", img);
+            ds.update(updateQuery, ops);
+
+        }
 
     }
 
@@ -250,7 +264,7 @@ public class DataService implements Service {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Host> query = ds.createQuery(Host.class).field("id").equal(id);
 
-        LOG.info("Getting host for id : " + id +" Found :"+query.get().getId());
+        LOG.info("Getting host for id : " + id + " Found :" + query.get().getId());
 
         return query.get();
     }

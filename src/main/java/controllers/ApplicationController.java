@@ -201,7 +201,8 @@ public class ApplicationController {
         authService.logout(context);
 //        String msg = "User session invalidated, log in again";
 
-        return Results.html().redirect("/form/login");
+        return reverseRouter.with(ApplicationController::showLoginForm)
+                .redirect();
 
     }
 
