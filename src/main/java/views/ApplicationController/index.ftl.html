@@ -12,13 +12,19 @@
             <div class="card-image  ">
                 <#if parent.parentImages?has_content>
                 <#list parent.parentImages as image>
+
                 <img src="${image.imageUrl}">
+
+                </#list>
+                <#else>
+                <img src="https://static.pexels.com/photos/279701/pexels-photo-279701.jpeg">
+                </#if> 
+
                 <span class="card-title">${parent.unitName}</span>
                 <a class="activator btn-floating halfway-fab waves-effect waves-light red">
                     <i class="material-icons">add</i>
                 </a>
-                </#list>
-                </#if>
+
             </div>
             <div class="card-content">
                 <p class="truncate">${parent.style}</p>
