@@ -57,9 +57,9 @@ public class UnitController {
         return Results.json().render(all);
     }
 
-    public Result getUnit(@PathParam("parentId") String parentId) {
-        List<Unit> units = dbService.findUnitsByParentId(parentId);
-        return Results.json().render(units);
+    public Result getUnit(@PathParam("unitId") String unitId) {
+         Unit unit = dbService.findUnitById(unitId);
+        return Results.json().render(unit);
     }
 
     public Result getUnitsByHostId(@PathParam("hostId") String hostId) {
@@ -67,10 +67,10 @@ public class UnitController {
         return Results.json().render(units);
     }
 
-    public Result getUnitsByParentId(@PathParam("unitId") String unitId) {
+    public Result getUnitsByParentId(@PathParam("parentId") String parentId) {
         //@TODO check the implementation, it was not finalized
-        Unit parent = dbService.findUnitById(unitId);
-        return Results.json().render(parent);
+        List<Unit> units = dbService.findUnitsByParentId(parentId);
+        return Results.json().render(units);
     }
 
     public Result searchUnits(String searchWord) {

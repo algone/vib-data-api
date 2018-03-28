@@ -40,8 +40,6 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -50,7 +48,9 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class DataService implements Service {
 
-    final static Logger LOG = LoggerFactory.getLogger(DataService.class);
+//    final static Logger LOG = LoggerFactory.getLogger(DataService.class);
+    @Inject
+    org.slf4j.Logger LOG;
     @Inject
     private MongoDB mongoDB;
     private Datastore ds;
@@ -88,11 +88,15 @@ public class DataService implements Service {
     }
 
     @Override
-    public void deleteParent(long parentId) {
-        final Query<ParentUnit> parentToDel = ds.createQuery(ParentUnit.class).filter("parentId =", parentId);
+    public void deleteParent(String parentId) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-        ds.delete(parentToDel);
+        final Query<ParentUnit> parentToDel = ds.createQuery(ParentUnit.class).filter("id =", parentId);
+        String id = parentToDel.get().getId();
 
+        Query<Unit> query = ds.createQuery(Unit.class).field("unitParentId").equal(id);
+        ds.findAndDelete(query);
+        ParentUnit res = ds.findAndDelete(parentToDel);
+        LOG.info("DELETED: " + res.getUnitName());
     }
 
     public Map<String, Object> getParentIds() {
@@ -159,6 +163,11 @@ public class DataService implements Service {
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(img);
+
+        Query<Unit> updateQuery = ds.createQuery(Unit.class).field("id").equal(img.getUnitId());
+        UpdateOperations<Unit> ops = ds.createUpdateOperations(Unit.class).addToSet("unitImages", img);
+        ds.update(updateQuery, ops);
+
     }
 
     @Override
@@ -206,13 +215,12 @@ public class DataService implements Service {
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         if (revType.equalsIgnoreCase("Host")) {
-            Query<Host> query = ds.createQuery(Host.class);
-            Query<Host> updateQuery = query.field("email").equal(identifier);
+            Query<Host> updateQuery = ds.createQuery(Host.class).field("email").equal(identifier);
             UpdateOperations<Host> ops = ds.createUpdateOperations(Host.class).addToSet("hostReviews", rev);
             ds.update(updateQuery, ops);
         } else {
-            Query<Unit> query = ds.createQuery(Unit.class);
-            Query<Unit> updateQuery = query.field("id").equal(identifier);
+            Query<Unit> updateQuery = ds.createQuery(Unit.class).field("id").equal(identifier);
+
             UpdateOperations<Unit> ops = ds.createUpdateOperations(Unit.class).addToSet("unitReviews", rev);
             ds.update(updateQuery, ops);
         }
@@ -231,11 +239,20 @@ public class DataService implements Service {
         return query.asList();
     }
 
-    public Host getHostById(String hostEmail) {
+    public Host getHostByHostId(String hostEmail) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Host> query = ds.createQuery(Host.class);
         Query<Host> result = query.field("email").equal(hostEmail);
         return result.get();
+    }
+
+    public Host getHost(String id) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        Query<Host> query = ds.createQuery(Host.class).field("id").equal(id);
+
+        LOG.info("Getting host for id : " + id +" Found :"+query.get().getId());
+
+        return query.get();
     }
 
     @Override
@@ -251,6 +268,9 @@ public class DataService implements Service {
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(unit);
+        Query<ParentUnit> updateQuery = ds.createQuery(ParentUnit.class).field("id").equal(parentId);
+        UpdateOperations<ParentUnit> ops = ds.createUpdateOperations(ParentUnit.class).addToSet("rentalUnits", unit.getId());
+        ds.update(updateQuery, ops);
     }
 
     @Override
@@ -265,8 +285,15 @@ public class DataService implements Service {
 
     @Override
     public void deleteUnit(String unitId) {
+        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
+        final Query<Unit> unitToDel = ds.createQuery(Unit.class).filter("id =", unitId);
+        String id = unitToDel.get().getId();
 
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query<VibandaImage> query = ds.createQuery(VibandaImage.class).field("unitId").equal(id);
+        ds.findAndDelete(query);
+        Unit res = ds.findAndDelete(unitToDel);
+        LOG.info("DELETED: " + res.getUnitHeading());
+
     }
 
     @Override
@@ -274,16 +301,20 @@ public class DataService implements Service {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
         Query<ParentUnit> result = query.field("id").equal(parentId);
-        LOG.info("FOUND PARENT: " + result.get().getId());
+//        LOG.info("FOUND PARENT: " + result.get().getId());
         return result.get();
     }
 
     public ParentUnit findParentByUnitId(String unitId) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-        Query<ParentUnit> query = ds.createQuery(ParentUnit.class);
-        Query<ParentUnit> result = query.field("id").equal(unitId);
-        LOG.info("FOUND PARENT: " + result.get().getId());
-        return result.get();
+        Query<Unit> query = ds.createQuery(Unit.class);
+        Query<Unit> result = query.field("id").equal(unitId);
+
+        Unit foundUnit = result.get();
+        LOG.info("FOUND UNIT: " + foundUnit.getId() + " with PARENT ID: " + foundUnit.getUnitParentId());
+
+        ParentUnit parent = findParentUnitById(foundUnit.getUnitParentId());
+        return parent;
     }
 
     @Override
@@ -294,7 +325,7 @@ public class DataService implements Service {
         return result.get();
     }
 
-    public List<Unit> findHostUnits(String email) {
+    public List<Unit> findUnitsByHostId(String email) {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         LOG.info("HOST ID: " + email);
         Query<ParentUnit> query = ds.createQuery(ParentUnit.class).field("ownerID").equal(email);
@@ -342,22 +373,11 @@ public class DataService implements Service {
         return units;
     }
 
-    public Host getHost(String hostEmail) {
-        ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
-        Query<Host> query = ds.createQuery(Host.class);
-        Query<Host> result = query.field("email").equal(hostEmail);
-        return result.get();
-    }
-
     public void addHost(Host host) {
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreEmpties(true);
         this.mongoDB.getMorphia().getMapper().getOptions().setStoreNulls(true);
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         ds.save(host);
-    }
-
-    public List<Unit> findUnitsByHostId(String hostId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public List<Unit> searchUnits(String searchWord) {

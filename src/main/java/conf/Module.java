@@ -19,6 +19,7 @@ package conf;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
+import controllers.AuthenticationFilter;
 import ninja.uploads.FileItemProvider;
 import ninja.uploads.MemoryFileItemProvider;
 import services.DataService;
@@ -37,7 +38,7 @@ public class Module extends AbstractModule {
         bind(FileItemProvider.class).to(MemoryFileItemProvider.class);
         bind(Service.class).to(DataService.class);
         bind(ImageService.class).to(VibandaImageService.class);
-//        bind(Authentications.class);
+        bind(AuthenticationFilter.class);
   
     }
 

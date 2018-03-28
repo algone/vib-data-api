@@ -15,23 +15,19 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import de.svenkubiak.ninja.auth.filters.AuthenticationFilter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import model.Host;
 import model.ParentUnit;
 import model.Rating;
 import model.Review;
 import model.Unit;
 import model.VibandaImage;
 import ninja.Context;
-import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 import ninja.ReverseRouter;
@@ -66,15 +62,6 @@ public class DatabaseController {
     DataService dbService;
     @Inject
     VibandaImageService imgService;
-
-
-
-    public Result findParent(@PathParam("parentId") String id) {
-        ParentUnit parent = dbService.findParentUnitById(id);
-        return Results.json().render(parent);
-
-    }
-
 
 
     public Result uploadImage(Context context, @Param("unitImageFile") FileItem unitImageFile,
@@ -114,8 +101,6 @@ public class DatabaseController {
         dbService.saveImage(img);
 
         List<Unit> unitIds = dbService.getAllUnits();
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("units", unitIds);
         return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds).render("host",context.getSession().get("userName") );
     }
 
@@ -159,45 +144,6 @@ public class DatabaseController {
 
     }
 
-    public Result listAll(Context context) {
-        List<ParentUnit> vpus = dbService.getAllParents();
-        return Results.json().render(vpus);
-    }
-
-    public Result listAllUnits(Context context) {
-        List<Unit> vus = dbService.getAllUnits();
-
-        return Results.json().render(vus);
-    }
-
-    public Result listAllHosts(Context context) {
-        List<Host> hosts = dbService.getAllHosts();
-        return Results.json().render(hosts);
-    }
-
-    public Result findHost(Context context, @PathParam("hostId") String id) {
-        Host host = dbService.getHostById(id);
-        return Results.json().render(host);
-    }
-
-    public Result findUnit(@PathParam("unitId") String id) {
-        Unit vu = dbService.findUnitById(id);
-
-        return Results.json().render(vu);
-    }
-
-    public Result findParentUnit(@PathParam("parentId") String id) {
-        ParentUnit vpu = dbService.findParentUnitById(id);
-        return Results.json().render(vpu);
-    }
-
-    public Result getUnitsByParentId(@PathParam("parentId") String id) {
-        List<Unit> vpu = dbService.findUnitsByParentId(id);
-        return Results.json().render(vpu);
-    }
-
-
-
     public Result findUnitImages(@PathParam("unitId") String id) {
         List<VibandaImage> vui = dbService.findUnitImagesById(id);
         return Results.json().render(vui);
@@ -212,24 +158,6 @@ public class DatabaseController {
             }
         }
         return Results.json().render(counties);
-    }
-
-    public Result findDestinations(Context context) {
-        List<Document> destinations = dbService.getDestinations();
-        return Results.json().render(destinations);
-    }
-
-    @FilterWith(AuthenticationFilter.class)
-    public Result findHostUnits(Context context, @PathParam("hostId") String id) {
-        LOG.info("Retrieving Units for host: " + id);
-        List<Unit> units = dbService.findHostUnits(id);
-//        units.add(new ParentUnit());
-        return Results.json().render(units);
-    }
-
-    public Result findTopDestinations(Context context) {
-        List<Document> topDestinations = dbService.getTopDestinations();
-        return Results.json().render(topDestinations);
     }
 
     public Result search(Context context) {
@@ -286,7 +214,6 @@ public class DatabaseController {
         rate.setIpAddress(context.getRemoteAddr());
         rev.setRating(rate);
         dbService.storeReview(rev, id, revType);
-//        return Results.noContent();
         return reverseRouter.with(ApplicationController::showReviewForm)
                 .redirect();
 

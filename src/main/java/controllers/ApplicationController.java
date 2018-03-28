@@ -75,8 +75,8 @@ public class ApplicationController {
     List<Unit> units = new ArrayList<>();
     List<VibandaImage> unitImages = new ArrayList<>();
 
-   @FilterWith(AuthenticationFilter.class)
-    
+    @FilterWith(AuthenticationFilter.class)
+
     public Result index(Context context) {
         LOG.info("We are here.....");
         String userId = authService.getAuthenticatedUser(context);
@@ -86,7 +86,7 @@ public class ApplicationController {
         String userName = context.getSession().get("userName");
         LOG.info("USER NAME: " + userName + " with " + vpus.size() + " parents");
 
-        Host profile = dbService.getHost(userId);
+        Host profile = dbService.getHostByHostId(userId);
 
         return Results.html().template("views/ApplicationController/index.ftl.html").render("host", userName).render("parents", vpus).render("profile", profile);
     }
@@ -121,7 +121,7 @@ public class ApplicationController {
     }
 
     public Result showImageUploadForm(Context context) {
-        List<Unit> unitIds = dbService.findHostUnits(authService.getAuthenticatedUser(context));
+        List<Unit> unitIds = dbService.findUnitsByHostId(authService.getAuthenticatedUser(context));
         System.out.println("Showing image upload form");
         return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds).render("host", context.getSession().get("userName"));
 
@@ -147,7 +147,7 @@ public class ApplicationController {
 
     @UnitOfWork
     public Result login(@Param("email") String email, @Param("password") String pass, Context context) {
-        Host user = dbService.getHost(email);
+        Host user = dbService.getHostByHostId(email);
         if (user != null) {
             LOG.info("User exists: " + user.getUserName() + " PASS :" + user.getPassword());
             boolean isValid = authService.authenticate(pass, user.getPassword());
@@ -194,6 +194,7 @@ public class ApplicationController {
         }
     }
 
+   
     public Result logout(Context context) {
 //        context.getSession().clear();
         LOG.info("User session invalidated, log in again");

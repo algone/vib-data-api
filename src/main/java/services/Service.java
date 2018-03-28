@@ -33,7 +33,7 @@ public interface Service {
      *Deletes an existing ParentUnit
      * @param parentId
      */
-    public void deleteParent(long parentId);
+    public void deleteParent(String parentId);
 
     /**
      *Persists a new Vibanda Unit to mongodb

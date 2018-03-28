@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.DataService;
 import services.VibandaAuthService;
-import services.VibandaImageService;
 
 /**
  *
@@ -31,7 +30,8 @@ import services.VibandaImageService;
 @FileProvider(DiskFileItemProvider.class)
 public class ParentController {
 
-    static final Logger LOG = LoggerFactory.getLogger(ParentController.class);
+    @Inject
+    org.slf4j.Logger LOG;
     @Inject
     ReverseRouter reverseRouter;
     @Inject
@@ -50,7 +50,7 @@ public class ParentController {
                 .redirect();
     }
 
-    public Result deleteParent(@PathParam("parentId") long productId) {
+    public Result deleteParent(@PathParam("parentId") String productId) {
         dbService.deleteParent(productId);
         return Results.noContent();
     }
