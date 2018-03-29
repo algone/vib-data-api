@@ -27,10 +27,10 @@
 
             </div>
             <div class="card-content">
-                <p class="truncate">${parent.style}</p>
+                <p class="truncate">${parent.parentType?capitalize} for ${parent.style?lower_case}</p>
             </div>
             <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                <span class="card-title grey-text text-darken-4">Property Description<i class="material-icons right">close</i></span>
                 <p>${parent.propertyDescription}</p>
 
             </div>

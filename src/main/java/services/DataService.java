@@ -379,6 +379,12 @@ public class DataService implements Service {
         JsonNode locationNode = jsonData.get("location");
 //        String place = jsonNode1.textValue();
         String county = locationNode.get("countyName").textValue();
+         LOG.info("CRITERIA CountyName = " + county);
+        if(county==null||county.isEmpty()){
+            LOG.info("CountyName is null or empty" );
+            return getAllUnits();
+        }
+        LOG.info("Searching for units in " +county+" County");
         List<Unit> units = ds.createQuery(Unit.class)
                 .search(county)
                 .order("_id")

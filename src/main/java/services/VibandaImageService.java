@@ -40,7 +40,7 @@ public class VibandaImageService implements ImageService {
             LOG.warn("Cannot retrieve image from cloudinary, gonna use default");
             Map map = new HashMap();
 //            map.put("url", "");
-            map.put("public_id", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+            map.put("public_id", "xxxxxxxxxxxxxxxxxxxxxxxxx");
 //           
             return map;
         }
