@@ -4,11 +4,10 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/form/login">login</a></li>
             <li><a href="/form/register">register</a></li>
-            <#if host??>
+            <#if (session.authenticateduser)??>
             <li>
                 <a class='dropdown-button ' data-beloworigin="true" href='#' data-activates='dropdown1'><i class="material-icons right">account_circle</i>
-                    Hello  
-                    ${host}
+                    Hi ${session.userName}
                 </a>
                 <ul id='dropdown1' class='dropdown-content'>
                     <li>  <!-- Modal Trigger -->

@@ -102,8 +102,8 @@ public class ApplicationController {
                 break;
             }
         }
-        String userName = context.getSession().get("userName");
-        return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html").render("counties", countyDocs).render("host", userName);
+ 
+        return Results.html().template("views/ApplicationController/parentUnitUpload.ftl.html").render("counties", countyDocs);
     }
 
     public Result showLoginForm() {
@@ -117,13 +117,13 @@ public class ApplicationController {
 
     public Result showUnitForm(Context context) {
         List<ParentUnit> hostPus = dbService.getHostParentUnits(authService.getAuthenticatedUser(context));
-        return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", hostPus).render("host", context.getSession().get("userName"));
+        return Results.html().template("views/ApplicationController/unitUpload.ftl.html").render("data", hostPus);
     }
 
     public Result showImageUploadForm(Context context) {
         List<Unit> unitIds = dbService.findUnitsByHostId(authService.getAuthenticatedUser(context));
         System.out.println("Showing image upload form");
-        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds).render("host", context.getSession().get("userName"));
+        return Results.html().template("views/ApplicationController/imagesUpload.ftl.html").render("units", unitIds);
 
     }
 
@@ -133,14 +133,12 @@ public class ApplicationController {
             System.out.println("Reviewing a UNIT");
             List<Unit> allUnits = dbService.getAllUnits();
             return Results.html().template("views/ApplicationController/reviewForm.ftl.html")
-                    .render("units", allUnits).render("title", "Unit")
-                    .render("host", context.getSession().get("userName"));
+                    .render("units", allUnits).render("title", "Unit");
         } else {
             System.out.println("Reviewing a HOST");
             List<Host> hosts = dbService.getAllHosts();
             return Results.html().template("views/ApplicationController/reviewForm.ftl.html")
-                    .render("hosts", hosts).render("title", "Host")
-                    .render("host", context.getSession().get("userName"));
+                    .render("hosts", hosts).render("title", "Host");
         }
 
     }
@@ -149,20 +147,24 @@ public class ApplicationController {
     public Result login(@Param("email") String email, @Param("password") String pass, Context context) {
         Host user = dbService.getHostByHostId(email);
         if (user != null) {
-            LOG.info("User exists: " + user.getUserName() + " PASS :" + user.getPassword());
+
             boolean isValid = authService.authenticate(pass, user.getPassword());
-            LOG.info("User is Authenticated: " + isValid);
+            
             if (isValid) {
+                LOG.info("User is Authenticated: " + isValid);
                 authService.login(context, email, isValid);
                 context.getSession().put("userName", user.getUserName());
-                return Results.redirect("/");
+//                return Results.redirect("/");
+                return reverseRouter.with(ApplicationController::index).redirect();
             } else {
                 LOG.info("Wrong credentials ... redirecting to login");
                 return Results.html().template("/views/layout/login.ftl.html");
+           
             }
         } else {
             LOG.info("User does not exists: " + email + "... go register");
-            return Results.html().template("/views/layout/register.ftl.html");
+//            return Results.html().template("/views/layout/register.ftl.html");
+            return reverseRouter.with(ApplicationController::showRegisterForm).redirect();
         }
     }
 
@@ -176,9 +178,10 @@ public class ApplicationController {
         Host user = dbService.getHost(email);
 
         if (user != null) {
-            //User exists ...go to login page and log in
 
-            return Results.html().template("/views/layout/signin.ftl.html").render("msg", "User " + userName + " already exists, got to login");
+            LOG.info("User exists ...go to login page and log in");
+//            return Results.html().template("/views/layout/signin.ftl.html").render("msg", "User " + userName + " already exists, got to login");
+            return reverseRouter.with(ApplicationController::showLoginForm).redirect();
         } else {
             //User does not exists ... go to login page
             Host host = new Host();
@@ -190,17 +193,14 @@ public class ApplicationController {
             host.setWhenJoined(ZonedDateTime.now().toString());
 
             dbService.addHost(host);
-            return Results.html().template("/views/layout/login.ftl.html").render("msg", userName);
+            return reverseRouter.with(ApplicationController::showLoginForm).redirect();
         }
     }
 
-   
     public Result logout(Context context) {
-//        context.getSession().clear();
+
         LOG.info("User session invalidated, log in again");
         authService.logout(context);
-//        String msg = "User session invalidated, log in again";
-
         return reverseRouter.with(ApplicationController::showLoginForm)
                 .redirect();
 

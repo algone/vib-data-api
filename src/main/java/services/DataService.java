@@ -264,7 +264,7 @@ public class DataService implements Service {
         ds = this.mongoDB.getMorphia().createDatastore(this.mongoDB.getMongoClient(), "mongolab-amazon-vibanda");
         Query<Host> query = ds.createQuery(Host.class).field("id").equal(id);
 
-        LOG.info("Getting host for id : " + id + " Found :" + query.get().getId());
+//        LOG.info("Getting host for id : " + id + " Found :" + query.get().getId());
 
         return query.get();
     }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Singleton;
+import ninja.utils.NinjaProperties;
 
 /**
  *
@@ -20,18 +21,20 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class VibandaImageService implements ImageService {
+
     @Inject
     org.slf4j.Logger LOG;
-
+    @Inject
+    NinjaProperties ninjaProperties;
 
     @Override
-    public Map uploadImage(File toUpload, Map uploadParams){
+    public Map uploadImage(File toUpload, Map uploadParams) {
         final Map config = ObjectUtils.asMap(
-                "cloud_name", "vibanda",
-                "api_key", "683298726672889",
-                "api_secret", "sjNGXv_v-TwTpetybaJe5Ld-yCY");
+                "cloud_name", ninjaProperties.get("cloudinary.cloud_name"),
+                "api_key", ninjaProperties.get("cloudinary.api_key"),
+                "api_secret", ninjaProperties.get("cloudinary.api_secret"));
         Cloudinary cloudinary = new Cloudinary(config);
-        uploadParams.put("proxy","http://10.151.249.76:8080");
+//        uploadParams.put("proxy", "http://10.151.249.76:8080");
         Map uploadResult;
         try {
             uploadResult = cloudinary.uploader().upload(toUpload, uploadParams);
@@ -44,6 +47,6 @@ public class VibandaImageService implements ImageService {
 //           
             return map;
         }
-        
+
     }
 }
